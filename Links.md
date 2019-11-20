@@ -1,0 +1,9 @@
+### Examples:
+1. https://github.com/mkyong/maven-examples
+### Topics:
+1. https://docs.confluent.io/current/connect/kafka-connect-elasticsearch/index.html
+1. https://graphql.org/learn/schema/
+1. https://www.baeldung.com/jacoco
+1. https://kafka.apache.org/intro.html
+1. https://www.tutorialspoint.com/go/index.htm
+1. https://reactjs.org/docs/hooks-intro.html
