@@ -16,17 +16,31 @@
 1. React.js
 1. Vue.js
 1. JUnit + JaCoCo
-1. Cucumber
+1. Cucumber + Selinium + Cypress
 1. JQuery
 1. Web-assembly
+1. TeaVM
+1. Quarkus
+1. Micronate
+1. GraalVM
+1. Jupiter-Notebook
+1. Echo
+1. Flask
 #### Database:
 1. Elasticsearch
 1. GraphQL
 1. MongoDB
 1. Netflix
+1. Oracle
+1. MySQL
+1. MS-SQL
+1. Postgre 
 #### Tools and features
 1. NIO
 1. Websocket
 1. Webhook
 1. Kubernate
 1. Gradle
+1. AWS
+1. GCF
+1. Azure
