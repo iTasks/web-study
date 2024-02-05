@@ -1,25 +1,42 @@
-from urllib.parse import parse_qs, urlencode
+import urllib
+
+def parseCookies(headers):
+    parsedCookie = {}
+    if headers.get('cookie'):
+        for cookie in headers['cookie'][0]['value'].split(';'):
+            if cookie:
+                parts = cookie.split('=')
+                parsedCookie[parts[0].strip()] = parts[1].strip()
+    return parsedCookie
 
 def lambda_handler(event, context):
     request = event['Records'][0]['cf']['request']
+    headers = request['headers']
 
     '''
-    When a request contains a query string key-value pair but the origin server
-    expects the value in a header, you can use this Lambda function to
-    convert the key-value pair to a header. Here's what the function does:
-        1. Parses the query string and gets the key-value pair.
-        2. Adds a header to the request using the key-value pair that the function got in step 1.
+    Check for session-id in request cookie in viewer-request event,
+    if session-id is absent, redirect the user to sign in page with original
+    request sent as redirect_url in query params.
     '''
 
-    # Parse request querystring to get dictionary/json
-    params = {k : v[0] for k, v in parse_qs(request['querystring']).items()}
+    # Check for session-id in cookie, if present, then proceed with request
+    parsedCookies = parseCookies(headers)
 
-    # Move auth param from querystring to headers
-    headerName = 'Auth-Header'
-    request['headers'][headerName.lower()] = [{'key': headerName, 'value': params['auth']}]
-    del params['auth']
+    if parsedCookies and parsedCookies['session-id']:
+        return request
 
-    # Update request querystring
-    request['querystring'] = urlencode(params)
+    # URI encode the original request to be sent as redirect_url in query params
+    redirectUrl = "https://%s%s?%s" % (headers['host'][0]['value'], request['uri'], request['querystring'])
+    encodedRedirectUrl = urllib.parse.quote_plus(redirectUrl.encode('utf-8'))
 
-    return request
+    response = {
+        'status': '302',
+        'statusDescription': 'Found',
+        'headers': {
+            'location': [{
+                'key': 'Location',
+                'value': 'https://www.example.com/signin?redirect_url=%s' % encodedRedirectUrl
+            }]
+        }
+    }
+    return response
