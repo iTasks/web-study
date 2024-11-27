@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star Trek Adventure</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1A1A1D;
+            color: #C5C6C7;
+            text-align: center;
+        }
+
+        .game-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #4E4E50;
+            border-radius: 8px;
+            box-shadow: 0 0 10px #111;
+        }
+
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #C5C6C7;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #66FCF1;
+            color: #0B0C10;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1 id="title">Star Trek Adventure</h1>
+        <p id="description">Welcome to the Star Trek text-based adventure.</p>
+        <button id="start-btn">Start Game</button>
+        <div id="gameStatus"></div>
+    </div>
+
+    <script>
+        document.getElementById("start-btn").addEventListener("click", startGame);
+
+        function startGame() {
+            const description = document.getElementById("description");
+            const gameStatus = document.getElementById("gameStatus");
+
+            description.innerText = "You are the captain of the starship Enterprise on your mission to explore strange new worlds.";
+            gameStatus.innerText = "You received a distress signal from the Vulcan planet.";
+
+            const decisions = [
+                { text: "Investigate the signal", outcome: "You decided to investigate the signal. It's a trap and you are under attack!" },
+                { text: "Ignore the signal", outcome: "You chose to ignore the signal. Later, you found out it was a genuine call for help." }
+            ];
+
+            // Clear existing buttons if any
+            gameStatus.innerHTML = '';
+
+            decisions.forEach(decision => {
+                const btn = document.createElement("button");
+                btn.innerText = decision.text;
+                btn.onclick = () => applyDecision(decision.outcome);
+                gameStatus.appendChild(btn);
+            });
+        }
+
+        function applyDecision(outcome) {
+            const gameStatus = document.getElementById("gameStatus");
+            gameStatus.innerHTML = `<p>${outcome}</p><p>Thank you for playing Star Trek Adventure.</p>`;
+        }
+    </script>
+</body>
+</html>
