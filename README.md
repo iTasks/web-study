@@ -1,46 +1,58 @@
-## Web Study:
-### Goal: Study and make sample apps for web based technologies
-### Modules:
-#### Language:
+# Web Study
+
+## Goal
+
+This repository aims to study and develop sample applications for various web-based technologies.
+
+## Modules
+
+### Languages
+
 1. Java
-1. Spring
-1. Go
-1. Groovy
-1. Scala
-1. Kotlin
-1. ES6/JavaScript + Typescript
-1. Python
-1. Rust
-#### Framework:
+2. Spring
+3. Go
+4. Groovy
+5. Scala
+6. Kotlin
+7. ES6/JavaScript + TypeScript
+8. Python
+9. Rust
+
+### Frameworks
+
 1. Node.js
-1. React.js
-1. Vue.js
-1. JUnit + JaCoCo
-1. Cucumber + Selinium + Cypress
-1. JQuery
-1. Web-assembly
-1. TeaVM
-1. Quarkus
-1. Micronate
-1. GraalVM
-1. Jupiter-Notebook
-1. Echo
-1. Flask
-#### Database:
+2. React.js
+3. Vue.js
+4. JUnit + JaCoCo
+5. Cucumber + Selenium + Cypress
+6. jQuery
+7. WebAssembly
+8. TeaVM
+9. Quarkus
+10. Micronaut
+11. GraalVM
+12. Jupyter Notebook
+13. Echo
+14. Flask
+
+### Databases
+
 1. Elasticsearch
-1. GraphQL
-1. MongoDB
-1. Netflix
-1. Oracle
-1. MySQL
-1. MS-SQL
-1. Postgre 
-#### Tools and features
+2. GraphQL
+3. MongoDB
+4. Neo4j
+5. Oracle
+6. MySQL
+7. MS-SQL
+8. PostgreSQL
+
+### Tools and Features
+
 1. NIO
-1. Websocket
-1. Webhook
-1. Kubernate
-1. Gradle
-1. AWS
-1. GCF
-1. Azure
+2. WebSocket
+3. Webhook
+4. Kubernetes
+5. Gradle
+6. AWS
+7. Google Cloud Functions (GCF)
+8. Azure
