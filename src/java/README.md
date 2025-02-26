@@ -84,4 +84,39 @@ To get started with the Java module, follow these steps:
 - [Selenium Documentation](https://www.selenium.dev/documentation/en/)
 - [Gradle Documentation](https://docs.gradle.org/current/userguide/userguide.html)
 
-Feel free to explore and contribute to the Java module by adding more sample applications and improving the documentation.
+## Structure
+
+```
+src/java
+├── Application.java
+├── Combination.java
+├── FixSetCombinations.java
+├── FutureExample.java
+├── ImageFilter.java
+├── LineSplit.java
+├── MatrixManipulations.java
+├── MyCallable.java
+├── PayPalIpnController.java
+├── PingPongGame.java
+├── Pipe.java
+├── README.md
+├── Ranking.java
+├── RestClient.java
+├── RubiksCube.jave
+├── SearchingAlgorithms.java
+├── SetManipulations.java
+├── SharedResources.java
+├── SortingAlgorithms.java
+├── Spliter.java
+├── StringManipulations.java
+├── WordCount.java
+├── grid_check.java
+├── pom.xml
+├── simple_grid_sum.java
+├── spark-hadoop
+│   ├── HadoopSparkApplication.java
+│   ├── README.md
+│   ├── generator.py
+│   ├── pom.xml
+└── test
+```
