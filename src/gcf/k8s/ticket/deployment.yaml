@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bigtable-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: bigtable-app
+  template:
+    metadata:
+      labels:
+        app: bigtable-app
+    spec:
+      containers:
+      - name: bigtable-app
+        image: gcr.io/<your-project-id>/my-bigtable-app
+        ports:
+        - containerPort: 8080
+      serviceAccountName: bigtable-access
