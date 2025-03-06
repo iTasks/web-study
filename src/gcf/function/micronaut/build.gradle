@@ -1,0 +1,80 @@
+plugins {
+    id "io.micronaut.application" version "3.1.4"
+    id 'java'
+}
+
+version "0.1"
+group "com.example"
+
+repositories {
+    mavenCentral()
+    jcenter()
+}
+
+micronaut {
+    runtime "netty"
+    testRuntime "junit5"
+    processing {
+        incremental true
+        annotations "com.example.*"
+    }
+}
+
+dependencies {
+    implementation "io.micronaut:micronaut-inject"
+    implementation "io.micronaut:micronaut-validation"
+    implementation "io.micronaut:micronaut-runtime"
+    implementation "io.micronaut:micronaut-http-client"
+    implementation "io.micronaut:micronaut-management"
+
+    // Micronaut GCP support
+    implementation "io.micronaut.gcp:micronaut-gcp-common"
+    implementation "io.micronaut.gcp:micronaut-gcp-http-client"
+    implementation "io.micronaut.gcp:micronaut-gcp-function"
+
+    // Apache Beam for Google Cloud Dataflow
+    implementation "org.apache.beam:beam-sdks-java-core:2.40.0"
+    implementation "org.apache.beam:beam-runners-google-cloud-dataflow-java:2.40.0"
+    implementation "org.apache.beam:beam-sdks-java-io-google-cloud-platform:2.40.0"
+    
+    // Google Cloud Pub/Sub
+    implementation "com.google.cloud:google-cloud-pubsub:2.11.0"
+
+    runtimeOnly "ch.qos.logback:logback-classic"
+    testImplementation("io.micronaut.test:micronaut-test-junit5")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+}
+
+java {
+    sourceCompatibility = JavaVersion.toVersion("11")
+    targetCompatibility = JavaVersion.toVersion("11")
+}
+
+// Use jib to create a Docker image
+jib {
+    from {
+        image = "gcr.io/distroless/java:11"
+    }
+    to {
+        image = "gcr.io/your-gcp-project-id/your-app-name:latest"
+        tags = ["latest"]
+    }
+    container {
+        ports = ['8080']
+        useCurrentTimestamp = true
+    }
+}
+
+mainClassName = "com.example.Application"
+// Uncomment these lines to enable native image building
+// tasks.withType(JavaCompile) {
+//     options.encoding = 'UTF-8'
+//     options.compilerArgs.add('-parameters')
+//     options.fork = true
+//     options.forkOptions.executable = 'javac'
+// }
+
+tasks.named("test") {
+    useJUnitPlatform()
+}
