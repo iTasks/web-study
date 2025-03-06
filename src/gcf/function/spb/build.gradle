@@ -1,0 +1,56 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.6'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://repo.spring.io/milestone'
+    }
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-json'
+
+    // Apache Beam dependencies
+    implementation 'org.apache.beam:beam-sdks-java-core:2.40.0'
+    implementation 'org.apache.beam:beam-runners-direct-java:2.40.0'
+    implementation 'org.apache.beam:beam-sdks-java-io-google-cloud-platform:2.40.0'
+
+    // Apache Spark dependencies
+    implementation 'org.apache.spark:spark-core_2.12:3.2.1'
+    implementation 'org.apache.spark:spark-sql_2.12:3.2.1'
+
+    // Jackson for JSON processing
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.2.2'
+    
+    // Testing dependencies
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.apache.beam:beam-sdks-java-core:2.40.0'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+// BootJar and other tasks can be configured here if specific build settings are necessary.
+bootJar {
+    enabled = true
+}
+
+// Task to run Spring Boot application with Beam and Spark included.
+task run(type: JavaExec) {
+    group = "application"
+    classpath = sourceSets.main.runtimeClasspath
+    main = 'com.example.springdataproject.DataProcessingApplication'
+}
+
+// Ensure that the application is correctly configured to run in various environments.
