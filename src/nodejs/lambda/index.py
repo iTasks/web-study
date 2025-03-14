@@ -10,7 +10,10 @@ JWKS_URI = f"{KEYCLOAK_ISSUER}/protocol/openid-connect/certs"  # JWKS endpoint f
 def fetch_jwks():
     """
     Fetch the JSON Web Key Set (JWKS) from the Keycloak JWKS endpoint.
-    
+
+    The JWKS keys are dynamically fetched from the Keycloak server to validate the
+    RS256-signed JWT tokens. This ensures compatibility with Keycloak key rotations.
+
     :return: A dictionary containing the JWKS keys.
     :rtype: dict
     :raises: requests.RequestException if the JWKS endpoint fails.
@@ -26,12 +29,16 @@ def fetch_jwks():
 def validate_jwt(token):
     """
     Validate the JWT token using Keycloak's JWKS endpoint.
-    
+
+    This function retrieves the JWKS keys from the Keycloak server, validates the JWT
+    token's signature using the matching public key, and ensures that the token's
+    claims (issuer, audience) are correct.
+
     :param token: The JWT token from the Authorization header.
     :type token: str
-    :return: Decoded token payload if the token is valid.
+    :return: Decoded token payload (dict) if the token is valid.
     :rtype: dict
-    :raises: Exception if the token is invalid.
+    :raises: Exception if the token is invalid or expired.
     """
     try:
         # Fetch JWKS keys dynamically
@@ -69,12 +76,43 @@ def validate_jwt(token):
 def lambda_handler(event, context):
     """
     AWS Lambda function handler for validating JWT tokens issued by Keycloak.
+
+    This function expects the incoming request to include an HTTP Authorization header
+    with a Bearer token. If the token is valid, it returns a 200 response with the
+    decoded token payload. If the token is invalid, expired, or missing, it returns a 401
+    response with the error details.
+
+    Deployment and Build Steps:
+    ---------------------------
+    1. Install Dependencies:
+       - Install the required libraries locally using pip:
+         ```
+         pip install python-jose requests -t .
+         ```
     
-    :param event: The AWS Lambda event object containing the HTTP request details.
+    2. Package the Function:
+       - Include the `lambda_function.py` and all dependencies into a zip file:
+         ```
+         zip -r lambda-function.zip lambda_function.py .
+         ```
+
+    3. Deploy to AWS Lambda:
+       - Go to the AWS Lambda console and upload the `lambda-function.zip`.
+
+    Example Event Input:
+    --------------------
+    {
+        "headers": {
+            "Authorization": "Bearer <your-jwt-token>"
+        }
+    }
+
+    :param event: The AWS Lambda event object (from API Gateway or other integrations).
+                  Should include headers with an Authorization field containing the JWT.
     :type event: dict
-    :param context: The AWS Lambda context object.
+    :param context: The AWS Lambda context object (not used in this function).
     :type context: object
-    :return: A response object for the HTTP request.
+    :return: A response object for the HTTP request (statusCode, body).
     :rtype: dict
     """
     try:
@@ -109,3 +147,48 @@ def lambda_handler(event, context):
             "statusCode": 401,
             "body": json.dumps({"message": "Invalid or expired token", "error": str(e)}),
         }
+
+
+# Additional Information
+"""
+Build and Deployment Details:
+
+1. **Dependencies**:
+   - `python-jose`: Library for decoding and validating JSON Web Tokens (JWT).
+   - `requests`: HTTP library for fetching JWKS keys from Keycloak's JWKS endpoint.
+
+   Install these dependencies locally or in your project directory:
+   pip install python-jose requests -t .
+
+2. **Packaging**:
+   - Ensure the `lambda_function.py` and the `site-packages` folder for dependencies are
+     packaged into a single zip file before deploying to AWS Lambda.
+
+   Command to create the zip package:
+   zip -r lambda-function.zip lambda_function.py .
+
+3. **Deployment**:
+   - Upload the zip file (`lambda-function.zip`) to an AWS Lambda function using the AWS Console,
+     AWS CLI, or IaC tools like AWS SAM or Terraform.
+
+Example usage:
+--------------
+Event Input:
+{
+    "headers": {
+        "Authorization": "Bearer <valid-jwt-token>"
+    }
+}
+
+Expected Output (Valid Token):
+{
+    "statusCode": 200,
+    "body": "{\"message\":\"Token is valid\", \"user\":{\"sub\":\"1234abcd\",\"email\":\"user@example.com\"}}"
+}
+
+Expected Output (Invalid Token or Errors):
+{
+    "statusCode": 401,
+    "body": "{\"message\":\"Invalid or expired token\", \"error\":\"Signature verification failed\"}"
+}
+"""
