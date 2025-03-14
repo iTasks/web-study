@@ -24,3 +24,11 @@ To start the Node.js application, run:
 ```
 npm start
 ```
+
+This will launch the application, and it will be accessible at `http://localhost:3000`.
+
+### Contributing
+
+If you wish to contribute to this project, please follow the [contributing guidelines](../CONTRIBUTING.md).
+
+For more detailed documentation, refer to the [official Node.js documentation](https://nodejs.org/en/docs/).
