@@ -3,6 +3,10 @@ name = "hello_world"
 version = "0.1.0"
 edition = "2021"
 
+[[bin]]
+name = "rust_http_server"
+path = "rust_http_server.rs"
+
 [dependencies]
 bytes = "1"
 hyper = { version = "1.0.0-rc.3", features = ["full"] }
