@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="LazyCache" Version="2.4.0" />
+		<PackageReference Include="QuickFix.Net.NETCore.FIX42" Version="1.8.1" />
+		<PackageReference Include="QuickFIXn.FIX4.2" Version="1.10.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+		<PackageReference Include="QuickFix.Net.NETCore" Version="1.8.1" />
+	  <PackageReference Include="QuickFix.Net.NETCore.FIX44" Version="1.8.1" />
+	  <PackageReference Include="QuickFix.Net.NETCore.FIX50SP1" Version="1.8.1" />
+	  <PackageReference Include="QuickFix.Net.NETCore.FIX50" Version="1.8.1" />
+	  
+	  <PackageReference Include="QuickFIXn.Core" Version="1.10.0" />
+	  <PackageReference Include="QuickFIXn.FIX5.0" Version="1.10.0" />
+	  <PackageReference Include="QuickFIXn.FIX4.4" Version="1.10.0" />
+	  <PackageReference Include="QuickFIXn.FIX5.0" Version="1.10.0" />
+	  <PackageReference Include="QuickFIXn.FIX5.0SP1" Version="1.10.0" />
+	</ItemGroup>
+
+</Project>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="starTrekGame">
+<head>
+    <meta charset="UTF-8">
+    <title>Star Trek Adventure</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1A1A1D;
+            color: #C5C6C7;
+            text-align: center;
+        }
+        .game-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #4E4E50;
+            border-radius: 8px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #C5C6C7;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #66FCF1;
+            color: #0B0C10;
+        }
+    </style>
+</head>
+<body ng-controller="GameController as game">
+    <div class="game-container">
+        <h1>Star Trek Adventure</h1>
+        <p>{{ game.description }}</p>
+        <button ng-click="game.startGame()" ng-if="!game.gameStarted">Start Game</button>
+        <div ng-show="game.gameStarted">
+            <p>{{ game.mission }}</p>
+            <button ng-repeat="decision in game.decisions" ng-click="game.applyDecision(decision.outcome)">
+                {{ decision.text }}
+            </button>
+        </div>
+        <p>{{ game.gameResult }}</p>
+    </div>
+
+    <script>
+        angular.module('starTrekGame', [])
+            .controller('GameController', function() {
+                this.description = "Welcome to the Star Trek text-based adventure game.";
+                this.gameStarted = false;
+                
+                this.startGame = () => {
+                    this.gameStarted = true;
+                    this.mission = "You are the captain of the starship Enterprise. You received a distress signal from Vulcan. How do you respond?";
+                    
+                    this.decisions = [
+                        { text: "Investigate the signal", outcome: "You decided to investigate the signal. It's a trap and you are now under attack by Romulans!" },
+                        { text: "Ignore the signal", outcome: "You chose to ignore the signal. Later, you learn it was a crucial diplomatic call for help. Missed opportunity for peace!" }
+                    ];
+                };
+
+                this.applyDecision = (outcome) => {
+                    this.gameResult = outcome;
+                    this.gameStarted = false; // Reset or end game
+                };
+            });
+    </script>
+</body>
+</html>

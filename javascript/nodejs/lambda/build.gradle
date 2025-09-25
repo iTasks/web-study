@@ -1,0 +1,62 @@
+// Apply the Java plugin for building Java projects
+plugins {
+    id 'java'
+    id 'application'
+}
+
+// Define the group and version of the project
+group = 'com.example'  // Replace with your package group
+version = '1.0-SNAPSHOT'
+
+// Specify target compatibility
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8  // AWS Lambda uses JDK 8 or later
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+// Dependencies for the project
+dependencies {
+    // AWS Lambda dependencies
+    implementation 'com.amazonaws:aws-lambda-java-core:1.2.2'
+    implementation 'com.amazonaws:aws-lambda-java-events:3.11.0'
+
+    // JWT and JWKS dependencies
+    implementation 'com.auth0:java-jwt:4.3.0'        // JWT library to decode and validate tokens
+    implementation 'com.auth0:jwks-rsa:0.20.0'       // Public key fetching from JWKS endpoint
+
+    // Logging dependencies
+    implementation 'org.slf4j:slf4j-api:2.0.9'
+    implementation 'org.slf4j:slf4j-simple:2.0.9'
+
+    // Test dependencies
+    testImplementation 'junit:junit:4.13.2'          // JUnit for unit testing
+}
+
+// Define the application entry point (not necessary for AWS Lambda, but helpful for local testing)
+application {
+    mainClass = 'LambdaFunction'  // Replace with the fully qualified name of your main handler class, if testing locally
+}
+
+// Create an uber/fat JAR that includes dependencies
+tasks.register('buildLambda', Jar) {
+    group = 'build'
+    description = 'Build a deployment-ready Lambda JAR file.'
+    archiveClassifier.set('lambda')
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    from {
+        configurations.runtimeClasspath.get().filter { it.exists() }.collect { zipTree(it) }
+    }
+
+    with(tasks.jar.get())
+}
+
+// Specify the output directory for JAR artifacts
+tasks.buildLambda {
+    destinationDirectory = file("$buildDir/libs")
+}
+
+// Clean task to remove build artifacts
+tasks.clean {
+    delete "$buildDir"
+}
