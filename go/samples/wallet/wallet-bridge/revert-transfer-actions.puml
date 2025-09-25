@@ -1,0 +1,42 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:init-session;
+:transfer;
+:post-process;
+if (succeed?) then (yes)
+    :success-msg;
+    :audit/logging;
+    :close-session;
+    :alert-user;
+    stop
+  else (no)
+  :call-revert;
+  if(reverted?) then (yes)
+    :revert-msg;
+    :audit/logging;
+    :close-session;
+    :alert-user;
+    stop
+  else (no)
+    :revert-queue;
+    :close-session;
+    :async-action;
+    if(executed?) then (yes)
+        :revert-msg;
+        :alert-user;
+        :logging;
+        stop
+    else (failed)
+        :manual-revert-queue;
+        :alert-admin;
+        :revert-msg;
+        :logging;
+        stop
+    endif
+
+  endif
+
+endif
+@enduml

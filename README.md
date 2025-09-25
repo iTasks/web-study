@@ -4,81 +4,129 @@
 
 This repository aims to study and develop sample applications for various web-based technologies. It serves as a comprehensive resource to explore different programming languages, frameworks, databases, tools, and features essential for web development.
 
-## Modules
+The repository is organized by programming language first, then by framework, to provide a scalable and intuitive structure for learning and development.
 
-- [Languages](#languages)
-- [Frameworks](#frameworks)
-- [Databases](#databases)
-- [Tools and Features](#tools-and-features)
-- [Additional Resources](#additional-resources)
+## Repository Structure
 
-### Languages
+This repository follows a language-first organization structure:
 
-1. [Java](#java)
-2. [Spring](#spring)
-3. [Go](#go)
-4. [Groovy](#groovy)
-5. [Scala](#scala)
-6. [Kotlin](#kotlin)
-7. [ES6/JavaScript + TypeScript](#es6javascript--typescript)
-8. [Python](#python)
-9. [Rust](#rust)
+```
+web-study/
+├── java/                    # Java programming language
+│   ├── spring/             # Spring framework examples
+│   └── samples/            # Pure Java examples
+├── python/                 # Python programming language
+│   ├── flask/              # Flask framework examples
+│   └── samples/            # Pure Python examples
+├── javascript/             # JavaScript/TypeScript
+│   ├── nodejs/             # Node.js framework examples
+│   ├── react/              # React/React Native examples
+│   └── samples/            # Pure JavaScript examples
+├── go/                     # Go programming language
+│   ├── echo/               # Echo framework examples
+│   └── samples/            # Pure Go examples
+├── csharp/                 # C# programming language
+│   └── samples/            # Pure C# examples
+├── ruby/                   # Ruby programming language
+│   └── samples/            # Pure Ruby examples
+├── rust/                   # Rust programming language
+│   └── samples/            # Pure Rust examples
+├── scala/                  # Scala programming language
+│   └── samples/            # Pure Scala examples
+├── groovy/                 # Groovy programming language
+│   └── samples/            # Pure Groovy examples
+├── lisp/                   # Lisp programming language
+│   └── samples/            # Pure Lisp examples
+├── teavm/                  # TeaVM (Java-to-JavaScript)
+│   └── samples/            # TeaVM examples
+└── src/                    # Legacy structure (cloud services, tools)
+```
 
-### Frameworks
+## Programming Languages
 
-1. [Node.js](#nodejs)
-2. [React.js](#reactjs)
-3. [Vue.js](#vuejs)
-4. [JUnit + JaCoCo](#junit--jacoco)
-5. [Cucumber + Selenium + Cypress](#cucumber--selenium--cypress)
-6. [jQuery](#jquery)
-7. [WebAssembly](#webassembly)
-8. [TeaVM](#teavm)
-9. [Quarkus](#quarkus)
-10. [Micronaut](#micronaut)
-11. [GraalVM](#graalvm)
-12. [Jupyter Notebook](#jupyter-notebook)
-13. [Echo](#echo)
-14. [Flask](#flask)
+### [Java](java/)
+Enterprise-grade programming language with comprehensive framework support.
+- **Frameworks**: Spring (Spring Boot, Spark, Beam)
+- **Key Topics**: Enterprise applications, big data processing, microservices
 
-### Databases
+### [Python](python/)
+High-level, interpreted language known for simplicity and extensive libraries.
+- **Frameworks**: Flask, Django
+- **Key Topics**: Web development, data science, automation, serverless
 
-1. [Elasticsearch](#elasticsearch)
-2. [GraphQL](#graphql)
-3. [MongoDB](#mongodb)
-4. [Neo4j](#neo4j)
-5. [Oracle](#oracle)
-6. [MySQL](#mysql)
-7. [MS-SQL](#ms-sql)
-8. [PostgreSQL](#postgresql)
+### [JavaScript](javascript/)
+Core web technology for client and server-side development.
+- **Frameworks**: Node.js, React/React Native
+- **Key Topics**: Web applications, mobile apps, server-side development
 
-### Tools and Features
+### [Go](go/)
+Modern systems programming language with excellent concurrency support.
+- **Frameworks**: Echo
+- **Key Topics**: Web services, microservices, concurrent programming
 
-1. [NIO](#nio)
-2. [WebSocket](#websocket)
-3. [Webhook](#webhook)
-4. [Kubernetes](#kubernetes)
-5. [Gradle](#gradle)
-6. [AWS](#aws)
-7. [Google Cloud Functions (GCF)](#google-cloud-functions-gcf)
-8. [Azure](#azure)
+### [C#](csharp/)
+Object-oriented programming language for the .NET platform.
+- **Key Topics**: Enterprise applications, financial systems, FIX protocol
 
-### AWS
+### [Ruby](ruby/)
+Dynamic programming language focused on simplicity and productivity.
+- **Key Topics**: Web development, automation, authentication systems
 
-- [Step Functions](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-invoke-sfn.html)
-- [Lambda](https://docs.aws.amazon.com/lambda/latest/dg/java-handler.html)
-- S3
-- SAM - Serverless Application Management
-- CDK
-- Wait, Pass, End function
-- DAG
-- Airflow
-- Batch
-- Bucket
-- [Amazon States Language (ASL)](https://docs.aws.amazon.com/step-functions/latest/dg/concepts-amazon-states-language.html)
+### [Rust](rust/)
+Systems programming language focused on safety and performance.
+- **Key Topics**: System programming, web servers, performance-critical applications
 
-### Additional Resources
+### [Scala](scala/)
+JVM language combining object-oriented and functional programming.
+- **Key Topics**: Big data processing, functional programming, JVM integration
 
-- [WebSocket Library](https://github.com/iTasks/ws) - Goal: using web-socket for developing web application
+### [Groovy](groovy/)
+Dynamic language for the Java platform with enhanced productivity features.
+- **Key Topics**: Scripting, DSLs, Java integration
 
-Feel free to explore each module and contribute to the repository by adding more sample applications and documentation.
+### [Lisp](lisp/)
+Functional programming language known for symbolic computation.
+- **Key Topics**: Symbolic computation, AI, functional programming
+
+### [TeaVM](teavm/)
+Java-to-JavaScript/WebAssembly transpiler.
+- **Key Topics**: Java in browsers, WebAssembly, cross-platform development
+
+## Cloud Services and Tools
+
+The `src/` directory contains cloud services and infrastructure tools:
+- **AWS**: Step Functions, Lambda, S3, CDK
+- **Google Cloud**: Cloud Functions, App Engine, Kubernetes
+- **Infrastructure**: Kubernetes, Docker, CI/CD
+
+## How to Use This Repository
+
+1. **Choose a Language**: Navigate to the language directory you want to study
+2. **Explore Frameworks**: Check framework-specific subdirectories for advanced examples  
+3. **Start with Samples**: Begin with the `samples/` directory for pure language examples
+4. **Read Documentation**: Each directory contains comprehensive README.md files
+5. **Run Examples**: Follow setup instructions in each directory's README
+
+## Contribution Guidelines
+
+1. **Language-First Organization**: Place content in appropriate language directories
+2. **Framework Separation**: Keep framework examples in dedicated subdirectories
+3. **Comprehensive Documentation**: Include README.md files with setup and usage instructions
+4. **Working Examples**: Ensure all code examples compile and run successfully
+5. **Consistent Structure**: Follow the established directory structure
+
+### Adding New Content
+
+1. **New Language**: Create new top-level directory with `samples/` subdirectory
+2. **New Framework**: Add framework subdirectory under appropriate language
+3. **New Examples**: Place in relevant `samples/` or framework directory
+4. **Documentation**: Update README.md files to reflect new content
+
+## Resources and References
+
+- [Web Development Best Practices](https://developer.mozilla.org/en-US/docs/Learn)
+- [Cloud Native Computing Foundation](https://www.cncf.io/)
+- [Modern Web Development Frameworks](https://jamstack.org/)
+- [Microservices Architecture](https://microservices.io/)
+
+Feel free to explore each language and framework, and contribute to the repository by adding more sample applications and documentation.

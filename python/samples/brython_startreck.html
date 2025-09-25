@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Star Trek Adventure</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.10.5/brython.min.js"></script>
+</head>
+<body onload="brython()">
+
+<div>
+    <h1 id="title">Star Trek Adventure</h1>
+    <p id="description">Welcome to the Star Trek text-based adventure.</p>
+    <button onclick="startGame()">Start Game</button>
+    <p id="gameStatus"></p>
+</div>
+
+<script type="text/python">
+
+from browser import document
+
+class Game:
+    def __init__(self):
+        self.introduction = "You are the captain of the starship Enterprise on your mission to explore strange new worlds."
+        self.mission = "You received a distress signal from the Vulcan planet."
+        self.decisions = [
+            {"text": "Investigate the signal", "outcome": "You decided to investigate the signal. It's a trap and you are under attack!"},
+            {"text": "Ignore the signal", "outcome": "You chose to ignore the signal. Later, you found out it was a genuine call for help."}
+        ]
+        self.game_over = "Thank you for playing Star Trek Adventure."
+
+    def start_game(self):
+        document['description'].text = self.introduction
+        document['gameStatus'].text = self.mission
+        # Create buttons for decisions
+        for decision in self.decisions:
+            btn = document.createElement('button')
+            btn.text = decision['text']
+            btn.bind('click', lambda event, d=decision: self.apply_decision(d))
+            document['gameStatus'] <= btn
+
+    def apply_decision(self, decision):
+        document['gameStatus'].text = decision['outcome']
+        document['gameStatus'] <= document.createElement('p').text = self.game_over
+
+game = Game()
+
+def startGame():
+    game.start_game()
+
+</script>
+
+</body>
+</html>
