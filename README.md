@@ -39,6 +39,8 @@ web-study/
 │   └── samples/            # Pure Lisp examples
 ├── teavm/                  # TeaVM (Java-to-JavaScript)
 │   └── samples/            # TeaVM examples
+├── zig/                    # Zig programming language
+│   └── samples/            # Pure Zig examples
 └── src/                    # Legacy structure (cloud services, tools)
 ```
 
@@ -91,6 +93,10 @@ Functional programming language known for symbolic computation.
 ### [TeaVM](teavm/)
 Java-to-JavaScript/WebAssembly transpiler.
 - **Key Topics**: Java in browsers, WebAssembly, cross-platform development
+
+### [Zig](zig/)
+Modern systems programming language focusing on performance, safety, and maintainability.
+- **Key Topics**: Systems programming, comptime, C interoperability, memory safety
 
 ## Cloud Services and Tools
 
