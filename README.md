@@ -41,6 +41,10 @@ web-study/
 │   └── samples/            # TeaVM examples
 ├── zig/                    # Zig programming language
 │   └── samples/            # Pure Zig examples
+├── ballerina/              # Ballerina programming language
+│   └── samples/            # Pure Ballerina examples
+├── r/                      # R programming language
+│   └── samples/            # Pure R examples
 └── src/                    # Legacy structure (cloud services, tools)
 ```
 
@@ -76,7 +80,7 @@ Dynamic programming language focused on simplicity and productivity.
 
 ### [Rust](rust/)
 Systems programming language focused on safety and performance.
-- **Key Topics**: System programming, web servers, performance-critical applications
+- **Key Topics**: Threading, async programming, webhooks, web servers, memory safety
 
 ### [Scala](scala/)
 JVM language combining object-oriented and functional programming.
@@ -97,6 +101,22 @@ Java-to-JavaScript/WebAssembly transpiler.
 ### [Zig](zig/)
 Modern systems programming language focusing on performance, safety, and maintainability.
 - **Key Topics**: Systems programming, comptime, C interoperability, memory safety
+
+### [Ballerina](ballerina/)
+Cloud-native programming language specialized for integration and networked services.
+- **Key Topics**: Web services, webhooks, concurrent workers, API integration, data transformation
+
+### [R](r/)
+Programming language and environment for statistical computing and data analysis.
+- **Key Topics**: Web applications with Shiny, parallel processing, webhooks with Plumber, data analysis pipelines
+
+### [Ballerina](ballerina/)
+Cloud-native programming language specialized for integration and networked services.
+- **Key Topics**: Web services, webhooks, concurrent workers, API integration, data transformation
+
+### [R](r/)
+Programming language and environment for statistical computing and data analysis.
+- **Key Topics**: Web applications with Shiny, parallel processing, webhooks with Plumber, data analysis pipelines
 
 ## Cloud Services and Tools
 
