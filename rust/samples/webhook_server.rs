@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::convert::Infallible;
+use std::net::SocketAddr;
 use std::sync::{Arc, Mutex};
 use std::time::SystemTime;
 
@@ -8,6 +9,7 @@ use http_body_util::{combinators::BoxBody, BodyExt, Full};
 use hyper::server::conn::http1;
 use hyper::service::service_fn;
 use hyper::{body::Incoming as IncomingBody, Method, Request, Response, StatusCode};
+use hyper_util::rt::TokioIo;
 use serde::{Deserialize, Serialize};
 use tokio::net::TcpListener;
 
@@ -52,7 +54,7 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     println!("  POST /webhook/generic - Generic webhooks");
     println!("  POST /webhook/test    - Test endpoint");
     
-    let addr = ([127, 0, 0, 1], 8080).into();
+    let addr: SocketAddr = ([127, 0, 0, 1], 8080).into();
     let listener = TcpListener::bind(addr).await?;
     
     // Shared state for storing webhook events
@@ -60,12 +62,13 @@ pub async fn main() -> Result<(), Box<dyn std::error::Error + Send + Sync>> {
     
     loop {
         let (stream, _) = listener.accept().await?;
+        let io = TokioIo::new(stream);
         let shared_state = Arc::clone(&shared_state);
         
         tokio::task::spawn(async move {
             let service = service_fn(move |req| handle_request(req, Arc::clone(&shared_state)));
             
-            if let Err(err) = http1::Builder::new().serve_connection(stream, service).await {
+            if let Err(err) = http1::Builder::new().serve_connection(io, service).await {
                 eprintln!("Error serving connection: {:?}", err);
             }
         });
@@ -171,18 +174,20 @@ async fn handle_github_webhook(
     req: Request<IncomingBody>,
     shared_state: SharedState,
 ) -> Response<BoxBody<Bytes, hyper::Error>> {
-    // Extract headers
+    // Extract headers before consuming the request body
     let event_type = req
         .headers()
         .get("X-GitHub-Event")
         .and_then(|h| h.to_str().ok())
-        .unwrap_or("unknown");
+        .unwrap_or("unknown")
+        .to_string();
     
     let delivery_id = req
         .headers()
         .get("X-GitHub-Delivery")
         .and_then(|h| h.to_str().ok())
-        .unwrap_or("unknown");
+        .unwrap_or("unknown")
+        .to_string();
     
     // Read body
     let body_bytes = match req.collect().await {
@@ -201,12 +206,12 @@ async fn handle_github_webhook(
     };
     
     // Process GitHub event
-    let result = process_github_event(event_type, &payload);
+    let result = process_github_event(&event_type, &payload);
     
     // Store the webhook event
     let webhook_event = WebhookEvent {
-        id: delivery_id.to_string(),
-        event_type: event_type.to_string(),
+        id: delivery_id.clone(),
+        event_type: event_type.clone(),
         source: "github".to_string(),
         timestamp: current_timestamp(),
         payload: payload.clone(),
@@ -297,12 +302,20 @@ async fn handle_generic_webhook(
     req: Request<IncomingBody>,
     shared_state: SharedState,
 ) -> Response<BoxBody<Bytes, hyper::Error>> {
-    // Extract user agent
+    // Extract headers before consuming the request body
     let user_agent = req
         .headers()
         .get("User-Agent")
         .and_then(|h| h.to_str().ok())
-        .unwrap_or("unknown");
+        .unwrap_or("unknown")
+        .to_string();
+    
+    let content_type = req
+        .headers()
+        .get("Content-Type")
+        .and_then(|h| h.to_str().ok())
+        .unwrap_or("unknown")
+        .to_string();
     
     // Read body
     let body_bytes = match req.collect().await {
@@ -317,9 +330,7 @@ async fn handle_generic_webhook(
         Ok(json) => json,
         Err(_) => serde_json::json!({
             "raw_body": String::from_utf8_lossy(&body_bytes),
-            "content_type": req.headers().get("Content-Type")
-                .and_then(|h| h.to_str().ok())
-                .unwrap_or("unknown")
+            "content_type": content_type
         }),
     };
     
