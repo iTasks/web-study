@@ -110,14 +110,6 @@ Cloud-native programming language specialized for integration and networked serv
 Programming language and environment for statistical computing and data analysis.
 - **Key Topics**: Web applications with Shiny, parallel processing, webhooks with Plumber, data analysis pipelines
 
-### [Ballerina](ballerina/)
-Cloud-native programming language specialized for integration and networked services.
-- **Key Topics**: Web services, webhooks, concurrent workers, API integration, data transformation
-
-### [R](r/)
-Programming language and environment for statistical computing and data analysis.
-- **Key Topics**: Web applications with Shiny, parallel processing, webhooks with Plumber, data analysis pipelines
-
 ## Cloud Services and Tools
 
 The `src/` directory contains cloud services and infrastructure tools:
