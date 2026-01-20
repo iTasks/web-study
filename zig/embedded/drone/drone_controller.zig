@@ -29,6 +29,7 @@ const IMU_ADDR = 0x68;
 // Control constants
 const CONTROL_RATE_HZ = 1000; // 1kHz control loop
 const CONTROL_PERIOD_MS = 1;
+const ACCEL_SAFETY_THRESHOLD: f32 = 0.01; // Minimum value to prevent division by zero
 
 /// 3D vector for sensor data
 const Vec3 = struct {
@@ -197,12 +198,14 @@ fn update_attitude(dt: f32) void {
     flight_state.attitude.yaw += flight_state.gyro.z * dt;
     
     // Calculate angles from accelerometer (low-pass) with safety checks
-    const accel_z_safe = if (@abs(flight_state.accel.z) < 0.01) 0.01 else flight_state.accel.z;
+    const accel_z_safe = if (@abs(flight_state.accel.z) < ACCEL_SAFETY_THRESHOLD) 
+        ACCEL_SAFETY_THRESHOLD else flight_state.accel.z;
     const accel_roll = @atan(@as(f64, flight_state.accel.y) / @as(f64, accel_z_safe)) * 57.2958;
     
     const denominator = @sqrt(@as(f64, flight_state.accel.y) * @as(f64, flight_state.accel.y) + 
                               @as(f64, flight_state.accel.z) * @as(f64, flight_state.accel.z));
-    const denominator_safe = if (denominator < 0.01) 0.01 else denominator;
+    const denominator_safe = if (denominator < ACCEL_SAFETY_THRESHOLD) 
+        ACCEL_SAFETY_THRESHOLD else denominator;
     const accel_pitch = @atan(@as(f64, -flight_state.accel.x) / denominator_safe) * 57.2958;
     
     // Complementary filter (98% gyro, 2% accel)
