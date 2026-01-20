@@ -24,6 +24,7 @@ const SIO_BASE = 0xd0000000;
 const GPIO_OUT_SET = SIO_BASE + 0x014;
 const GPIO_OUT_CLR = SIO_BASE + 0x018;
 const GPIO_OE_SET = SIO_BASE + 0x024;
+const GPIO_OE_CLR = SIO_BASE + 0x028;
 
 // System clock frequency (133 MHz)
 const SYSTEM_CLOCK_HZ = 133_000_000;
@@ -213,7 +214,7 @@ fn gpio_set_dir(pin: u8, is_output: bool) void {
     const gpio_oe = if (is_output)
         @as(*volatile u32, @ptrFromInt(GPIO_OE_SET))
     else
-        @as(*volatile u32, @ptrFromInt(SIO_BASE + 0x028)); // GPIO_OE_CLR
+        @as(*volatile u32, @ptrFromInt(GPIO_OE_CLR));
     
     gpio_oe.* = @as(u32, 1) << @intCast(pin);
 }
@@ -263,7 +264,7 @@ pub fn main() void {
 }
 
 /// Panic handler
-pub fn panic(msg: []const u8, error_return_trace: ?*@import("std").builtin.StackTrace, ret_addr: ?usize) noreturn {
+pub fn panic(msg: []const u8, error_return_trace: ?*@import("builtin").StackTrace, ret_addr: ?usize) noreturn {
     _ = msg;
     _ = error_return_trace;
     _ = ret_addr;

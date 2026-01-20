@@ -196,11 +196,14 @@ fn update_attitude(dt: f32) void {
     flight_state.attitude.pitch += flight_state.gyro.y * dt;
     flight_state.attitude.yaw += flight_state.gyro.z * dt;
     
-    // Calculate angles from accelerometer (low-pass)
-    const accel_roll = @atan(@as(f64, flight_state.accel.y) / @as(f64, flight_state.accel.z)) * 57.2958;
-    const accel_pitch = @atan(@as(f64, -flight_state.accel.x) / 
-        @sqrt(@as(f64, flight_state.accel.y) * @as(f64, flight_state.accel.y) + 
-              @as(f64, flight_state.accel.z) * @as(f64, flight_state.accel.z))) * 57.2958;
+    // Calculate angles from accelerometer (low-pass) with safety checks
+    const accel_z_safe = if (@abs(flight_state.accel.z) < 0.01) 0.01 else flight_state.accel.z;
+    const accel_roll = @atan(@as(f64, flight_state.accel.y) / @as(f64, accel_z_safe)) * 57.2958;
+    
+    const denominator = @sqrt(@as(f64, flight_state.accel.y) * @as(f64, flight_state.accel.y) + 
+                              @as(f64, flight_state.accel.z) * @as(f64, flight_state.accel.z));
+    const denominator_safe = if (denominator < 0.01) 0.01 else denominator;
+    const accel_pitch = @atan(@as(f64, -flight_state.accel.x) / denominator_safe) * 57.2958;
     
     // Complementary filter (98% gyro, 2% accel)
     const alpha: f32 = 0.98;
@@ -302,7 +305,9 @@ pub fn main() void {
     // Add heartbeat task (low priority, 1s period)
     os.add_task(heartbeat_task, 10, 1000);
     
-    // For testing: arm after 3 seconds
+    // SAFETY: For testing only - in production, use proper arming sequence
+    // TODO: Replace with RC input or button-based arming
+    // Example: wait for specific RC command or safety switch
     os.busy_wait_us(3_000_000);
     flight_state.armed = true;
     

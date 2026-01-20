@@ -116,7 +116,10 @@ pub fn wireBegin() void {
 /// Wire library-style beginTransmission
 var i2c_target_addr: u7 = 0;
 var i2c_tx_buffer: [32]u8 = undefined;
+var i2c_rx_buffer: [32]u8 = undefined;
 var i2c_tx_len: u8 = 0;
+var i2c_rx_len: u8 = 0;
+var i2c_rx_pos: u8 = 0;
 
 pub fn wireBeginTransmission(addr: u7) void {
     i2c_target_addr = addr;
@@ -141,19 +144,25 @@ pub fn wireEndTransmission() bool {
 /// Wire library-style requestFrom
 pub fn wireRequestFrom(addr: u7, count: u8) bool {
     i2c_target_addr = addr;
-    return i2c_module.read(.I2C0, addr, i2c_tx_buffer[0..count]);
+    const success = i2c_module.read(.I2C0, addr, i2c_rx_buffer[0..count]);
+    if (success) {
+        i2c_rx_len = count;
+        i2c_rx_pos = 0;
+    }
+    return success;
 }
 
 /// Wire library-style available
 pub fn wireAvailable() u8 {
-    return i2c_tx_len;
+    return i2c_rx_len - i2c_rx_pos;
 }
 
 /// Wire library-style read
 pub fn wireRead() u8 {
-    if (i2c_tx_len > 0) {
-        i2c_tx_len -= 1;
-        return i2c_tx_buffer[i2c_tx_len];
+    if (i2c_rx_pos < i2c_rx_len) {
+        const byte = i2c_rx_buffer[i2c_rx_pos];
+        i2c_rx_pos += 1;
+        return byte;
     }
     return 0;
 }

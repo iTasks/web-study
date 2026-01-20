@@ -96,11 +96,12 @@ pub fn gpio_to_channel(pin: u8) Channel {
 
 /// Servo control - set position in microseconds (typically 1000-2000)
 pub fn set_servo_us(slice: Slice, channel: Channel, pulse_us: u16) void {
-    // Assuming 50Hz servo signal (20ms period)
+    // Assuming 50Hz servo signal (20ms period = 20000us)
     // With TOP=20000 and div=100, we get 50Hz at 133MHz system clock
-    // duty = (pulse_us * TOP) / 20000
-    const duty = (@as(u32, pulse_us) * 20000) / 20000;
-    set_duty(slice, channel, @truncate(duty));
+    // The duty cycle maps microseconds to counter ticks
+    // Since TOP=20000 represents 20ms (20000us), duty = pulse_us directly
+    const duty = pulse_us;
+    set_duty(slice, channel, duty);
 }
 
 /// ESC control - set throttle percentage (0-100)
