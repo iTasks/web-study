@@ -16,6 +16,15 @@ This directory contains Zig programming language study materials and sample appl
   - Testing framework usage
   - Advanced features and patterns
 
+### Embedded Systems
+- `embedded/`: Bare-metal embedded programming examples
+  - Minimal OS for microcontrollers
+  - RP2040 (Raspberry Pi Pico) implementation
+  - Arduino compatibility layer
+  - Real-time drone flight controller
+  - Hardware abstraction layers (GPIO, PWM, I2C)
+  - Safety-critical embedded systems
+
 ## Setup Instructions
 
 ### Prerequisites
@@ -89,6 +98,20 @@ zig run interop.zig
 zig test testing.zig
 ```
 
+### Building Embedded Projects
+```bash
+# Build drone controller for RP2040
+cd zig/embedded
+zig build-exe -target thumb-freestanding-eabi -mcpu cortex_m0plus \
+  -O ReleaseSafe drone/drone_controller.zig
+
+# Build Arduino-style drone
+zig build-exe -target thumb-freestanding-eabi -mcpu cortex_m0plus \
+  -O ReleaseSafe arduino/arduino_drone.zig
+
+# See embedded/README.md for detailed instructions
+```
+
 ### Building Projects
 ```bash
 # Create optimized executable
@@ -104,17 +127,29 @@ zig build-exe -target aarch64-linux your_program.zig
 ```
 zig/
 ├── README.md                    # This file
-└── samples/                     # Pure Zig language examples
-    ├── hello.zig               # Hello world and basic syntax
-    ├── variables.zig           # Variables, constants, and types
-    ├── functions.zig           # Function definitions and usage
-    ├── control_flow.zig        # Conditionals, loops, and control flow
-    ├── error_handling.zig      # Error unions and error handling
-    ├── structs_enums.zig       # Structs, enums, and custom types
-    ├── comptime.zig            # Compile-time programming
-    ├── memory_management.zig   # Allocators and memory handling
-    ├── interop.zig             # C interoperability
-    └── testing.zig             # Testing framework and examples
+├── samples/                     # Pure Zig language examples
+│   ├── hello.zig               # Hello world and basic syntax
+│   ├── variables.zig           # Variables, constants, and types
+│   ├── functions.zig           # Function definitions and usage
+│   ├── control_flow.zig        # Conditionals, loops, and control flow
+│   ├── error_handling.zig      # Error unions and error handling
+│   ├── structs_enums.zig       # Structs, enums, and custom types
+│   ├── comptime.zig            # Compile-time programming
+│   ├── memory_management.zig   # Allocators and memory handling
+│   ├── interop.zig             # C interoperability
+│   └── testing.zig             # Testing framework and examples
+└── embedded/                    # Embedded systems and bare-metal programming
+    ├── README.md               # Embedded systems guide
+    ├── BUILD.md                # Build instructions and scripts
+    ├── rp2040/                 # RP2040 (Raspberry Pi Pico) implementation
+    │   ├── minimal_os.zig      # Minimal OS with scheduler
+    │   ├── pwm.zig             # PWM driver for servos/ESC
+    │   └── i2c.zig             # I2C driver for sensors
+    ├── arduino/                # Arduino compatibility layer
+    │   ├── arduino_compat.zig  # Arduino-style API wrapper
+    │   └── arduino_drone.zig   # Arduino-style drone controller
+    └── drone/                  # Fixed-wing drone flight controller
+        └── drone_controller.zig # Complete drone control system
 ```
 
 ## Key Learning Topics
@@ -127,6 +162,8 @@ zig/
 - **Interoperability**: Seamless C integration, calling C libraries
 - **Cross-compilation**: Build for any supported target from any platform
 - **Testing**: Built-in testing framework and documentation tests
+- **Embedded Systems**: Bare-metal programming, hardware control, real-time systems
+- **Drone Control**: Flight controllers, sensor fusion, PID control algorithms
 
 ## Contribution Guidelines
 
