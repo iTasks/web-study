@@ -45,6 +45,12 @@ web-study/
 │   └── samples/            # Pure Ballerina examples
 ├── r/                      # R programming language
 │   └── samples/            # Pure R examples
+├── kotlin/                 # Kotlin programming language
+│   ├── android-app/        # Android mobile app examples
+│   └── samples/            # Pure Kotlin examples
+├── swift/                  # Swift programming language
+│   ├── ios-app/            # iOS mobile app examples
+│   └── samples/            # Pure Swift examples
 └── src/                    # Legacy structure (cloud services, tools)
 ```
 
@@ -174,6 +180,15 @@ Cloud-native programming language specialized for integration and networked serv
 Programming language and environment for statistical computing and data analysis.
 - **Key Topics**: Web applications with Shiny, parallel processing, webhooks with Plumber, data analysis pipelines
 
+### [Kotlin](kotlin/)
+Modern, statically typed programming language for JVM and Android development.
+- **Frameworks**: Android SDK, Jetpack Compose
+- **Key Topics**: Android mobile development, null safety, coroutines, functional programming, mobile apps
+
+### [Swift](swift/)
+Powerful, intuitive programming language for iOS, macOS, and Apple ecosystem development.
+- **Frameworks**: SwiftUI, UIKit
+- **Key Topics**: iOS mobile development, memory safety, modern concurrency, protocol-oriented programming, mobile apps
 ## DevOps and Cloud Management
 
 ### [DevOps & AWS - Zero to Expert](devops-aws/)
