@@ -114,10 +114,15 @@ while (i < 10) {
 }
 
 // Optionals (Java 8+)
+import java.util.Optional;
+
 Optional<Integer> maybeValue = Optional.empty();
 int value = maybeValue.orElse(0);
 
 // Streams and Lambda (Java 8+)
+import java.util.List;
+import java.util.Arrays;
+
 List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
 list.stream()
     .filter(n -> n % 2 == 0)
@@ -320,6 +325,8 @@ if err != nil {
 }
 
 // Structs
+import "math"
+
 type Point struct {
     X float64
     Y float64
@@ -942,6 +949,9 @@ public class JavaFeatures {
     }
     
     // Collections
+    import java.util.List;
+    import java.util.Arrays;
+    
     public void processData() {
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
         numbers.stream()
