@@ -117,39 +117,71 @@ devops-aws/
 ├── STUDY-PLAN.md                      # Detailed 24-week curriculum
 ├── 01-fundamentals/                   # Level 1: Beginner content
 │   ├── README.md
+│   ├── EXAMPLES.md                    # ⭐ Examples overview
 │   ├── linux-basics/
+│   │   └── examples/                  # Shell scripts and automation
 │   ├── git-github/
+│   │   └── examples/                  # Git workflows
 │   ├── networking-basics/
+│   │   └── examples/                  # Network diagnostics
 │   ├── docker-intro/
+│   │   └── examples/                  # Dockerfiles and apps
 │   └── aws-basics/
+│       └── examples/                  # Terraform EC2 example
 ├── 02-intermediate/                   # Level 2: Intermediate content
 │   ├── README.md
+│   ├── README-EXAMPLES.md             # ⭐ Examples overview
 │   ├── ci-cd-pipelines/
+│   │   └── examples/                  # GitHub Actions workflows
 │   ├── kubernetes-basics/
+│   │   └── examples/                  # K8s deployments
 │   ├── terraform-iac/
+│   │   └── examples/                  # Infrastructure templates
 │   ├── aws-core-services/
+│   │   └── examples/                  # VPC, RDS, ALB configs
 │   └── configuration-management/
 ├── 03-advanced/                       # Level 3: Advanced content
 │   ├── README.md
+│   ├── README-EXAMPLES.md             # ⭐ Examples overview
 │   ├── kubernetes-advanced/
+│   │   └── examples/                  # Helm charts, operators
 │   ├── aws-advanced-services/
+│   │   └── examples/                  # Lambda, ECS, EKS
 │   ├── monitoring-observability/
+│   │   └── examples/                  # Prometheus, Grafana
 │   ├── security-compliance/
+│   │   └── examples/                  # IAM policies, security
 │   └── high-availability/
+│       └── examples/                  # Multi-AZ architectures
 └── 04-expert/                         # Level 4: Expert content
     ├── README.md
+    ├── README-EXAMPLES.md             # ⭐ Examples overview
     ├── multi-cloud/
+    │   └── examples/                  # Multi-cloud templates
     ├── advanced-networking/
+    │   └── examples/                  # Service mesh configs
     ├── gitops/
+    │   └── examples/                  # ArgoCD applications
     ├── platform-engineering/
+    │   └── examples/                  # Golden path templates
     ├── chaos-engineering/
+    │   └── examples/                  # Chaos experiments
     └── enterprise-devops/
+        └── examples/                  # Enterprise architectures
 ```
 
 ## Learning Approach
 
 ### Hands-On First
 Every concept includes practical examples and labs. Learning is most effective when you practice.
+
+**📂 Examples Available**: Each level now includes comprehensive examples:
+- **Level 1**: Shell scripts, Dockerfiles, Terraform templates, Git workflows
+- **Level 2**: CI/CD pipelines, Kubernetes manifests, IaC configurations
+- **Level 3**: Helm charts, Lambda functions, monitoring stacks, security configs
+- **Level 4**: GitOps apps, chaos experiments, multi-cloud templates
+
+See the `examples/` directory in each module or check the `EXAMPLES.md` file in each level.
 
 ### Build Real Projects
 Each level includes capstone projects that simulate real-world scenarios:
