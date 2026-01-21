@@ -112,9 +112,9 @@ pub fn main() void {
 }
 
 // Variables and Constants
-const constant: i32 = 42;           // Immutable constant
-var mutable: i32 = 100;              // Mutable variable
-const inferred = 3.14;               // Type inference
+const constant: i32 = 42; // Immutable constant
+var mutable: i32 = 100; // Mutable variable
+const inferred = 3.14; // Type inference
 
 // Functions
 fn add(a: i32, b: i32) i32 {
@@ -138,17 +138,20 @@ const Point = struct {
 };
 
 // Control Flow
-if (condition) {
+const x = 10;
+if (x > 0) {
     // if block
 } else {
     // else block
 }
 
-for (items) |item| {
+const numbers = [_]i32{1, 2, 3, 4, 5};
+for (numbers) |num| {
     // loop body
 }
 
-while (condition) {
+var i: i32 = 0;
+while (i < 10) : (i += 1) {
     // loop body
 }
 
