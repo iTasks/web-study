@@ -102,6 +102,67 @@ Java-to-JavaScript/WebAssembly transpiler.
 Modern systems programming language focusing on performance, safety, and maintainability.
 - **Key Topics**: Systems programming, comptime, C interoperability, memory safety
 
+**Basic Syntax:**
+```zig
+// Hello World
+const std = @import("std");
+
+pub fn main() void {
+    std.debug.print("Hello, World!\n", .{});
+}
+
+// Variables and Constants
+const constant: i32 = 42;           // Immutable constant
+var mutable: i32 = 100;              // Mutable variable
+const inferred = 3.14;               // Type inference
+
+// Functions
+fn add(a: i32, b: i32) i32 {
+    return a + b;
+}
+
+// Error Handling
+fn divide(a: i32, b: i32) !i32 {
+    if (b == 0) return error.DivisionByZero;
+    return @divTrunc(a, b);
+}
+
+// Structs
+const Point = struct {
+    x: f32,
+    y: f32,
+    
+    pub fn init(x: f32, y: f32) Point {
+        return Point{ .x = x, .y = y };
+    }
+};
+
+// Control Flow
+if (condition) {
+    // if block
+} else {
+    // else block
+}
+
+for (items) |item| {
+    // loop body
+}
+
+while (condition) {
+    // loop body
+}
+
+// Optionals
+const maybe_value: ?i32 = null;
+const value: i32 = maybe_value orelse 0;
+
+// Compile-time evaluation (comptime)
+fn fibonacci(comptime n: u32) u32 {
+    if (n <= 1) return n;
+    return fibonacci(n - 1) + fibonacci(n - 2);
+}
+```
+
 ### [Ballerina](ballerina/)
 Cloud-native programming language specialized for integration and networked services.
 - **Key Topics**: Web services, webhooks, concurrent workers, API integration, data transformation
