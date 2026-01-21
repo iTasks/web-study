@@ -111,7 +111,7 @@ namespace RestFixClient.Samples
                     }
                     else
                     {
-                        return HealthCheckResult.Degraded($"API {_apiUrl} is slow", data);
+                        return HealthCheckResult.Degraded($"API {_apiUrl} is slow", null, data);
                     }
                 }
                 catch (Exception ex)
@@ -169,6 +169,9 @@ namespace RestFixClient.Samples
         {
             var services = new ServiceCollection();
             
+            // Register API health check with dependency
+            services.AddSingleton(new ApiHealthCheck("https://api.example.com"));
+            
             services.AddHealthChecks()
                 .AddCheck<DatabaseHealthCheck>("database", 
                     failureStatus: HealthStatus.Unhealthy,
@@ -176,9 +179,7 @@ namespace RestFixClient.Samples
                 .AddCheck<MemoryHealthCheck>("memory",
                     failureStatus: HealthStatus.Degraded,
                     tags: new[] { "memory" })
-                .AddCheck("api_service", 
-                    () => new ApiHealthCheck("https://api.example.com").CheckHealthAsync(
-                        new HealthCheckContext()),
+                .AddCheck<ApiHealthCheck>("api_service",
                     tags: new[] { "api", "external" })
                 .AddCheck<LivenessHealthCheck>("liveness",
                     tags: new[] { "live" })

@@ -110,10 +110,10 @@ namespace RestFixClient.Samples
             
             public static async Task<bool> CallApiAsync(string endpoint, string method)
             {
-                var tags = new TagList
+                var tags = new KeyValuePair<string, object?>[]
                 {
-                    { "endpoint", endpoint },
-                    { "method", method }
+                    new("endpoint", endpoint),
+                    new("method", method)
                 };
                 
                 _apiCalls.Add(1, tags);
@@ -134,16 +134,20 @@ namespace RestFixClient.Samples
                     var duration = (DateTime.UtcNow - startTime).TotalMilliseconds;
                     _apiLatency.Record(duration, tags);
                     
-                    tags.Add("status", "success");
                     return true;
                 }
                 catch (Exception)
                 {
-                    tags.Add("status", "error");
-                    _apiErrors.Add(1, tags);
+                    var errorTags = new KeyValuePair<string, object?>[]
+                    {
+                        new("endpoint", endpoint),
+                        new("method", method),
+                        new("status", "error")
+                    };
+                    _apiErrors.Add(1, errorTags);
                     
                     var duration = (DateTime.UtcNow - startTime).TotalMilliseconds;
-                    _apiLatency.Record(duration, tags);
+                    _apiLatency.Record(duration, errorTags);
                     
                     return false;
                 }
@@ -168,9 +172,9 @@ namespace RestFixClient.Samples
             
             public static void RecordOrder(int itemCount, decimal amount, string category)
             {
-                var tags = new TagList
+                var tags = new KeyValuePair<string, object?>[]
                 {
-                    { "category", category }
+                    new("category", category)
                 };
                 
                 _ordersPlaced.Add(1, tags);

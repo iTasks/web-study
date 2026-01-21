@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Collections.Concurrent;
 
 namespace RestFixClient.Samples
 {
@@ -95,13 +96,14 @@ namespace RestFixClient.Samples
         public long ParallelForEachWithLocalStateExample()
         {
             var items = Enumerable.Range(1, 1000).ToList();
+            long total = 0;
             
-            long total = Parallel.ForEach(
+            Parallel.ForEach(
                 source: items,
                 localInit: () => 0L, // Initialize thread-local state
                 body: (item, loopState, localSum) => localSum + item, // Update local state
                 localFinally: localSum => Interlocked.Add(ref total, localSum) // Aggregate results
-            ).IsCompleted ? total : 0;
+            );
             
             return total;
         }

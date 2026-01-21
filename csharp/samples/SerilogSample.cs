@@ -1,4 +1,5 @@
 using Serilog;
+using Serilog.Context;
 using Serilog.Events;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -52,8 +53,6 @@ namespace RestFixClient.Samples
                 .Enrich.FromLogContext()
                 .Enrich.WithProperty("Application", "SampleApp")
                 .Enrich.WithProperty("Environment", "Development")
-                .Enrich.WithMachineName()
-                .Enrich.WithThreadId()
                 .WriteTo.Console()
                 .CreateLogger();
             

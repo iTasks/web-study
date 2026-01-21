@@ -121,7 +121,9 @@ namespace RestFixClient.Samples
             catch (Exception ex)
             {
                 activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
-                activity?.RecordException(ex);
+                // Note: RecordException is not available in .NET 6
+                activity?.SetTag("exception.type", ex.GetType().FullName);
+                activity?.SetTag("exception.message", ex.Message);
                 Console.WriteLine($"Operation failed: {ex.Message}");
             }
         }
@@ -163,7 +165,7 @@ namespace RestFixClient.Samples
         /// <summary>
         /// Custom activity listener for processing spans
         /// </summary>
-        public class CustomActivityListener
+        public class CustomActivityListener : IDisposable
         {
             private readonly ActivityListener _listener;
             

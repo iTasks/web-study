@@ -222,7 +222,8 @@ namespace RestFixClient.Samples
             var cache = new ThreadSafeCache<string, int>();
             Parallel.For(0, 10, i =>
             {
-                var value = cache.GetOrAdd($"key{i}", key => i * 10);
+                var key = $"key{i}";
+                var value = cache.GetOrAdd(key, k => i * 10);
                 Console.WriteLine($"   Cached value for {key}: {value}");
             });
             Console.WriteLine();
