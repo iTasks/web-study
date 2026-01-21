@@ -4,10 +4,10 @@ import java.util.stream.Stream;
 
 /**
  * Java 25 Features Demonstration
- * Expected Release: March 2025
+ * Released: March 2025
  * 
- * Note: As of January 2026, Java 25 features may still be in preview/development.
- * This demonstrates expected and preview features that may be finalized in Java 25.
+ * Note: This sample was created to demonstrate Java 25 features.
+ * Some features may still be in preview or finalized versions may differ slightly.
  * 
  * Key Features (Expected/Preview):
  * 1. Primitive Types in Patterns (Preview)
@@ -188,33 +188,6 @@ public class Java25Features {
         System.out.println("Example 1: " + ex1);
         System.out.println("Example 2: " + ex2);
         System.out.println();
-    }
-
-    /**
-     * Additional Java 25 improvements
-     */
-    private static void demonstrateAdditionalFeatures() {
-        System.out.println("=== Java 25: Additional Features ===");
-        
-        // String enhancements
-        String text = "Java 25";
-        System.out.println("Text: " + text);
-        
-        // Collection enhancements
-        List<String> items = List.of("A", "B", "C", "D", "E");
-        System.out.println("Items: " + items);
-        
-        // Performance improvements in various APIs
-        Map<String, Integer> map = Map.of(
-            "one", 1,
-            "two", 2,
-            "three", 3
-        );
-        System.out.println("Map size: " + map.size());
-        
-        System.out.println();
-        System.out.println("Note: Java 25 is expected in March 2025.");
-        System.out.println("Features shown here may be in preview or subject to change.");
     }
 
     /**
