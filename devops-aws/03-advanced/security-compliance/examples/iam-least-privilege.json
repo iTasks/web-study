@@ -1,6 +1,5 @@
-# IAM Policy - Least Privilege Example
-
 {
+  "_comment": "IAM Policy - Least Privilege Example",
   "Version": "2012-10-17",
   "Statement": [
     {

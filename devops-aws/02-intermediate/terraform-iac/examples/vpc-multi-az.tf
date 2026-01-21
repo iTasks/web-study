@@ -1,7 +1,5 @@
-# Multi-Environment Terraform Configuration
-
-# Backend configuration for remote state
 terraform {
+  # Backend configuration for remote state
   backend "s3" {
     bucket         = "my-terraform-state-bucket"
     key            = "vpc/terraform.tfstate"
