@@ -643,6 +643,8 @@ JVM language combining object-oriented and functional programming.
 **Basic Syntax:**
 ```scala
 // Hello World
+import scala.util.{Try, Success, Failure}
+
 object HelloWorld {
   def main(args: Array[String]): Unit = {
     println("Hello, World!")
@@ -663,8 +665,6 @@ def add(a: Int, b: Int): Int = {
 def multiply(a: Int, b: Int): Int = a * b
 
 // Error Handling with Try
-import scala.util.{Try, Success, Failure}
-
 def divide(a: Int, b: Int): Try[Int] = {
   if (b == 0) Failure(new ArithmeticException("Division by zero"))
   else Success(a / b)
@@ -1152,6 +1152,8 @@ Programming language and environment for statistical computing and data analysis
 **Basic Syntax:**
 ```r
 # Hello World
+library(dplyr) # Load dplyr for pipe operator examples
+
 print("Hello, World!")
 cat("Hello, World!\n")
 
@@ -1245,7 +1247,6 @@ df <- data.frame(
 adults <- df[df$age >= 18, ]
 
 # Pipe operator (magrittr/dplyr)
-library(dplyr)
 result <- df %>%
   filter(age >= 25) %>%
   select(name)
