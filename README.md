@@ -174,6 +174,18 @@ Cloud-native programming language specialized for integration and networked serv
 Programming language and environment for statistical computing and data analysis.
 - **Key Topics**: Web applications with Shiny, parallel processing, webhooks with Plumber, data analysis pipelines
 
+## DevOps and Cloud Management
+
+### [DevOps & AWS - Zero to Expert](devops-aws/)
+Comprehensive learning path for DevOps practices and AWS cloud management.
+- **Level 1 (Fundamentals)**: Linux, Git, Docker, AWS basics
+- **Level 2 (Intermediate)**: CI/CD, Kubernetes, Terraform, AWS core services
+- **Level 3 (Advanced)**: Advanced K8s, serverless, monitoring, security, high availability
+- **Level 4 (Expert)**: Multi-cloud, service mesh, GitOps, platform engineering, chaos engineering
+- **Duration**: 24-week structured curriculum with hands-on labs
+- **Certifications**: Prepares for AWS and Kubernetes certifications
+- **Key Topics**: Infrastructure as Code, container orchestration, cloud architecture, security, observability
+
 ## Cloud Services and Tools
 
 The `src/` directory contains cloud services and infrastructure tools:
