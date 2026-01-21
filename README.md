@@ -58,6 +58,10 @@ Enterprise-grade programming language with comprehensive framework support.
 **Basic Syntax:**
 ```java
 // Hello World
+import java.util.Optional;
+import java.util.List;
+import java.util.Arrays;
+
 public class HelloWorld {
     public static void main(String[] args) {
         System.out.println("Hello, World!");
@@ -114,15 +118,10 @@ while (i < 10) {
 }
 
 // Optionals (Java 8+)
-import java.util.Optional;
-
 Optional<Integer> maybeValue = Optional.empty();
 int value = maybeValue.orElse(0);
 
 // Streams and Lambda (Java 8+)
-import java.util.List;
-import java.util.Arrays;
-
 List<Integer> list = Arrays.asList(1, 2, 3, 4, 5);
 list.stream()
     .filter(n -> n % 2 == 0)
@@ -292,7 +291,10 @@ Modern systems programming language with excellent concurrency support.
 // Hello World
 package main
 
-import "fmt"
+import (
+    "fmt"
+    "math"
+)
 
 func main() {
     fmt.Println("Hello, World!")
@@ -325,8 +327,6 @@ if err != nil {
 }
 
 // Structs
-import "math"
-
 type Point struct {
     X float64
     Y float64
@@ -906,9 +906,14 @@ Java-to-JavaScript/WebAssembly transpiler.
 **Basic Syntax:**
 ```java
 // TeaVM uses Java syntax but compiles to JavaScript/WebAssembly
-// Hello World (runs in browser)
 import org.teavm.jso.browser.Window;
+import org.teavm.jso.dom.html.HTMLDocument;
+import org.teavm.jso.dom.html.HTMLElement;
+import org.teavm.jso.JSBody;
+import java.util.List;
+import java.util.Arrays;
 
+// Hello World (runs in browser)
 public class HelloWorld {
     public static void main(String[] args) {
         Window.alert("Hello, World!");
@@ -916,9 +921,6 @@ public class HelloWorld {
 }
 
 // DOM Manipulation
-import org.teavm.jso.dom.html.HTMLDocument;
-import org.teavm.jso.dom.html.HTMLElement;
-
 public class DOMExample {
     public static void main(String[] args) {
         HTMLDocument document = Window.current().getDocument();
@@ -949,9 +951,6 @@ public class JavaFeatures {
     }
     
     // Collections
-    import java.util.List;
-    import java.util.Arrays;
-    
     public void processData() {
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5);
         numbers.stream()
@@ -961,8 +960,6 @@ public class JavaFeatures {
 }
 
 // Interop with JavaScript
-import org.teavm.jso.JSBody;
-
 public class JSInterop {
     @JSBody(params = {"message"}, script = "console.log(message);")
     public static native void log(String message);
