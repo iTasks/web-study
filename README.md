@@ -45,6 +45,12 @@ web-study/
 │   └── samples/            # Pure Ballerina examples
 ├── r/                      # R programming language
 │   └── samples/            # Pure R examples
+├── kotlin/                 # Kotlin programming language
+│   ├── android-app/        # Android mobile app examples
+│   └── samples/            # Pure Kotlin examples
+├── swift/                  # Swift programming language
+│   ├── ios-app/            # iOS mobile app examples
+│   └── samples/            # Pure Swift examples
 └── src/                    # Legacy structure (cloud services, tools)
 ```
 
@@ -1251,8 +1257,29 @@ result <- df %>%
   filter(age >= 25) %>%
   select(name)
 ```
+### [Kotlin](kotlin/)
+Modern, statically typed programming language for JVM and Android development.
+- **Frameworks**: Android SDK, Jetpack Compose
+- **Key Topics**: Android mobile development, null safety, coroutines, functional programming, mobile apps
 
-## Cloud Services and Tools
+### [Swift](swift/)
+Powerful, intuitive programming language for iOS, macOS, and Apple ecosystem development.
+- **Frameworks**: SwiftUI, UIKit
+- **Key Topics**: iOS mobile development, memory safety, modern concurrency, protocol-oriented programming, mobile apps
+
+### DevOps and Cloud Management
+
+### [DevOps & AWS - Zero to Expert](devops-aws/)
+Comprehensive learning path for DevOps practices and AWS cloud management.
+- **Level 1 (Fundamentals)**: Linux, Git, Docker, AWS basics
+- **Level 2 (Intermediate)**: CI/CD, Kubernetes, Terraform, AWS core services
+- **Level 3 (Advanced)**: Advanced K8s, serverless, monitoring, security, high availability
+- **Level 4 (Expert)**: Multi-cloud, service mesh, GitOps, platform engineering, chaos engineering
+- **Duration**: 24-week structured curriculum with hands-on labs
+- **Certifications**: Prepares for AWS and Kubernetes certifications
+- **Key Topics**: Infrastructure as Code, container orchestration, cloud architecture, security, observability
+
+### Cloud Services and Tools
 
 The `src/` directory contains cloud services and infrastructure tools:
 - **AWS**: Step Functions, Lambda, S3, CDK
