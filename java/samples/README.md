@@ -52,6 +52,25 @@ This module focuses on the Java programming language and its related technologie
   - A sample project demonstrating BDD testing with Cucumber and Selenium.
   - [Cucumber and Selenium Integration](https://cucumber.io/docs/guides/browser-automation/)
 
+### Version-Specific Features
+
+- **Java11Features.java**
+  - Demonstrates Java 11 features including var in lambda parameters, HTTP Client, new String methods, and enhanced file operations.
+  - Key features: `var` in lambdas, `HttpClient`, `String.isBlank()`, `String.lines()`, `String.strip()`, `String.repeat()`, `Files.readString()`, `Files.writeString()`
+
+- **Java18Features.java**
+  - Demonstrates Java 18 features including UTF-8 by default, Simple Web Server, and code snippets in JavaDoc.
+  - Key features: UTF-8 default charset, `jwebserver` command-line tool, `@snippet` JavaDoc tag, pattern matching for switch (preview)
+
+- **Java21Features.java**
+  - Demonstrates Java 21 LTS features including Virtual Threads, pattern matching for switch, record patterns, and sequenced collections.
+  - Key features: Virtual threads (`Thread.ofVirtual()`), pattern matching with guards, record patterns, `SequencedCollection` interface
+
+- **Java25Features.java**
+  - Demonstrates expected Java 25 features including primitive patterns, stream gatherers, and enhanced pattern matching.
+  - Note: Java 25 features may be in preview or subject to change. Release expected in March 2025.
+
+
 ## Getting Started
 
 To get started with the Java module, follow these steps:
@@ -93,6 +112,10 @@ src/java
 ├── FixSetCombinations.java
 ├── FutureExample.java
 ├── ImageFilter.java
+├── Java11Features.java
+├── Java18Features.java
+├── Java21Features.java
+├── Java25Features.java
 ├── LineSplit.java
 ├── MatrixManipulations.java
 ├── MyCallable.java
