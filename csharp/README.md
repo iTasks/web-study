@@ -8,7 +8,14 @@ This directory contains C# programming language study materials and sample appli
 
 ### Pure Language Samples
 - `samples/`: Core C# language examples and applications
-  - Financial trading applications (FIX protocol implementations)
+  - **Async Programming**: async/await patterns, async streams (IAsyncEnumerable)
+  - **Concurrency**: Thread-safe collections, parallel processing, channels
+  - **Locking & Thread Safety**: Synchronization primitives, lock-free patterns
+  - **Caching**: Memory caching with IMemoryCache and LazyCache
+  - **Logging**: Structured logging with ILogger and Serilog
+  - **Observability**: Metrics, distributed tracing, health checks
+  - **Advanced Language Features**: Pattern matching, records, nullable reference types, Span<T>/Memory<T>
+  - **FIX Protocol**: Financial trading applications (legacy implementation)
   - REST client implementations
   - Observer pattern implementations
   - Stock market simulation applications
@@ -127,6 +134,14 @@ csharp/
 - **Core C# Concepts**: Classes, interfaces, generics, LINQ, async/await
 - **Object-Oriented Programming**: Inheritance, polymorphism, encapsulation
 - **Design Patterns**: Observer, Factory, Singleton, Dependency Injection
+- **Async Programming**: Task-based async patterns, async streams, cancellation
+- **Concurrency**: Thread-safe collections, parallel processing, channels
+- **Thread Safety**: Locking mechanisms, Interlocked operations, lock-free patterns
+- **Performance**: Span<T>, Memory<T>, ArrayPool, zero-allocation techniques
+- **Modern C# Features**: Pattern matching, records, nullable reference types, init-only properties
+- **Caching**: In-memory caching, cache policies, distributed caching patterns
+- **Logging**: Structured logging, log levels, Serilog integration
+- **Observability**: Application metrics, distributed tracing, health checks
 - **Financial Programming**: FIX protocol, trading systems, market data processing
 - **Web Development**: ASP.NET Core, REST APIs, controllers
 - **Testing**: Unit testing with xUnit, NUnit, or MSTest
@@ -155,11 +170,27 @@ csharp/
 
 ## Resources and References
 
+### Official Documentation
 - [Official .NET Documentation](https://docs.microsoft.com/en-us/dotnet/)
 - [C# Programming Guide](https://docs.microsoft.com/en-us/dotnet/csharp/)
 - [ASP.NET Core Documentation](https://docs.microsoft.com/en-us/aspnet/core/)
+- [Async Programming](https://docs.microsoft.com/en-us/dotnet/csharp/async)
+- [Task Parallel Library](https://docs.microsoft.com/en-us/dotnet/standard/parallel-programming/)
+- [Pattern Matching](https://docs.microsoft.com/en-us/dotnet/csharp/pattern-matching)
+- [Nullable Reference Types](https://docs.microsoft.com/en-us/dotnet/csharp/nullable-references)
+- [Memory and Span](https://docs.microsoft.com/en-us/dotnet/standard/memory-and-spans/)
+
+### Tools & Libraries
 - [NuGet Package Manager](https://www.nuget.org/)
-- [C# Coding Conventions](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions)
 - [xUnit Testing Framework](https://xunit.net/)
-- [FIX Protocol Documentation](https://www.fixtrading.org/)
+- [Serilog](https://serilog.net/)
+- [LazyCache](https://github.com/alastairtree/LazyCache)
+- [OpenTelemetry](https://opentelemetry.io/)
 - [Entity Framework Core](https://docs.microsoft.com/en-us/ef/core/)
+- [FIX Protocol Documentation](https://www.fixtrading.org/)
+- [QuickFIX/n](https://github.com/connamara/quickfixn)
+
+### Best Practices
+- [C# Coding Conventions](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions)
+- [Performance Best Practices](https://docs.microsoft.com/en-us/dotnet/framework/performance/)
+- [Async Best Practices](https://docs.microsoft.com/en-us/archive/msdn-magazine/2013/march/async-await-best-practices-in-asynchronous-programming)

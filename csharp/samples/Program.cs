@@ -1,5 +1,5 @@
-public class Program {
-public void Main(string[] args) {
-  Console.WriteLine("Hello");
-}
-}
+using RestFixClient.Samples;
+
+// Run the sample application
+await SampleRunner.Main(args);
+
