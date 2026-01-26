@@ -1357,7 +1357,8 @@ suspend fun fetchData(): String {
     return "Data"
 }
 
-fun main() = runBlocking {
+// Usage in coroutine scope
+runBlocking {
     val result = async { fetchData() }
     println(result.await())
 }
