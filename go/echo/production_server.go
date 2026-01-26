@@ -83,11 +83,11 @@ func main() {
 
 	// Health check endpoint (Kubernetes liveness probe)
 	e.GET("/health", healthCheckHandler)
-	e.GET("/healthz", healthCheckHandler)
+	e.GET("/healthz", healthCheckHandler) // Kubernetes compatibility alias
 
 	// Readiness check endpoint (Kubernetes readiness probe)
 	e.GET("/ready", readinessCheckHandler)
-	e.GET("/readyz", readinessCheckHandler)
+	e.GET("/readyz", readinessCheckHandler) // Kubernetes compatibility alias
 
 	// Prometheus metrics endpoint
 	e.GET("/metrics", echo.WrapHandler(promhttp.Handler()))
