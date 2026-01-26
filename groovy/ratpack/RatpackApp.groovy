@@ -9,6 +9,7 @@
 import ratpack.groovy.Groovy
 import ratpack.jackson.Jackson
 import static ratpack.jackson.Jackson.json
+import java.lang.management.ManagementFactory
 
 // Sample data store
 class UserStore {
@@ -151,5 +152,3 @@ Ratpack.start {
         }
     }
 }
-
-import java.lang.management.ManagementFactory
