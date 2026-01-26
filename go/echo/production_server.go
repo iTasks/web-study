@@ -58,9 +58,9 @@ func main() {
 
 	// 7. CORS
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"*"}, // Configure based on your needs
-		AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete, http.MethodPatch},
-		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization, "X-Trace-ID", "X-Parent-Span-ID"},
+		AllowOrigins:  []string{"*"}, // Configure based on your needs
+		AllowMethods:  []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete, http.MethodPatch},
+		AllowHeaders:  []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization, "X-Trace-ID", "X-Parent-Span-ID"},
 		ExposeHeaders: []string{"X-Trace-ID", "X-Span-ID"},
 	}))
 
@@ -110,10 +110,10 @@ func main() {
 	v1.DELETE("/users/:id", deleteUserHandler)
 
 	// Example endpoints for testing observability features
-	v1.GET("/slow", slowHandler)           // Test timeout and latency tracking
-	v1.GET("/error", errorHandler)         // Test error handling
-	v1.GET("/panic", panicHandler)         // Test panic recovery
-	v1.GET("/trace", traceExampleHandler)  // Test distributed tracing
+	v1.GET("/slow", slowHandler)          // Test timeout and latency tracking
+	v1.GET("/error", errorHandler)        // Test error handling
+	v1.GET("/panic", panicHandler)        // Test panic recovery
+	v1.GET("/trace", traceExampleHandler) // Test distributed tracing
 
 	// ============================================
 	// Graceful Shutdown

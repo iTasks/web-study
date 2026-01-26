@@ -103,7 +103,7 @@ func TestErrorHandler(t *testing.T) {
 
 	err := errorHandler(c)
 	assert.Error(t, err)
-	
+
 	httpErr, ok := err.(*echo.HTTPError)
 	assert.True(t, ok)
 	assert.Equal(t, http.StatusInternalServerError, httpErr.Code)
@@ -168,7 +168,7 @@ func TestPrometheusMiddleware(t *testing.T) {
 func TestGenerateTraceID(t *testing.T) {
 	id1 := generateTraceID()
 	id2 := generateTraceID()
-	
+
 	assert.NotEmpty(t, id1)
 	assert.NotEmpty(t, id2)
 	assert.NotEqual(t, id1, id2) // Should generate unique IDs
@@ -178,7 +178,7 @@ func TestGenerateTraceID(t *testing.T) {
 func TestGenerateSpanID(t *testing.T) {
 	id1 := generateSpanID()
 	id2 := generateSpanID()
-	
+
 	assert.NotEmpty(t, id1)
 	assert.NotEmpty(t, id2)
 	assert.NotEqual(t, id1, id2) // Should generate unique IDs
@@ -188,7 +188,7 @@ func TestGenerateSpanID(t *testing.T) {
 func BenchmarkHealthCheckHandler(b *testing.B) {
 	e := echo.New()
 	req := httptest.NewRequest(http.MethodGet, "/health", nil)
-	
+
 	for i := 0; i < b.N; i++ {
 		rec := httptest.NewRecorder()
 		c := e.NewContext(req, rec)
@@ -201,7 +201,7 @@ func BenchmarkTracingMiddleware(b *testing.B) {
 	handler := TracingMiddleware()(func(c echo.Context) error {
 		return c.String(http.StatusOK, "OK")
 	})
-	
+
 	for i := 0; i < b.N; i++ {
 		req := httptest.NewRequest(http.MethodGet, "/", nil)
 		rec := httptest.NewRecorder()
@@ -215,7 +215,7 @@ func TestFullMiddlewareStack(t *testing.T) {
 	e := echo.New()
 	e.Use(TracingMiddleware())
 	e.Use(PrometheusMiddleware())
-	
+
 	e.GET("/test", func(c echo.Context) error {
 		trace := GetTraceContext(c)
 		return c.JSON(http.StatusOK, map[string]string{
@@ -226,9 +226,9 @@ func TestFullMiddlewareStack(t *testing.T) {
 
 	req := httptest.NewRequest(http.MethodGet, "/test", nil)
 	rec := httptest.NewRecorder()
-	
+
 	e.ServeHTTP(rec, req)
-	
+
 	assert.Equal(t, http.StatusOK, rec.Code)
 	assert.NotEmpty(t, rec.Header().Get("X-Trace-ID"))
 	assert.NotEmpty(t, rec.Header().Get("X-Span-ID"))
@@ -238,14 +238,14 @@ func TestFullMiddlewareStack(t *testing.T) {
 func ExampleTracingMiddleware() {
 	e := echo.New()
 	e.Use(TracingMiddleware())
-	
+
 	e.GET("/example", func(c echo.Context) error {
 		trace := GetTraceContext(c)
 		return c.JSON(http.StatusOK, map[string]string{
 			"trace_id": trace.TraceID,
 		})
 	})
-	
+
 	fmt.Println("Tracing middleware configured")
 	// Output: Tracing middleware configured
 }
