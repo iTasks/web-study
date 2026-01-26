@@ -3,6 +3,8 @@
  * Demonstrates JSON and XML processing in Groovy
  */
 
+@Grab('org.codehaus.groovy:groovy-xml:3.0.19')
+
 import groovy.json.JsonBuilder
 import groovy.json.JsonSlurper
 import groovy.xml.MarkupBuilder
@@ -72,14 +74,17 @@ class JsonXmlProcessing {
      */
     static String modifyJson(String jsonString) {
         def slurper = new JsonSlurper()
-        def person = slurper.parseText(jsonString)
+        def data = slurper.parseText(jsonString)
+        
+        // Access the person object from the parsed data
+        def person = data.person
         
         // Modify the data
         person.age = person.age + 1
         person.lastModified = new Date().format('yyyy-MM-dd')
         
         // Convert back to JSON
-        def builder = new JsonBuilder(person)
+        def builder = new JsonBuilder(data)
         return builder.toPrettyString()
     }
 
