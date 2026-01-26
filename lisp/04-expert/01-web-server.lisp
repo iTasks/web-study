@@ -34,10 +34,15 @@
 ;;; Parse HTTP request line
 (defun parse-request-line (line)
   "Parse HTTP request line into method, path, version"
-  (let* ((parts (split-sequence:split-sequence #\Space line)))
-    (values (first parts)    ; method
-            (second parts)    ; path
-            (third parts))))  ; version
+  ;; Simple string splitting without external dependencies
+  (let* ((space-pos-1 (position #\Space line))
+         (space-pos-2 (when space-pos-1 
+                        (position #\Space line :start (1+ space-pos-1)))))
+    (if (and space-pos-1 space-pos-2)
+        (values (subseq line 0 space-pos-1)
+                (subseq line (1+ space-pos-1) space-pos-2)
+                (subseq line (1+ space-pos-2)))
+        (values nil nil nil))))
 
 ;;; HTML page generator
 (defun html-page (title body)

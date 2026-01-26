@@ -49,9 +49,15 @@
   :components ((:module "tests"
                 :components ((:file "example-tests"))))
   :perform (asdf:test-op (op c)
-             (uiop:symbol-call :fiveam '#:run! 
-                              (uiop:find-symbol* '#:basic-tests 
-                                                :fiveam))))
+             ;; Only run tests if FiveAM is available
+             (handler-case
+                 (uiop:symbol-call :fiveam '#:run! 
+                                  (uiop:find-symbol* '#:basic-tests 
+                                                    :fiveam))
+               (error (e)
+                 (format t "~%Test suite requires FiveAM to be loaded.~%")
+                 (format t "Install with: (ql:quickload :fiveam)~%")
+                 (format t "Error: ~a~%" e)))))
 
 ;; Usage:
 ;;

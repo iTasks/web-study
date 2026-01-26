@@ -195,11 +195,20 @@
 ;;; Interactive calculator function
 (defun calc-repl ()
   "Simple calculator REPL"
-  (format t "~%Calculator REPL (type 'quit' to exit)~%")
+  (format t "~%Calculator REPL (type 'quit' to exit or Ctrl+D)~%")
   (loop
     (format t "~%calc> ")
     (force-output)
-    (let ((input (read-line)))
+    (let ((input (handler-case (read-line)
+                   (end-of-file ()
+                     (format t "~%Goodbye!~%")
+                     (return))
+                   (error (e)
+                     (format t "Error reading input: ~a~%" e)
+                     (return)))))
+      (when (null input)
+        (format t "~%Goodbye!~%")
+        (return))
       (cond
         ((string-equal input "quit")
          (format t "Goodbye!~%")

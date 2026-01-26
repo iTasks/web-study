@@ -92,8 +92,20 @@ sbcl --version
 
 #### 2. Install Quicklisp (Package Manager)
 ```bash
+# Download Quicklisp installer
 curl -O https://beta.quicklisp.org/quicklisp.lisp
+
+# Verify download (optional but recommended)
+# Check SHA256: curl https://beta.quicklisp.org/quicklisp.lisp.sha256
+
+# Install Quicklisp
 sbcl --load quicklisp.lisp --eval "(quicklisp-quickstart:install)" --quit
+```
+
+**Note**: For production systems, consider using your system's package manager if available:
+```bash
+# Ubuntu/Debian (if available)
+sudo apt install cl-quicklisp
 ```
 
 In your SBCL REPL:

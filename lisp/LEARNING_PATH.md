@@ -258,7 +258,17 @@ Common Lisp learning is different from other languages:
 ```elisp
 ;; In your .emacs or init.el
 (setq inferior-lisp-program "sbcl")
-(require 'slime)
+
+;; Install SLIME via Quicklisp (recommended):
+;; In SBCL REPL: (ql:quickload "quicklisp-slime-helper")
+;; Then add this line:
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+
+;; Or install SLIME via MELPA in Emacs:
+;; M-x package-install RET slime RET
+;; Then use:
+;; (require 'slime)
+
 (slime-setup '(slime-fancy slime-company))
 ```
 

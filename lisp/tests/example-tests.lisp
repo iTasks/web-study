@@ -103,7 +103,7 @@
   "Simple test function"
   (format t "~a: ~a~%" 
           name 
-          (if condition "✓ PASS" "✗ FAIL")))
+          (if condition "[PASS]" "[FAIL]")))
 
 ;; Arithmetic tests
 (format t "Arithmetic Tests:~%")
