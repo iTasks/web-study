@@ -1,0 +1,53 @@
+# Lisp compiled files
+*.fasl
+*.fas
+*.lib
+*.x86f
+*.dfsl
+*.sse2f
+*.lx64fsl
+*.lx32fsl
+*.dx64fsl
+*.dx32fsl
+
+# SBCL
+*.sbcl-socket
+*.socket
+
+# CCL
+*.ccl
+*.lx64fsl
+
+# Quicklisp
+quicklisp/
+
+# Emacs
+*~
+\#*\#
+.\#*
+*.elc
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.o
+*.so
+*.dll
+*.exe
+
+# Temporary files
+/tmp/
+*.tmp
+*.bak
+
+# Test output
+test-output/
+*.log
