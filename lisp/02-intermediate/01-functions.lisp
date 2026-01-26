@@ -30,9 +30,9 @@
 ;;; Function with multiple statements
 (defun calculate-area (radius)
   "Calculate the area of a circle"
-  (let ((pi 3.14159))
+  (let ((my-pi 3.14159))
     (format t "Calculating area for radius ~a~%" radius)
-    (* pi radius radius)))
+    (* my-pi radius radius)))
 
 (format t "~%Area: ~a~%" (calculate-area 5))
 
