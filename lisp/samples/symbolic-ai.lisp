@@ -110,6 +110,7 @@
     ((or (null pattern) (null data)) nil)
     ;; Variable binding
     ((and (symbolp (car pattern))
+          (> (length (symbol-name (car pattern))) 0)
           (char= (char (symbol-name (car pattern)) 0) #\?))
      (let ((var (car pattern))
            (value (car data)))
