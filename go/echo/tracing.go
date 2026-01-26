@@ -2,10 +2,19 @@ package main
 
 import (
 	"context"
+	"crypto/rand"
+	"encoding/binary"
 	"fmt"
 	"time"
 
 	"github.com/labstack/echo/v4"
+)
+
+// contextKey is a custom type for context keys to avoid collisions
+type contextKey string
+
+const (
+	traceContextKey contextKey = "trace"
 )
 
 // TraceContext holds tracing information
@@ -41,7 +50,7 @@ func TracingMiddleware() echo.MiddlewareFunc {
 			}
 
 			// Store trace context in request context
-			ctx := context.WithValue(c.Request().Context(), "trace", trace)
+			ctx := context.WithValue(c.Request().Context(), traceContextKey, trace)
 			c.SetRequest(c.Request().WithContext(ctx))
 
 			// Add trace headers to response
@@ -67,22 +76,30 @@ func TracingMiddleware() echo.MiddlewareFunc {
 
 // generateTraceID generates a unique trace ID
 func generateTraceID() string {
-	return fmt.Sprintf("trace-%d-%d", time.Now().UnixNano(), randomInt())
+	return fmt.Sprintf("trace-%d-%d", time.Now().UnixNano(), secureRandomInt())
 }
 
 // generateSpanID generates a unique span ID
 func generateSpanID() string {
-	return fmt.Sprintf("span-%d-%d", time.Now().UnixNano(), randomInt())
+	return fmt.Sprintf("span-%d-%d", time.Now().UnixNano(), secureRandomInt())
 }
 
-// randomInt generates a random integer for ID generation
-func randomInt() int {
-	return int(time.Now().UnixNano() % 100000)
+// secureRandomInt generates a cryptographically secure random integer
+func secureRandomInt() uint64 {
+	var n uint64
+	b := make([]byte, 8)
+	_, err := rand.Read(b)
+	if err != nil {
+		// Fallback to timestamp-based randomness if crypto/rand fails
+		return uint64(time.Now().UnixNano() % 100000)
+	}
+	n = binary.BigEndian.Uint64(b)
+	return n
 }
 
 // GetTraceContext retrieves the trace context from the request context
 func GetTraceContext(c echo.Context) *TraceContext {
-	trace, ok := c.Request().Context().Value("trace").(*TraceContext)
+	trace, ok := c.Request().Context().Value(traceContextKey).(*TraceContext)
 	if !ok {
 		return nil
 	}
