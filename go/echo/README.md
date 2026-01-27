@@ -6,16 +6,35 @@ This directory contains production-ready Echo framework examples with comprehens
 
 ## 🚀 Quick Start
 
+### Basic Server (No Database)
+
 ```bash
 # Install dependencies
 cd go/echo
 go mod download
 
 # Run the production server
-go run production_server.go monitoring.go tracing.go
-
-# Or use the Makefile
 make run-prod
+```
+
+### Server with Database
+
+```bash
+# Run server with database integration
+make run-db
+
+# The server will create a SQLite database and seed it with sample data
+```
+
+### CLI Tool
+
+```bash
+# Start the interactive CLI tool
+make cli
+
+# Or build and run manually
+make build-cli
+./cli-tool
 ```
 
 The server will start on `http://localhost:8080`
@@ -27,10 +46,16 @@ The server will start on `http://localhost:8080`
 This implementation includes:
 
 - **Production Server** (`production_server.go`) - Complete server with all production middlewares
+- **Database Server** (`server_with_db.go`) - Server with GORM database integration
+- **Database Models** (`models.go`) - User and Product models with GORM
+- **Database Manager** (`database.go`) - Database operations, migrations, and analytics
+- **CLI Tool** (`cli.go`) - Interactive menu-based tool for API testing
 - **Prometheus Monitoring** (`monitoring.go`) - Comprehensive metrics collection
 - **Distributed Tracing** (`tracing.go`) - Request tracing with trace/span IDs
 - **Comprehensive Tests** (`main_test.go`) - Unit and integration tests
 - **Production Guide** (`PRODUCTION_GUIDE.md`) - Detailed deployment documentation
+- **Database Guide** (`DATABASE_GUIDE.md`) - Complete database integration guide
+- **Examples** (`EXAMPLES.md`) - Practical usage examples
 - **Docker Support** (`Dockerfile`, `docker-compose.yml`) - Container deployment
 - **Development Tools** (`Makefile`) - Common development tasks
 
@@ -58,18 +83,134 @@ All servers include a complete production-ready middleware stack:
 
 ### API Endpoints
 
-REST API examples:
+**User Management (CRUD):**
 - `GET /api/v1/users` - List all users
 - `POST /api/v1/users` - Create a user
 - `GET /api/v1/users/:id` - Get specific user
 - `PUT /api/v1/users/:id` - Update user
 - `DELETE /api/v1/users/:id` - Delete user
 
-Testing endpoints:
+**Product Management (CRUD):**
+- `GET /api/v1/products` - List all products
+- `POST /api/v1/products` - Create a product
+- `GET /api/v1/products/:id` - Get specific product
+- `PUT /api/v1/products/:id` - Update product
+- `DELETE /api/v1/products/:id` - Delete product
+
+**Database Analysis:**
+- `GET /api/v1/db/stats` - Database statistics and metrics
+- `GET /api/v1/db/performance` - Query performance analysis
+
+**Testing endpoints:**
 - `GET /api/v1/slow` - Test timeout handling (2s delay)
 - `GET /api/v1/error` - Test error handling
 - `GET /api/v1/panic` - Test panic recovery
 - `GET /api/v1/trace` - Test distributed tracing
+
+## 💾 Database Integration
+
+### GORM Support
+
+Full database integration with GORM ORM:
+
+- **Supported Databases**: SQLite (default), PostgreSQL, MySQL
+- **Auto Migration**: Automatic schema creation and updates
+- **Connection Pooling**: Optimized connection management
+- **Soft Deletes**: Data preservation with deleted_at timestamps
+- **Performance Monitoring**: Query performance tracking and analysis
+
+### Database Models
+
+**User Model:**
+```go
+type User struct {
+    ID        uint
+    Name      string
+    Email     string  // Unique index
+    Role      string  // admin, user, moderator
+    Active    bool
+    CreatedAt time.Time
+    UpdatedAt time.Time
+    DeletedAt gorm.DeletedAt
+}
+```
+
+**Product Model:**
+```go
+type Product struct {
+    ID          uint
+    Name        string
+    Description string
+    Price       float64
+    Stock       int
+    SKU         string  // Unique index
+    CreatedAt   time.Time
+    UpdatedAt   time.Time
+    DeletedAt   gorm.DeletedAt
+}
+```
+
+### Quick Database Setup
+
+```bash
+# Using SQLite (default)
+make run-db
+
+# Using PostgreSQL
+export DB_DRIVER=postgres
+export DB_HOST=localhost
+export DB_PORT=5432
+export DB_USER=postgres
+export DB_PASSWORD=secret
+export DB_NAME=echo_db
+make run-db
+```
+
+See **[DATABASE_GUIDE.md](DATABASE_GUIDE.md)** for complete database documentation.
+
+## 🖥️ CLI Tool
+
+Interactive menu-based CLI for testing and managing the server:
+
+### Features
+
+1. **Health & Status Checks** - Test server health and readiness
+2. **User Management** - Complete CRUD operations for users
+3. **Product Management** - Complete CRUD operations for products
+4. **Metrics & Monitoring** - View Prometheus metrics
+5. **Database Analysis** - Database statistics and performance
+6. **Server Logs** - View server log information
+7. **Performance Testing** - Test various server features
+
+### Usage
+
+```bash
+# Start the CLI
+make cli
+
+# Or build and run manually
+make build-cli
+./cli-tool
+```
+
+### CLI Example
+
+```
+╔═══════════════════════════════════════════╗
+║   Echo Server CLI - Main Menu            ║
+╚═══════════════════════════════════════════╝
+
+  [1] Health & Status Checks
+  [2] User Management (CRUD)
+  [3] Product Management (CRUD)
+  [4] Metrics & Monitoring
+  [5] Database Analysis
+  [6] Server Logs
+  [7] Performance Testing
+  [0] Exit
+
+Select an option: _
+```
 
 ## 🛠️ Setup Instructions
 
@@ -100,12 +241,36 @@ go build -o server production_server.go monitoring.go tracing.go
 ### Using Make
 
 ```bash
-make install    # Install dependencies
-make test       # Run tests
-make run-prod   # Run production server
-make build      # Build binary
-make docker-build  # Build Docker image
+make install      # Install dependencies
+make test         # Run tests
+make run-prod     # Run production server (no database)
+make run-db       # Run server with database
+make cli          # Run CLI tool
+make build        # Build server binary
+make build-db     # Build database server binary
+make build-cli    # Build CLI tool binary
+make docker-build # Build Docker image
 ```
+
+### Available Make Targets
+
+| Target | Description |
+|--------|-------------|
+| `make install` | Install Go dependencies |
+| `make run-prod` | Run production server without database |
+| `make run-db` | Run server with database integration |
+| `make cli` | Start interactive CLI tool |
+| `make test` | Run all tests with coverage |
+| `make bench` | Run benchmarks |
+| `make build` | Build production server binary |
+| `make build-db` | Build database server binary |
+| `make build-cli` | Build CLI tool binary |
+| `make fmt` | Format code with go fmt |
+| `make vet` | Run go vet |
+| `make clean` | Clean build artifacts and database files |
+| `make docker-build` | Build Docker image |
+| `make docker-run` | Run Docker container |
+| `make check` | Run fmt, vet, and tests |
 
 ## 📊 Monitoring & Observability
 
@@ -225,6 +390,19 @@ go test -bench=. -benchmem
 - Docker and container-ready
 - Horizontal scaling support
 
+### Database Integration
+- GORM ORM with multiple database support
+- Auto-migration and schema management
+- Connection pooling and optimization
+- Performance monitoring and analysis
+- CRUD operations with soft deletes
+
+### Developer Tools
+- Interactive CLI for API testing
+- Menu-based interface for all operations
+- Built-in database analysis tools
+- Performance testing utilities
+
 ## 📚 Learning Topics
 
 This implementation demonstrates:
@@ -235,16 +413,41 @@ This implementation demonstrates:
 4. **Logging** - JSON-formatted structured logging
 5. **Metrics** - Prometheus integration
 6. **Tracing** - Distributed tracing patterns
-7. **Testing** - Unit and integration testing
-8. **Docker** - Containerization and deployment
-9. **Kubernetes** - Cloud-native patterns
-10. **Graceful Shutdown** - Clean application termination
+7. **Database Integration** - GORM ORM with migrations
+8. **CRUD Operations** - RESTful API design
+9. **Testing** - Unit and integration testing
+10. **CLI Development** - Interactive command-line tools
+11. **Docker** - Containerization and deployment
+12. **Kubernetes** - Cloud-native patterns
+13. **Graceful Shutdown** - Clean application termination
+14. **Performance Analysis** - Database and query optimization
+
+## 📖 Documentation
+
+- **[README.md](README.md)** - This file: Overview and quick start
+- **[PRODUCTION_GUIDE.md](PRODUCTION_GUIDE.md)** - Production deployment guide
+  - Middleware configuration details
+  - Kubernetes deployment examples
+  - Performance tuning recommendations
+  - Best practices and troubleshooting
+- **[DATABASE_GUIDE.md](DATABASE_GUIDE.md)** - Complete database integration guide
+  - Database configuration and setup
+  - Model definitions and relationships
+  - CRUD operations examples
+  - Migration and seeding
+  - Performance analysis tools
+  - CLI tool usage
+- **[EXAMPLES.md](EXAMPLES.md)** - Practical usage examples
+  - curl commands for all endpoints
+  - Prometheus query examples
+  - Load testing patterns
 
 ## 🔗 Resources
 
 - [Echo Framework Documentation](https://echo.labstack.com/)
 - [Echo GitHub Repository](https://github.com/labstack/echo)
 - [Echo Cookbook](https://echo.labstack.com/cookbook/)
+- [GORM Documentation](https://gorm.io/)
 - [Prometheus Documentation](https://prometheus.io/docs/)
 - [Go Web Development](https://golang.org/doc/articles/wiki/)
 - [Twelve-Factor App](https://12factor.net/)
