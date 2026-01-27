@@ -1262,10 +1262,327 @@ Modern, statically typed programming language for JVM and Android development.
 - **Frameworks**: Android SDK, Jetpack Compose
 - **Key Topics**: Android mobile development, null safety, coroutines, functional programming, mobile apps
 
+**Basic Syntax:**
+```kotlin
+// Hello World
+fun main() {
+    println("Hello, World!")
+}
+
+// Variables and Constants
+const val CONSTANT = 42 // Compile-time constant
+val immutable = 100 // Immutable variable (read-only)
+var mutable = 200 // Mutable variable
+val inferred = 3.14 // Type inference
+
+// Functions
+fun add(a: Int, b: Int): Int {
+    return a + b
+}
+
+// Single expression function
+fun multiply(a: Int, b: Int) = a * b
+
+// Error Handling
+fun divide(a: Int, b: Int): Int {
+    if (b == 0) throw ArithmeticException("Division by zero")
+    return a / b
+}
+
+// Try-catch
+try {
+    divide(10, 0)
+} catch (e: ArithmeticException) {
+    println("Error: ${e.message}")
+}
+
+// Classes and Data Classes
+class Point(val x: Float, val y: Float) {
+    fun distanceFromOrigin(): Double {
+        return Math.sqrt((x * x + y * y).toDouble())
+    }
+}
+
+// Data class (auto-generates equals, hashCode, toString, copy)
+data class Person(val name: String, val age: Int)
+
+// Control Flow
+val x = 10
+if (x > 0) {
+    // if block
+} else {
+    // else block
+}
+
+val numbers = listOf(1, 2, 3, 4, 5)
+for (num in numbers) {
+    // loop body
+}
+
+var i = 0
+while (i < 10) {
+    // loop body
+    i++
+}
+
+// Null Safety
+val maybeValue: Int? = null // Nullable type
+val value = maybeValue ?: 0 // Elvis operator
+
+// Safe call operator
+val length = maybeValue?.toString()?.length
+
+// Higher-order Functions and Lambdas
+val doubled = numbers.map { it * 2 }
+val evens = numbers.filter { it % 2 == 0 }
+val sum = numbers.reduce { acc, n -> acc + n }
+
+// When Expression (pattern matching)
+val number = 7
+when (number) {
+    1 -> println("One")
+    in 2..5 -> println("Two to Five")
+    else -> println("Something else")
+}
+
+// Extension Functions
+fun String.addExclamation() = this + "!"
+val greeting = "Hello".addExclamation() // "Hello!"
+
+// Coroutines (async/await)
+import kotlinx.coroutines.*
+
+suspend fun fetchData(): String {
+    delay(1000) // Non-blocking delay
+    return "Data"
+}
+
+// Usage in coroutine scope
+runBlocking {
+    val result = async { fetchData() }
+    println(result.await())
+}
+
+// Scope Functions
+val person = Person("Alice", 30).apply {
+    // this refers to person
+    println("Created: $name")
+}
+
+// Smart Casts
+fun processValue(value: Any) {
+    if (value is String) {
+        // value is automatically cast to String
+        println(value.length)
+    }
+}
+```
+
 ### [Swift](swift/)
 Powerful, intuitive programming language for iOS, macOS, and Apple ecosystem development.
 - **Frameworks**: SwiftUI, UIKit
 - **Key Topics**: iOS mobile development, memory safety, modern concurrency, protocol-oriented programming, mobile apps
+
+**Basic Syntax:**
+```swift
+// Hello World
+import Foundation
+
+print("Hello, World!")
+
+// Variables and Constants
+let constant = 42 // Immutable constant
+var mutable = 100 // Mutable variable
+let inferred = 3.14 // Type inference
+var typed: String = "Swift"
+
+// Functions
+func add(a: Int, b: Int) -> Int {
+    return a + b
+}
+
+// Implicit return (single expression)
+func multiply(a: Int, b: Int) -> Int {
+    a * b
+}
+
+// Error Handling
+enum DivisionError: Error {
+    case divisionByZero
+}
+
+func divide(a: Int, b: Int) throws -> Int {
+    if b == 0 {
+        throw DivisionError.divisionByZero
+    }
+    return a / b
+}
+
+// Do-try-catch
+do {
+    let result = try divide(a: 10, b: 0)
+    print("Result: \(result)")
+} catch {
+    print("Error: \(error)")
+}
+
+// Structs and Classes
+struct Point {
+    var x: Float
+    var y: Float
+    
+    func distanceFromOrigin() -> Double {
+        return sqrt(Double(x * x + y * y))
+    }
+}
+
+class Person {
+    var name: String
+    var age: Int
+    
+    init(name: String, age: Int) {
+        self.name = name
+        self.age = age
+    }
+}
+
+// Control Flow
+let x = 10
+if x > 0 {
+    // if block
+} else {
+    // else block
+}
+
+let numbers = [1, 2, 3, 4, 5]
+for num in numbers {
+    // loop body
+}
+
+var i = 0
+while i < 10 {
+    // loop body
+    i += 1
+}
+
+// Optionals
+var maybeValue: Int? = nil // Optional type
+let value = maybeValue ?? 0 // Nil coalescing
+
+// Optional binding
+if let unwrapped = maybeValue {
+    print("Value: \(unwrapped)")
+} else {
+    print("No value")
+}
+
+// Guard statement
+func processValue(_ value: Int?) {
+    guard let value = value else {
+        return
+    }
+    print(value)
+}
+
+// Higher-order Functions and Closures
+let doubled = numbers.map { $0 * 2 }
+let evens = numbers.filter { $0 % 2 == 0 }
+let sum = numbers.reduce(0) { $0 + $1 }
+
+// Trailing closure syntax
+let sorted = numbers.sorted { $0 > $1 }
+
+// Switch Statement (pattern matching)
+let number = 7
+switch number {
+case 1:
+    print("One")
+case 2...5:
+    print("Two to Five")
+default:
+    print("Something else")
+}
+
+// Enums with Associated Values
+enum Result<T> {
+    case success(T)
+    case failure(Error)
+}
+
+let result: Result<Int> = .success(42)
+switch result {
+case .success(let value):
+    print("Success: \(value)")
+case .failure(let error):
+    print("Error: \(error)")
+}
+
+// Protocols
+protocol Drawable {
+    func draw()
+}
+
+struct Circle: Drawable {
+    var radius: Double
+    
+    func draw() {
+        print("Drawing circle with radius \(radius)")
+    }
+}
+
+// Extensions
+extension Int {
+    func squared() -> Int {
+        return self * self
+    }
+}
+
+let squared = 5.squared() // 25
+
+// Generics
+func swapValues<T>(_ a: inout T, _ b: inout T) {
+    let temp = a
+    a = b
+    b = temp
+}
+
+// Property Observers
+class Counter {
+    var count: Int = 0 {
+        willSet {
+            print("Will set to \(newValue)")
+        }
+        didSet {
+            print("Did set from \(oldValue)")
+        }
+    }
+}
+
+// Async/Await (Swift 5.5+)
+func fetchData() async throws -> String {
+    try await Task.sleep(nanoseconds: 1_000_000_000)
+    return "Data"
+}
+
+Task {
+    do {
+        let data = try await fetchData()
+        print(data)
+    } catch {
+        print("Error: \(error)")
+    }
+}
+
+// Computed Properties
+struct Rectangle {
+    var width: Double
+    var height: Double
+    
+    var area: Double {
+        return width * height
+    }
+}
+```
 
 ### DevOps and Cloud Management
 
