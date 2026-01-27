@@ -156,6 +156,7 @@ go/
 
 ## Resources and References
 
+- [Previous Go Lang Study Repository](https://github.com/smaruf/go-lang-study)
 - [Official Go Documentation](https://golang.org/doc/)
 - [Go Tour](https://tour.golang.org/)
 - [Echo Framework Documentation](https://echo.labstack.com/)
