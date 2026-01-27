@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - DATABASE_URL=sqlite:///app.db
+    volumes:
+      - ./logs:/app/logs
+      - ./app.db:/app/app.db
+    command: gunicorn -w 4 -b 0.0.0.0:5000 --timeout 120 run:app
+  
+  grpc:
+    build: .
+    ports:
+      - "50051:50051"
+    environment:
+      - FLASK_ENV=production
+      - DATABASE_URL=sqlite:///app.db
+    volumes:
+      - ./app.db:/app/app.db
+    command: python -m app.grpc_service.server
