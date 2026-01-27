@@ -287,7 +287,7 @@ async function fetchData() {
 }
 ```
 
-### [Go](go/)
+### [Go](https://github.com/iTasks/web-study/tree/master/go)
 Modern systems programming language with excellent concurrency support.
 - **Frameworks**: Echo
 - **Key Topics**: Web services, microservices, concurrent programming
