@@ -109,7 +109,7 @@
     
     <footer>
         <div class="container">
-            <p>&copy; 2026 Django Production Ready Project. Built with Django {{ request.META.SERVER_SOFTWARE|default:"Django" }}</p>
+            <p>&copy; {% now 'Y' %} Django Production Ready Project. Built with Django {{ request.META.SERVER_SOFTWARE|default:"Django" }}</p>
         </div>
     </footer>
     
