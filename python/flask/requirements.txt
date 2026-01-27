@@ -13,14 +13,14 @@ graphql-core==3.2.3
 # gRPC
 grpcio==1.60.0
 grpcio-tools==1.60.0
-protobuf==4.25.1
+protobuf==4.25.8
 
 # Database
 alembic==1.13.1
 SQLAlchemy==2.0.25
 
 # Production Server
-gunicorn==21.2.0
+gunicorn==22.0.0
 gevent==23.9.1
 
 # Observability & Monitoring
