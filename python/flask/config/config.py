@@ -46,6 +46,7 @@ class TestingConfig(Config):
     TESTING = True
     SQLALCHEMY_DATABASE_URI = 'sqlite:///:memory:'
     RATELIMIT_ENABLED = False
+    ENABLE_METRICS = False  # Disable metrics in testing
 
 
 config = {

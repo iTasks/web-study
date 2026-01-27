@@ -1,109 +1,153 @@
-import graphene
-from graphene import relay
-from graphene_sqlalchemy import SQLAlchemyObjectType
+from graphql import (
+    GraphQLSchema,
+    GraphQLObjectType,
+    GraphQLField,
+    GraphQLArgument,
+    GraphQLList,
+    GraphQLInt,
+    GraphQLString,
+    GraphQLBoolean,
+    GraphQLNonNull,
+)
 from app.models import db, User as UserModel, Task as TaskModel
 
 
-# GraphQL Types
-class User(SQLAlchemyObjectType):
-    class Meta:
-        model = UserModel
-        interfaces = (relay.Node,)
+# User Type
+UserType = GraphQLObjectType(
+    'User',
+    lambda: {
+        'id': GraphQLField(GraphQLInt),
+        'username': GraphQLField(GraphQLString),
+        'email': GraphQLField(GraphQLString),
+        'created_at': GraphQLField(GraphQLString),
+        'updated_at': GraphQLField(GraphQLString),
+    }
+)
 
 
-class Task(SQLAlchemyObjectType):
-    class Meta:
-        model = TaskModel
-        interfaces = (relay.Node,)
+# Task Type
+TaskType = GraphQLObjectType(
+    'Task',
+    lambda: {
+        'id': GraphQLField(GraphQLInt),
+        'title': GraphQLField(GraphQLString),
+        'description': GraphQLField(GraphQLString),
+        'completed': GraphQLField(GraphQLBoolean),
+        'user_id': GraphQLField(GraphQLInt),
+        'created_at': GraphQLField(GraphQLString),
+        'updated_at': GraphQLField(GraphQLString),
+    }
+)
 
 
-# Queries
-class Query(graphene.ObjectType):
-    node = relay.Node.Field()
-    all_users = graphene.List(User)
-    all_tasks = graphene.List(Task)
-    user = graphene.Field(User, id=graphene.Int())
-    task = graphene.Field(Task, id=graphene.Int())
-    
-    def resolve_all_users(self, info):
-        return UserModel.query.all()
-    
-    def resolve_all_tasks(self, info):
-        return TaskModel.query.all()
-    
-    def resolve_user(self, info, id):
-        return UserModel.query.get(id)
-    
-    def resolve_task(self, info, id):
-        return TaskModel.query.get(id)
+# Resolvers
+def resolve_all_users(obj, info):
+    users = db.session.query(UserModel).all()
+    return [user.to_dict() for user in users]
 
 
-# Mutations
-class CreateUser(graphene.Mutation):
-    class Arguments:
-        username = graphene.String(required=True)
-        email = graphene.String(required=True)
-    
-    user = graphene.Field(lambda: User)
-    
-    def mutate(self, info, username, email):
-        user = UserModel(username=username, email=email)
-        db.session.add(user)
-        db.session.commit()
-        return CreateUser(user=user)
+def resolve_all_tasks(obj, info):
+    tasks = db.session.query(TaskModel).all()
+    return [task.to_dict() for task in tasks]
 
 
-class CreateTask(graphene.Mutation):
-    class Arguments:
-        title = graphene.String(required=True)
-        description = graphene.String()
-        completed = graphene.Boolean()
-        user_id = graphene.Int()
-    
-    task = graphene.Field(lambda: Task)
-    
-    def mutate(self, info, title, description=None, completed=False, user_id=None):
-        task = TaskModel(
-            title=title,
-            description=description,
-            completed=completed,
-            user_id=user_id
-        )
-        db.session.add(task)
-        db.session.commit()
-        return CreateTask(task=task)
+def resolve_user(obj, info, id):
+    user = db.session.query(UserModel).get(id)
+    return user.to_dict() if user else None
 
 
-class UpdateTask(graphene.Mutation):
-    class Arguments:
-        id = graphene.Int(required=True)
-        title = graphene.String()
-        description = graphene.String()
-        completed = graphene.Boolean()
-    
-    task = graphene.Field(lambda: Task)
-    
-    def mutate(self, info, id, title=None, description=None, completed=None):
-        task = TaskModel.query.get(id)
-        if not task:
-            raise Exception('Task not found')
-        
-        if title is not None:
-            task.title = title
-        if description is not None:
-            task.description = description
-        if completed is not None:
-            task.completed = completed
-        
-        db.session.commit()
-        return UpdateTask(task=task)
+def resolve_task(obj, info, id):
+    task = db.session.query(TaskModel).get(id)
+    return task.to_dict() if task else None
 
 
-class Mutation(graphene.ObjectType):
-    create_user = CreateUser.Field()
-    create_task = CreateTask.Field()
-    update_task = UpdateTask.Field()
+def resolve_create_user(obj, info, username, email):
+    user = UserModel(username=username, email=email)
+    db.session.add(user)
+    db.session.commit()
+    return {'user': user.to_dict()}
+
+
+def resolve_create_task(obj, info, title, description=None, completed=False, user_id=None):
+    task = TaskModel(
+        title=title,
+        description=description,
+        completed=completed,
+        user_id=user_id
+    )
+    db.session.add(task)
+    db.session.commit()
+    return {'task': task.to_dict()}
+
+
+# Query Type
+QueryType = GraphQLObjectType(
+    'Query',
+    lambda: {
+        'allUsers': GraphQLField(
+            GraphQLList(UserType),
+            resolve=resolve_all_users
+        ),
+        'allTasks': GraphQLField(
+            GraphQLList(TaskType),
+            resolve=resolve_all_tasks
+        ),
+        'user': GraphQLField(
+            UserType,
+            args={'id': GraphQLArgument(GraphQLNonNull(GraphQLInt))},
+            resolve=resolve_user
+        ),
+        'task': GraphQLField(
+            TaskType,
+            args={'id': GraphQLArgument(GraphQLNonNull(GraphQLInt))},
+            resolve=resolve_task
+        ),
+    }
+)
+
+
+# Mutation Result Types
+CreateUserResultType = GraphQLObjectType(
+    'CreateUserResult',
+    lambda: {
+        'user': GraphQLField(UserType),
+    }
+)
+
+
+CreateTaskResultType = GraphQLObjectType(
+    'CreateTaskResult',
+    lambda: {
+        'task': GraphQLField(TaskType),
+    }
+)
+
+
+# Mutation Type
+MutationType = GraphQLObjectType(
+    'Mutation',
+    lambda: {
+        'createUser': GraphQLField(
+            CreateUserResultType,
+            args={
+                'username': GraphQLArgument(GraphQLNonNull(GraphQLString)),
+                'email': GraphQLArgument(GraphQLNonNull(GraphQLString)),
+            },
+            resolve=resolve_create_user
+        ),
+        'createTask': GraphQLField(
+            CreateTaskResultType,
+            args={
+                'title': GraphQLArgument(GraphQLNonNull(GraphQLString)),
+                'description': GraphQLArgument(GraphQLString),
+                'completed': GraphQLArgument(GraphQLBoolean),
+                'user_id': GraphQLArgument(GraphQLInt),
+            },
+            resolve=resolve_create_task
+        ),
+    }
+)
 
 
 # Schema
-schema = graphene.Schema(query=Query, mutation=Mutation)
+graphql_schema = GraphQLSchema(query=QueryType, mutation=MutationType)

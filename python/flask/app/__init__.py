@@ -87,17 +87,32 @@ def create_app(config_name='default'):
     app.register_blueprint(api_blueprint)
     
     # GraphQL endpoint
-    from flask_graphql import GraphQLView
-    from app.graphql_service import schema
+    from flask import request, jsonify
+    from graphql import graphql_sync
+    from app.graphql_service import graphql_schema
     
-    app.add_url_rule(
-        '/graphql',
-        view_func=GraphQLView.as_view(
-            'graphql',
-            schema=schema,
-            graphiql=True  # Enable GraphiQL interface
-        )
-    )
+    @app.route('/graphql', methods=['GET', 'POST'])
+    def graphql_endpoint():
+        # Get GraphQL query from request
+        if request.method == 'POST':
+            data = request.get_json()
+            query = data.get('query', '')
+            variables = data.get('variables')
+        else:
+            query = request.args.get('query', '')
+            variables = None
+        
+        # Execute query
+        result = graphql_sync(graphql_schema, query, variable_values=variables)
+        
+        # Return response
+        response = {}
+        if result.data:
+            response['data'] = result.data
+        if result.errors:
+            response['errors'] = [str(error) for error in result.errors]
+        
+        return jsonify(response)
     
     # Main routes
     @app.route('/')

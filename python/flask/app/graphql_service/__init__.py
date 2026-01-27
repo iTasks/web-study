@@ -1,3 +1,3 @@
-from .schema import schema
+from .schema import graphql_schema
 
-__all__ = ['schema']
+__all__ = ['graphql_schema']
