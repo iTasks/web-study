@@ -1,4 +1,4 @@
-.PHONY: help run run-prod test bench clean install fmt vet docker-build docker-run
+.PHONY: help run run-prod run-db test bench clean install fmt vet docker-build docker-run cli build-cli
 
 help: ## Show this help message
 	@echo 'Usage: make [target]'
@@ -11,10 +11,19 @@ install: ## Install dependencies
 	go mod tidy
 
 run: ## Run basic server
-	go run main.go
-
-run-prod: ## Run production server with all features
 	go run production_server.go monitoring.go tracing.go
+
+run-prod: ## Run production server with all features (no database)
+	go run production_server.go monitoring.go tracing.go
+
+run-db: ## Run server with database integration
+	go run server_with_db.go database.go models.go monitoring.go tracing.go
+
+cli: ## Run the CLI tool
+	go run cli.go
+
+build-cli: ## Build CLI binary
+	go build -o cli-tool cli.go
 
 test: ## Run tests
 	go test -v -cover
@@ -29,11 +38,15 @@ vet: ## Run go vet
 	go vet ./...
 
 clean: ## Clean build artifacts
-	rm -f server
+	rm -f server server-db cli-tool
+	rm -f *.db
 	go clean
 
-build: ## Build server binary
+build: ## Build server binary (no database)
 	go build -o server production_server.go monitoring.go tracing.go
+
+build-db: ## Build server binary with database
+	go build -o server-db server_with_db.go database.go models.go monitoring.go tracing.go
 
 docker-build: ## Build Docker image
 	docker build -t echo-server:latest .
