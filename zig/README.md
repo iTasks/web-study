@@ -1,5 +1,7 @@
 # Zig
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory contains Zig programming language study materials and sample applications. Zig is a general-purpose programming language and toolchain for maintaining robust, optimal, and reusable software. It aims to be a better C, offering modern language features while maintaining simplicity and performance.

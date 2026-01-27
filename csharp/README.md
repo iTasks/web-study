@@ -1,5 +1,7 @@
 # C#
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory contains C# programming language study materials and sample applications. C# is a modern, object-oriented, and type-safe programming language developed by Microsoft as part of the .NET platform.

@@ -1,5 +1,7 @@
 # Django Framework - Production Ready Project
 
+[← Back to Python](../README.md) | [Main README](../../README.md)
+
 ## Purpose
 
 This directory contains a fully production-ready Django project implementation. Django is a high-level Python web framework that encourages rapid development and clean, pragmatic design. This project demonstrates best practices for deploying Django applications in production environments.

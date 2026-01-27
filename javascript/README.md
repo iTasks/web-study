@@ -1,5 +1,7 @@
 # JavaScript
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory contains JavaScript/TypeScript programming language study materials, sample applications, and framework implementations. JavaScript is a high-level, interpreted programming language that is one of the core technologies of the World Wide Web, alongside HTML and CSS.

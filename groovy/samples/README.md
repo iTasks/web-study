@@ -1,5 +1,7 @@
 # Groovy Samples
 
+[← Back to Groovy](../README.md) | [Main README](../../README.md)
+
 This directory contains comprehensive Groovy programming examples demonstrating the language's key features and capabilities.
 
 ## Available Samples

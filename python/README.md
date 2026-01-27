@@ -1,5 +1,7 @@
 # Python
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory contains Python programming language study materials, sample applications, and framework implementations. Python is a high-level, interpreted programming language known for its simplicity, readability, and extensive ecosystem of libraries and frameworks.

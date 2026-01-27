@@ -1,5 +1,7 @@
 # Rust
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory contains Rust programming language study materials and sample applications. Rust is a systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety.

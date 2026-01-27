@@ -1,5 +1,7 @@
 # TeaVM
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory contains TeaVM study materials and sample applications. TeaVM is an ahead-of-time transpiler that takes Java bytecode and produces JavaScript, WebAssembly, or C code, allowing Java applications to run in web browsers and other JavaScript environments.

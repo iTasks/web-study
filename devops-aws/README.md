@@ -1,5 +1,7 @@
 # DevOps and AWS Management - Zero to Expert
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory provides a comprehensive learning path for DevOps practices and AWS cloud management, taking you from absolute beginner to expert level. The content is structured progressively, with hands-on examples, best practices, and real-world scenarios.
