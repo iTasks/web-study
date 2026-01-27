@@ -93,9 +93,16 @@ func main() {
 		ContentSecurityPolicy: "default-src 'self'",
 	}))
 
-	// 7. CORS
+	// 7. CORS - Configure for your production needs
+	// WARNING: "*" allows all origins. In production, specify exact origins.
+	corsOrigins := getEnv("CORS_ORIGINS", "*")
+	allowedOrigins := []string{corsOrigins}
+	if corsOrigins == "*" {
+		e.Logger.Warn("CORS configured to allow all origins (*). Set CORS_ORIGINS env var for production.")
+	}
+	
 	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
-		AllowOrigins: []string{"*"}, // Configure based on your needs
+		AllowOrigins: allowedOrigins,
 		AllowMethods: []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete, http.MethodPatch},
 		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept, echo.HeaderAuthorization, "X-Trace-ID", "X-Parent-Span-ID"},
 		ExposeHeaders: []string{"X-Trace-ID", "X-Span-ID"},
@@ -109,9 +116,10 @@ func main() {
 	// 9. Rate Limiting
 	e.Use(middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(100)))
 
-	// 10. Request Timeout
+	// 10. Request Timeout - Configurable via environment variable
+	timeoutSeconds := getIntEnv("REQUEST_TIMEOUT", 30)
 	e.Use(middleware.TimeoutWithConfig(middleware.TimeoutConfig{
-		Timeout: 30 * time.Second,
+		Timeout: time.Duration(timeoutSeconds) * time.Second,
 	}))
 
 	// ============================================

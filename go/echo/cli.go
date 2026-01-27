@@ -330,8 +330,12 @@ func (c *CLIClient) checkEndpoint(path, title string) {
 	// Pretty print JSON
 	var prettyJSON map[string]interface{}
 	if err := json.Unmarshal(body, &prettyJSON); err == nil {
-		formatted, _ := json.MarshalIndent(prettyJSON, "", "  ")
-		fmt.Printf("Response:\n%s\n", string(formatted))
+		formatted, err := json.MarshalIndent(prettyJSON, "", "  ")
+		if err != nil {
+			fmt.Printf("Response:\n%s\n", string(body))
+		} else {
+			fmt.Printf("Response:\n%s\n", string(formatted))
+		}
 	} else {
 		// If not JSON, print first 500 chars
 		if len(body) > 500 {

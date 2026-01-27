@@ -7,6 +7,7 @@ import (
 )
 
 // User represents a user in the system
+// Note: validate tags are included for documentation and future use with validation libraries
 type User struct {
 	ID        uint           `gorm:"primarykey" json:"id"`
 	CreatedAt time.Time      `json:"created_at"`
@@ -24,6 +25,7 @@ func (User) TableName() string {
 }
 
 // Product represents a product in the system
+// Note: validate tags are included for documentation and future use with validation libraries
 type Product struct {
 	ID          uint           `gorm:"primarykey" json:"id"`
 	CreatedAt   time.Time      `json:"created_at"`
