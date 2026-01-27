@@ -1,3 +1,6 @@
+//go:build dbserver
+// +build dbserver
+
 package main
 
 import (
