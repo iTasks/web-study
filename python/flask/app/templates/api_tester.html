@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Tester - Production Flask API</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .header h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .panel {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .panel h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #eee;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 500;
+        }
+        select, input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        textarea {
+            min-height: 150px;
+            font-family: 'Courier New', monospace;
+        }
+        .button {
+            background: #667eea;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background: #764ba2;
+        }
+        .response-section {
+            margin-top: 20px;
+        }
+        .response-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .response-body {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 4px;
+            overflow-x: auto;
+            max-height: 400px;
+        }
+        .response-body pre {
+            margin: 0;
+        }
+        .examples {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 4px;
+        }
+        .examples h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .example-item {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .example-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 API Tester</h1>
+            <p>Test REST, GraphQL, and other endpoints interactively</p>
+        </div>
+        
+        <div class="content">
+            <div class="panel">
+                <h2>Request</h2>
+                
+                <div class="form-group">
+                    <label>API Type</label>
+                    <select id="apiType">
+                        <option value="rest">REST API</option>
+                        <option value="graphql">GraphQL</option>
+                    </select>
+                </div>
+                
+                <div id="restFields">
+                    <div class="form-group">
+                        <label>HTTP Method</label>
+                        <select id="method">
+                            <option value="GET">GET</option>
+                            <option value="POST">POST</option>
+                            <option value="PUT">PUT</option>
+                            <option value="DELETE">DELETE</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Endpoint</label>
+                        <input type="text" id="endpoint" placeholder="/api/v1/users">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Request Body (JSON)</label>
+                    <textarea id="requestBody" placeholder='{"username": "john", "email": "john@example.com"}'></textarea>
+                </div>
+                
+                <button class="button" onclick="sendRequest()">Send Request</button>
+                
+                <div class="examples">
+                    <h3>Quick Examples</h3>
+                    <div class="example-item" onclick="loadExample('list-users')">
+                        GET /api/v1/users - List all users
+                    </div>
+                    <div class="example-item" onclick="loadExample('create-user')">
+                        POST /api/v1/users - Create user
+                    </div>
+                    <div class="example-item" onclick="loadExample('list-tasks')">
+                        GET /api/v1/tasks - List all tasks
+                    </div>
+                    <div class="example-item" onclick="loadExample('graphql-query')">
+                        GraphQL - Query all users
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel">
+                <h2>Response</h2>
+                
+                <div class="response-section" id="responseSection" style="display: none;">
+                    <div class="response-header">
+                        <span>Status:</span>
+                        <span class="status-badge" id="statusBadge"></span>
+                    </div>
+                    <div class="response-body">
+                        <pre id="responseBody"></pre>
+                    </div>
+                </div>
+                
+                <div id="placeholderText" style="text-align: center; padding: 50px; color: #999;">
+                    Send a request to see the response here
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        const examples = {
+            'list-users': {
+                type: 'rest',
+                method: 'GET',
+                endpoint: '/api/v1/users',
+                body: ''
+            },
+            'create-user': {
+                type: 'rest',
+                method: 'POST',
+                endpoint: '/api/v1/users',
+                body: JSON.stringify({
+                    username: 'john_doe',
+                    email: 'john@example.com'
+                }, null, 2)
+            },
+            'list-tasks': {
+                type: 'rest',
+                method: 'GET',
+                endpoint: '/api/v1/tasks',
+                body: ''
+            },
+            'graphql-query': {
+                type: 'graphql',
+                method: 'POST',
+                endpoint: '/graphql',
+                body: JSON.stringify({
+                    query: `{
+  allUsers {
+    id
+    username
+    email
+  }
+}`
+                }, null, 2)
+            }
+        };
+        
+        function loadExample(exampleId) {
+            const example = examples[exampleId];
+            document.getElementById('apiType').value = example.type;
+            document.getElementById('method').value = example.method;
+            document.getElementById('endpoint').value = example.endpoint;
+            document.getElementById('requestBody').value = example.body;
+        }
+        
+        async function sendRequest() {
+            const apiType = document.getElementById('apiType').value;
+            const method = document.getElementById('method').value;
+            const endpoint = document.getElementById('endpoint').value;
+            const body = document.getElementById('requestBody').value;
+            
+            const url = apiType === 'graphql' ? '/graphql' : endpoint;
+            
+            try {
+                const options = {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                };
+                
+                if (body && (method === 'POST' || method === 'PUT')) {
+                    options.body = body;
+                }
+                
+                const response = await fetch(url, options);
+                const data = await response.json();
+                
+                // Display response
+                document.getElementById('placeholderText').style.display = 'none';
+                document.getElementById('responseSection').style.display = 'block';
+                
+                const statusBadge = document.getElementById('statusBadge');
+                statusBadge.textContent = `${response.status} ${response.statusText}`;
+                statusBadge.className = 'status-badge ' + (response.ok ? 'status-success' : 'status-error');
+                
+                document.getElementById('responseBody').textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('placeholderText').style.display = 'none';
+                document.getElementById('responseSection').style.display = 'block';
+                
+                const statusBadge = document.getElementById('statusBadge');
+                statusBadge.textContent = 'Error';
+                statusBadge.className = 'status-badge status-error';
+                
+                document.getElementById('responseBody').textContent = error.message;
+            }
+        }
+    </script>
+</body>
+</html>

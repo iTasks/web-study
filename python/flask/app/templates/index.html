@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Production Flask API</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            padding: 40px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .feature-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            transition: transform 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+        .links {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 2px solid #eee;
+        }
+        .links h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .link-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .link-button {
+            display: block;
+            padding: 15px 20px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            text-align: center;
+            transition: background 0.3s;
+        }
+        .link-button:hover {
+            background: #764ba2;
+        }
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+        .code-example pre {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Production-Ready Flask API</h1>
+        <p class="subtitle">A comprehensive Flask application with REST, gRPC, GraphQL, and more</p>
+        
+        <div class="features">
+            <div class="feature-card">
+                <h3>📡 REST API</h3>
+                <p>Full-featured REST API with Swagger/OpenAPI documentation for easy exploration and testing.</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚡ gRPC Service</h3>
+                <p>High-performance gRPC server for efficient client-server communication.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔮 GraphQL</h3>
+                <p>Flexible GraphQL API with GraphiQL interface for queries and mutations.</p>
+            </div>
+            <div class="feature-card">
+                <h3>💾 Database</h3>
+                <p>SQLAlchemy ORM with migration support for robust data management.</p>
+            </div>
+            <div class="feature-card">
+                <h3>📊 Observability</h3>
+                <p>Prometheus metrics and health checks for monitoring application performance.</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔒 Security</h3>
+                <p>Rate limiting, CORS, and security headers for production-ready deployment.</p>
+            </div>
+        </div>
+        
+        <div class="links">
+            <h2>🔗 Quick Links</h2>
+            <div class="link-grid">
+                <a href="/api/v1/docs" class="link-button">📚 REST API Docs</a>
+                <a href="/graphql" class="link-button">🔮 GraphiQL</a>
+                <a href="/api-tester" class="link-button">🧪 API Tester GUI</a>
+                <a href="/api/v1/health" class="link-button">💚 Health Check</a>
+                <a href="/metrics" class="link-button">📊 Metrics</a>
+            </div>
+        </div>
+        
+        <div class="links">
+            <h2>📖 Quick Start</h2>
+            <div class="code-example">
+                <pre># Install dependencies
+pip install -r requirements.txt
+
+# Run REST API server
+python run.py
+
+# Run gRPC server (separate terminal)
+python -m app.grpc_service.server
+
+# Use CLI tools
+python -m app.cli.api_client --help</pre>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
