@@ -15,6 +15,9 @@ class Config:
     PORT = int(os.getenv('PORT', 5000))
     GRPC_PORT = int(os.getenv('GRPC_PORT', 50051))
     
+    # Security: Limit request size (1MB default)
+    MAX_CONTENT_LENGTH = 1 * 1024 * 1024
+    
     # Logging
     LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO')
     LOG_FORMAT = os.getenv('LOG_FORMAT', 'json')

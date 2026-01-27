@@ -13,6 +13,9 @@ graphql-core==3.2.3
 # gRPC
 grpcio==1.60.0
 grpcio-tools==1.60.0
+# Note: protobuf 4.25.8 has a known JSON recursion depth bypass vulnerability (affects <= 6.33.4)
+# No patched version is currently available. We primarily use protobuf for gRPC (binary protocol),
+# not JSON parsing. See SECURITY.md for details and mitigations.
 protobuf==4.25.8
 
 # Database

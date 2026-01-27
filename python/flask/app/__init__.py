@@ -95,15 +95,39 @@ def create_app(config_name='default'):
     def graphql_endpoint():
         # Get GraphQL query from request
         if request.method == 'POST':
-            data = request.get_json()
-            query = data.get('query', '')
-            variables = data.get('variables')
+            # Security: Limit request size to prevent abuse
+            if request.content_length and request.content_length > 1024 * 1024:  # 1MB limit
+                return jsonify({'errors': ['Request too large']}), 413
+            
+            try:
+                data = request.get_json()
+                if not data:
+                    return jsonify({'errors': ['Invalid JSON']}), 400
+                    
+                query = data.get('query', '')
+                variables = data.get('variables')
+                
+                # Security: Limit query length
+                if len(query) > 10000:  # 10KB query limit
+                    return jsonify({'errors': ['Query too long']}), 400
+                    
+            except Exception as e:
+                app.logger.error(f'Error parsing GraphQL request: {e}')
+                return jsonify({'errors': ['Invalid request format']}), 400
         else:
             query = request.args.get('query', '')
             variables = None
+            
+            # Security: Limit query length for GET requests
+            if len(query) > 2000:  # 2KB limit for GET
+                return jsonify({'errors': ['Query too long']}), 400
         
         # Execute query
-        result = graphql_sync(graphql_schema, query, variable_values=variables)
+        try:
+            result = graphql_sync(graphql_schema, query, variable_values=variables)
+        except Exception as e:
+            app.logger.error(f'Error executing GraphQL query: {e}')
+            return jsonify({'errors': ['Query execution failed']}), 500
         
         # Return response
         response = {}

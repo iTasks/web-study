@@ -227,6 +227,18 @@ flask/
 - **Input Validation**: Marshmallow for data validation
 - **SQL Injection Prevention**: SQLAlchemy ORM
 
+### Known Security Considerations
+
+⚠️ **Note**: The protobuf library (version 4.25.8) has a known JSON recursion depth bypass vulnerability affecting versions <= 6.33.4. Currently, there is no patched version available. 
+
+**Mitigations**:
+- We use protobuf primarily for gRPC (binary protocol), not JSON parsing
+- REST and GraphQL APIs use Flask's native JSON handling
+- Rate limiting and request size limits are in place
+- See [SECURITY.md](SECURITY.md) for detailed security information
+
+For the latest security status and recommendations, see the [SECURITY.md](SECURITY.md) file.
+
 ## 🛠️ Development
 
 ### Code Formatting
