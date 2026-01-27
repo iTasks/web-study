@@ -9,7 +9,7 @@ This directory contains Ruby programming language study materials and sample app
 ## Contents
 
 ### Pure Language Samples
-- `samples/`: Core Ruby language examples and applications
+- **[Samples](samples/)**: Core Ruby language examples and applications
   - Authentication and OTP (One-Time Password) implementations
   - Redis pub/sub messaging demonstrations
   - AWS service integrations

@@ -9,7 +9,7 @@ This directory contains TeaVM study materials and sample applications. TeaVM is 
 ## Contents
 
 ### Pure Language Samples
-- `samples/`: TeaVM examples and applications
+- **[Samples](samples/)**: TeaVM examples and applications
   - Java-to-JavaScript transpilation examples
   - WebAssembly compilation demonstrations
   - Coroutine implementations

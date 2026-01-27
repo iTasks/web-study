@@ -9,7 +9,7 @@ This directory contains Groovy programming language study materials and sample a
 ## Contents
 
 ### Pure Language Samples
-- `samples/`: Core Groovy language examples and applications
+- **[Samples](samples/)**: Core Groovy language examples and applications
   - **Gapp.groovy** - Simple "Hello World" application
   - **StringManipulations.groovy** - String operations including reverse, palindrome check, compression, anagrams, permutations, and word frequency
   - **CollectionOperations.groovy** - List, map, set, and range operations with Groovy's powerful collection APIs
@@ -18,7 +18,7 @@ This directory contains Groovy programming language study materials and sample a
   - **JsonXmlProcessing.groovy** - JSON and XML parsing, creation, and transformation
 
 ### Web Framework Examples
-- `ratpack/`: Ratpack web framework examples
+- **[Ratpack](ratpack/)**: Ratpack web framework examples
   - Lightweight, high-performance REST API server
   - Reactive and non-blocking architecture
   - RESTful endpoints with CRUD operations

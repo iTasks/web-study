@@ -9,7 +9,7 @@ This directory contains Rust programming language study materials and sample app
 ## Contents
 
 ### Pure Language Samples
-- `samples/`: Core Rust language examples and applications
+- **[Samples](samples/)**: Core Rust language examples and applications
   - **Web Development**: HTTP server implementations with Hyper
   - **Threading**: Multi-threaded programming with shared state and message passing
   - **Webhooks**: Comprehensive webhook server handling GitHub, Slack, and generic webhooks

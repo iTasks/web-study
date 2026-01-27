@@ -9,11 +9,11 @@ This directory contains Go programming language study materials, sample applicat
 ## Contents
 
 ### Frameworks
-- **Echo**: High performance, minimalist Go web framework
-  - `echo/`: Echo web framework examples and utilities
+- **[Echo](echo/)**: High performance, minimalist Go web framework
+  - Echo web framework examples and utilities
 
 ### Pure Language Samples
-- `samples/`: Core Go language examples and applications
+- **[Samples](samples/)**: Core Go language examples and applications
   - REST API implementations
   - Wallet applications and blockchain-related code
   - Concurrent programming examples

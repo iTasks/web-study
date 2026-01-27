@@ -9,7 +9,7 @@ This directory contains R programming language study materials and sample applic
 ## Contents
 
 ### Pure Language Samples
-- `samples/`: Core R language examples and applications
+- **[Samples](samples/)**: Core R language examples and applications
   - Web application development with Shiny
   - Parallel computing and threading
   - Webhook handling with Plumber API

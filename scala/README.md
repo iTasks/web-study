@@ -9,7 +9,7 @@ This directory contains Scala programming language study materials and sample ap
 ## Contents
 
 ### Pure Language Samples
-- `samples/`: Core Scala language examples and applications
+- **[Samples](samples/)**: Core Scala language examples and applications
   - Functional programming demonstrations
   - Object-oriented programming examples
   - JVM interoperability samples

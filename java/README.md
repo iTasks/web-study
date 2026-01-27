@@ -9,12 +9,12 @@ This directory contains Java programming language study materials, sample applic
 ## Contents
 
 ### Frameworks
-- **Spring**: Enterprise-grade framework for building Java applications
-  - `spring/spark-hadoop/`: Apache Spark with Hadoop integration examples
-  - `spring/spark-beam/`: Apache Beam data processing pipelines
+- **[Spring](spring/)**: Enterprise-grade framework for building Java applications
+  - [Spark with Hadoop](spring/spark-hadoop/): Apache Spark with Hadoop integration examples
+  - [Spark with Beam](spring/spark-beam/): Apache Beam data processing pipelines
 
 ### Pure Language Samples
-- `samples/`: Core Java language examples and utilities
+- **[Samples](samples/)**: Core Java language examples and utilities
   - Data structures and algorithms implementations
   - Concurrency and threading examples
   - File I/O and data processing utilities

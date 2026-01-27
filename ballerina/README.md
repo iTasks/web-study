@@ -9,7 +9,7 @@ This directory contains Ballerina programming language study materials and sampl
 ## Contents
 
 ### Pure Language Samples
-- `samples/`: Core Ballerina language examples and applications
+- **[Samples](samples/)**: Core Ballerina language examples and applications
   - Web service implementations
   - Webhook handling examples
   - Concurrent programming with workers

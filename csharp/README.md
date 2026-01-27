@@ -9,7 +9,7 @@ This directory contains C# programming language study materials and sample appli
 ## Contents
 
 ### Pure Language Samples
-- `samples/`: Core C# language examples and applications
+- **[Samples](samples/)**: Core C# language examples and applications
   - **Async Programming**: async/await patterns, async streams (IAsyncEnumerable)
   - **Concurrency**: Thread-safe collections, parallel processing, channels
   - **Locking & Thread Safety**: Synchronization primitives, lock-free patterns

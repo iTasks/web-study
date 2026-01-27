@@ -8,8 +8,14 @@ This directory contains Zig programming language study materials and sample appl
 
 ## Contents
 
+### Embedded Systems
+- **[Embedded](embedded/)**: Embedded systems programming with Zig
+  - Bare-metal RP2040 (Raspberry Pi Pico) implementation
+  - Minimal RTOS for small fixed-wing drone control
+  - Microcontroller programming examples
+
 ### Pure Language Samples
-- `samples/`: Core Zig language examples and applications
+- **[Samples](samples/)**: Core Zig language examples and applications
   - Basic syntax and language fundamentals
   - Memory management and allocators
   - Compile-time programming (comptime)

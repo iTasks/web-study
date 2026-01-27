@@ -9,7 +9,7 @@ This directory contains Kotlin programming language study materials, sample appl
 ## Contents
 
 ### Mobile Development
-- **Android**: Native Android mobile application development
+- **[Android App](android-app/)**: Native Android mobile application development
   - Jetpack Compose for modern UI development
   - Material Design components
   - MVVM architecture patterns
@@ -17,7 +17,7 @@ This directory contains Kotlin programming language study materials, sample appl
   - Retrofit for networking
 
 ### Pure Language Samples
-- `samples/`: Core Kotlin language examples
+- **[Samples](samples/)**: Core Kotlin language examples
   - Data classes and sealed classes
   - Coroutines and Flow
   - Extension functions

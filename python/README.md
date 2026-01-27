@@ -9,13 +9,13 @@ This directory contains Python programming language study materials, sample appl
 ## Contents
 
 ### Frameworks
-- **Django**: High-level Python web framework for rapid development
-  - `django/`: Production-ready Django project with REST API, Docker support, and best practices
-- **Flask**: Lightweight WSGI web application framework
-  - `flask/`: Flask web application examples and utilities
+- **[Django](django/)**: High-level Python web framework for rapid development
+  - Production-ready Django project with REST API, Docker support, and best practices
+- **[Flask](flask/)**: Lightweight WSGI web application framework
+  - Flask web application examples and utilities
 
 ### Pure Language Samples
-- `samples/`: Core Python language examples and applications
+- **[Samples](samples/)**: Core Python language examples and applications
   - Django web applications and models
   - Lambda function implementations
   - Server implementations
