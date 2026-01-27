@@ -1,5 +1,7 @@
 # Go
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory contains Go programming language study materials, sample applications, and framework implementations. Go is an open-source programming language developed by Google that makes it easy to build simple, reliable, and efficient software.
@@ -7,11 +9,11 @@ This directory contains Go programming language study materials, sample applicat
 ## Contents
 
 ### Frameworks
-- **Echo**: High performance, minimalist Go web framework
-  - `echo/`: Echo web framework examples and utilities
+- **[Echo](echo/)**: High performance, minimalist Go web framework
+  - Echo web framework examples and utilities
 
 ### Pure Language Samples
-- `samples/`: Core Go language examples and applications
+- **[Samples](samples/)**: Core Go language examples and applications
   - REST API implementations
   - Wallet applications and blockchain-related code
   - Concurrent programming examples

@@ -1,5 +1,7 @@
 # DevOps and AWS Management - Zero to Expert
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory provides a comprehensive learning path for DevOps practices and AWS cloud management, taking you from absolute beginner to expert level. The content is structured progressively, with hands-on examples, best practices, and real-world scenarios.
@@ -23,7 +25,7 @@ Topics covered:
 - Docker containers basics
 - AWS account setup and core concepts
 
-**Location**: `01-fundamentals/`
+**[→ Go to Level 1: Fundamentals](01-fundamentals/)**
 
 ### 🔧 Level 2: Intermediate (Weeks 5-10)
 **Target**: Those with basic understanding seeking practical skills
@@ -36,7 +38,7 @@ Topics covered:
 - Configuration management (Ansible)
 - Container orchestration basics
 
-**Location**: `02-intermediate/`
+**[→ Go to Level 2: Intermediate](02-intermediate/)**
 
 ### 🚀 Level 3: Advanced (Weeks 11-18)
 **Target**: Practitioners ready for production-grade implementations
@@ -49,7 +51,7 @@ Topics covered:
 - High availability and disaster recovery
 - Cost optimization and resource management
 
-**Location**: `03-advanced/`
+**[→ Go to Level 3: Advanced](03-advanced/)**
 
 ### 🏆 Level 4: Expert (Weeks 19-24)
 **Target**: Senior practitioners and architects
@@ -63,7 +65,7 @@ Topics covered:
 - Enterprise DevOps transformation
 - Advanced AWS architectures (Well-Architected Framework)
 
-**Location**: `04-expert/`
+**[→ Go to Level 4: Expert](04-expert/)**
 
 ## Quick Start
 

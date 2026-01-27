@@ -1,5 +1,7 @@
 # Rust
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory contains Rust programming language study materials and sample applications. Rust is a systems programming language that runs blazingly fast, prevents segfaults, and guarantees thread safety.
@@ -7,7 +9,7 @@ This directory contains Rust programming language study materials and sample app
 ## Contents
 
 ### Pure Language Samples
-- `samples/`: Core Rust language examples and applications
+- **[Samples](samples/)**: Core Rust language examples and applications
   - **Web Development**: HTTP server implementations with Hyper
   - **Threading**: Multi-threaded programming with shared state and message passing
   - **Webhooks**: Comprehensive webhook server handling GitHub, Slack, and generic webhooks

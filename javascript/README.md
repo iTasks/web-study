@@ -1,5 +1,7 @@
 # JavaScript
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory contains JavaScript/TypeScript programming language study materials, sample applications, and framework implementations. JavaScript is a high-level, interpreted programming language that is one of the core technologies of the World Wide Web, alongside HTML and CSS.
@@ -7,14 +9,14 @@ This directory contains JavaScript/TypeScript programming language study materia
 ## Contents
 
 ### Frameworks
-- **Node.js**: JavaScript runtime built on Chrome's V8 JavaScript engine
-  - `nodejs/`: Server-side JavaScript applications and utilities
-  - `nodejs/lambda/`: AWS Lambda function implementations
-- **React**: Library for building user interfaces, particularly React Native
-  - `react/`: React Native mobile application examples
+- **[Node.js](nodejs/)**: JavaScript runtime built on Chrome's V8 JavaScript engine
+  - Server-side JavaScript applications and utilities
+  - AWS Lambda function implementations
+- **[React](react/)**: Library for building user interfaces, particularly React Native
+  - React Native mobile application examples
 
 ### Pure Language Samples
-- `samples/`: Core JavaScript/TypeScript language examples
+- **[Samples](samples/)**: Core JavaScript/TypeScript language examples
   - Testing frameworks (Pact.js)
   - Browser-based applications
   - TypeScript implementations

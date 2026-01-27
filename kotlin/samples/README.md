@@ -1,5 +1,7 @@
 # Kotlin Samples
 
+[← Back to Kotlin](../README.md) | [Main README](../../README.md)
+
 ## Purpose
 
 This directory contains pure Kotlin language examples demonstrating core language features, idioms, and best practices. These samples are designed to help learn Kotlin programming fundamentals before diving into Android mobile development.

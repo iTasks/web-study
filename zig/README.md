@@ -1,13 +1,21 @@
 # Zig
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory contains Zig programming language study materials and sample applications. Zig is a general-purpose programming language and toolchain for maintaining robust, optimal, and reusable software. It aims to be a better C, offering modern language features while maintaining simplicity and performance.
 
 ## Contents
 
+### Embedded Systems
+- **[Embedded](embedded/)**: Embedded systems programming with Zig
+  - Bare-metal RP2040 (Raspberry Pi Pico) implementation
+  - Minimal RTOS for small fixed-wing drone control
+  - Microcontroller programming examples
+
 ### Pure Language Samples
-- `samples/`: Core Zig language examples and applications
+- **[Samples](samples/)**: Core Zig language examples and applications
   - Basic syntax and language fundamentals
   - Memory management and allocators
   - Compile-time programming (comptime)

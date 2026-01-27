@@ -1,5 +1,7 @@
 # Ruby
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory contains Ruby programming language study materials and sample applications. Ruby is a dynamic, open-source programming language with a focus on simplicity and productivity, featuring an elegant syntax that is natural to read and easy to write.
@@ -7,7 +9,7 @@ This directory contains Ruby programming language study materials and sample app
 ## Contents
 
 ### Pure Language Samples
-- `samples/`: Core Ruby language examples and applications
+- **[Samples](samples/)**: Core Ruby language examples and applications
   - Authentication and OTP (One-Time Password) implementations
   - Redis pub/sub messaging demonstrations
   - AWS service integrations

@@ -1,5 +1,7 @@
 # Level 4: Expert
 
+[← Back to Lisp](../README.md) | [Main README](../../README.md)
+
 Welcome to expert-level Common Lisp! This level demonstrates real-world applications and advanced programming techniques that showcase Lisp's unique strengths.
 
 ## Learning Objectives

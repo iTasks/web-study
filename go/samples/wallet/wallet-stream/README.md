@@ -1,4 +1,8 @@
-## Waller Kafka-Stream Consumers App
+# Wallet Kafka-Stream Consumers App
+
+[← Back to Go Samples](../../README.md) | [Go](../../../README.md) | [Main README](../../../../README.md)
+
+## Wallet Kafka-Stream Consumers App
 
 ### Dependencies:
 1. Golang: https://golang.org/

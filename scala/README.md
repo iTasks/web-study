@@ -1,5 +1,7 @@
 # Scala
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory contains Scala programming language study materials and sample applications. Scala is a general-purpose programming language that combines object-oriented and functional programming paradigms, running on the Java Virtual Machine (JVM).
@@ -7,7 +9,7 @@ This directory contains Scala programming language study materials and sample ap
 ## Contents
 
 ### Pure Language Samples
-- `samples/`: Core Scala language examples and applications
+- **[Samples](samples/)**: Core Scala language examples and applications
   - Functional programming demonstrations
   - Object-oriented programming examples
   - JVM interoperability samples

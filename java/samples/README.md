@@ -1,4 +1,6 @@
-# Java Module
+# Java Samples
+
+[← Back to Java](../README.md) | [Main README](../../README.md)
 
 ## Overview
 

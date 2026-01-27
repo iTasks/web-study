@@ -1,5 +1,7 @@
 # Zig Embedded Systems - Minimal OS for Drone Control
 
+[← Back to Zig](../README.md) | [Main README](../../README.md)
+
 ## Purpose
 
 This directory contains Zig implementations for embedded systems, focusing on bare-metal programming for microcontrollers. The primary application is a minimal real-time operating system (RTOS) for small fixed-wing drone control using Arduino and RP2040 (Raspberry Pi Pico).

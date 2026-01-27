@@ -1,5 +1,7 @@
 # Swift
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory contains Swift programming language study materials, sample applications, and mobile development implementations. Swift is a powerful, intuitive programming language developed by Apple for iOS, macOS, watchOS, and tvOS app development.
@@ -7,7 +9,7 @@ This directory contains Swift programming language study materials, sample appli
 ## Contents
 
 ### Mobile Development
-- **iOS**: Native iOS mobile application development
+- **[iOS App](ios-app/)**: Native iOS mobile application development
   - SwiftUI for modern declarative UI
   - UIKit for traditional UI development
   - Combine framework for reactive programming
@@ -15,7 +17,7 @@ This directory contains Swift programming language study materials, sample appli
   - URLSession for networking
 
 ### Pure Language Samples
-- `samples/`: Core Swift language examples
+- **[Samples](samples/)**: Core Swift language examples
   - Protocols and protocol extensions
   - Generics and associated types
   - Closures and higher-order functions

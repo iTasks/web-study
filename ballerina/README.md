@@ -1,5 +1,7 @@
 # Ballerina
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory contains Ballerina programming language study materials and sample applications. Ballerina is a cloud-native programming language that specializes in integration and is designed to make it easier to write programs that integrate with networked services and APIs.
@@ -7,7 +9,7 @@ This directory contains Ballerina programming language study materials and sampl
 ## Contents
 
 ### Pure Language Samples
-- `samples/`: Core Ballerina language examples and applications
+- **[Samples](samples/)**: Core Ballerina language examples and applications
   - Web service implementations
   - Webhook handling examples
   - Concurrent programming with workers

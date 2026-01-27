@@ -1,5 +1,7 @@
 # R
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory contains R programming language study materials and sample applications. R is a programming language and software environment specifically designed for statistical computing, data analysis, and graphics.
@@ -7,7 +9,7 @@ This directory contains R programming language study materials and sample applic
 ## Contents
 
 ### Pure Language Samples
-- `samples/`: Core R language examples and applications
+- **[Samples](samples/)**: Core R language examples and applications
   - Web application development with Shiny
   - Parallel computing and threading
   - Webhook handling with Plumber API

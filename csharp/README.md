@@ -1,5 +1,7 @@
 # C#
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 ## Purpose
 
 This directory contains C# programming language study materials and sample applications. C# is a modern, object-oriented, and type-safe programming language developed by Microsoft as part of the .NET platform.
@@ -7,7 +9,7 @@ This directory contains C# programming language study materials and sample appli
 ## Contents
 
 ### Pure Language Samples
-- `samples/`: Core C# language examples and applications
+- **[Samples](samples/)**: Core C# language examples and applications
   - **Async Programming**: async/await patterns, async streams (IAsyncEnumerable)
   - **Concurrency**: Thread-safe collections, parallel processing, channels
   - **Locking & Thread Safety**: Synchronization primitives, lock-free patterns
