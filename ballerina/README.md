@@ -121,3 +121,4 @@ ballerina/
 - [Ballerina API Documentation](https://lib.ballerina.io/)
 - [Ballerina Central](https://central.ballerina.io/)
 - [Ballerina GitHub Repository](https://github.com/ballerina-platform/ballerina-lang)
+- [Ballerina Study Examples](https://github.com/smaruf/ballerina-study) - Additional study materials and examples
