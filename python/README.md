@@ -171,3 +171,7 @@ python/
 - [Python Package Index (PyPI)](https://pypi.org/)
 - [Real Python Tutorials](https://realpython.com/)
 - [Python.org Tutorial](https://docs.python.org/3/tutorial/)
+
+### Additional Learning Resources
+- [Python AI Course](https://github.com/smaruf/python-ai-course) - Comprehensive Python AI/ML course materials
+- [Python Study](https://github.com/smaruf/python-study) - Additional Python study materials and examples
