@@ -1,0 +1,40 @@
+{% extends 'core/base.html' %}
+
+{% block title %}Home - Django Production Ready{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>Welcome to Django Production-Ready Project</h2>
+    <p>This is a fully production-ready Django project with best practices and modern features.</p>
+    
+    <h3 style="margin-top: 2rem;">Features</h3>
+    <ul style="margin-left: 2rem; margin-top: 1rem; line-height: 2;">
+        <li><strong>Environment-based Configuration</strong> - Using python-decouple for settings management</li>
+        <li><strong>REST API</strong> - Django REST Framework with ViewSets and Routers</li>
+        <li><strong>Database Support</strong> - PostgreSQL for production, SQLite for development</li>
+        <li><strong>Static Files</strong> - Whitenoise for serving static files in production</li>
+        <li><strong>Security</strong> - Production-ready security settings (HTTPS, HSTS, etc.)</li>
+        <li><strong>CORS Support</strong> - django-cors-headers for cross-origin requests</li>
+        <li><strong>Admin Interface</strong> - Customized Django admin panel</li>
+        <li><strong>Logging</strong> - Comprehensive logging configuration</li>
+        <li><strong>Docker Support</strong> - Containerization ready</li>
+        <li><strong>Production Server</strong> - Gunicorn WSGI server</li>
+    </ul>
+    
+    <h3 style="margin-top: 2rem;">Quick Links</h3>
+    <div style="margin-top: 1rem;">
+        <a href="{% url 'core:task_list' %}" class="btn">View Tasks</a>
+        <a href="/api/" class="btn" style="margin-left: 1rem;">API Root</a>
+        <a href="/admin/" class="btn" style="margin-left: 1rem;">Admin Panel</a>
+    </div>
+    
+    <h3 style="margin-top: 2rem;">API Endpoints</h3>
+    <ul style="margin-left: 2rem; margin-top: 1rem; line-height: 2;">
+        <li><code>/api/</code> - API Root</li>
+        <li><code>/api/tasks/</code> - Task List/Create</li>
+        <li><code>/api/tasks/{id}/</code> - Task Detail/Update/Delete</li>
+        <li><code>/api/categories/</code> - Category List/Create</li>
+        <li><code>/api/categories/{id}/</code> - Category Detail/Update/Delete</li>
+    </ul>
+</div>
+{% endblock %}

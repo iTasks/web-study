@@ -7,6 +7,8 @@ This directory contains Python programming language study materials, sample appl
 ## Contents
 
 ### Frameworks
+- **Django**: High-level Python web framework for rapid development
+  - `django/`: Production-ready Django project with REST API, Docker support, and best practices
 - **Flask**: Lightweight WSGI web application framework
   - `flask/`: Flask web application examples and utilities
 
@@ -57,10 +59,12 @@ This directory contains Python programming language study materials, sample appl
 
 3. **Install Dependencies**
    ```bash
-   # For Django samples
-   pip install django
+   # For Django framework
+   cd django
+   pip install -r requirements.txt
    
    # For Flask framework
+   cd flask
    pip install flask
    
    # For web scraping
@@ -68,6 +72,16 @@ This directory contains Python programming language study materials, sample appl
    ```
 
 ### Building and Running
+
+#### For Django framework:
+```bash
+cd python/django
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python3 manage.py migrate
+python3 manage.py runserver
+```
 
 #### For samples directory:
 ```bash
@@ -113,6 +127,15 @@ flask run --debug
 ```
 python/
 ├── README.md                 # This file
+├── django/                   # Django framework (production-ready)
+│   ├── config/              # Project configuration
+│   ├── core/                # Main application
+│   ├── templates/           # HTML templates
+│   ├── static/              # Static files
+│   ├── requirements.txt     # Python dependencies
+│   ├── Dockerfile           # Docker configuration
+│   ├── docker-compose.yml   # Multi-container setup
+│   └── README.md            # Django-specific documentation
 ├── samples/                  # Pure Python language examples
 │   ├── __init__.py          # Python package marker
 │   ├── admin.py             # Django admin configuration
