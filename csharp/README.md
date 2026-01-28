@@ -196,3 +196,6 @@ csharp/
 - [C# Coding Conventions](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/inside-a-program/coding-conventions)
 - [Performance Best Practices](https://docs.microsoft.com/en-us/dotnet/framework/performance/)
 - [Async Best Practices](https://docs.microsoft.com/en-us/archive/msdn-magazine/2013/march/async-await-best-practices-in-asynchronous-programming)
+
+### Additional Learning Resources
+- [C# AI Study](https://github.com/smaruf/csharp-ai-study)
