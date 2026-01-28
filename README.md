@@ -1632,5 +1632,6 @@ The `src/` directory contains cloud services and infrastructure tools:
 - [Cloud Native Computing Foundation](https://www.cncf.io/)
 - [Modern Web Development Frameworks](https://jamstack.org/)
 - [Microservices Architecture](https://microservices.io/)
+- [C Study Repository](https://github.com/smaruf/c-study)
 
 Feel free to explore each language and framework, and contribute to the repository by adding more sample applications and documentation.
