@@ -8,8 +8,9 @@ The repository is organized by programming language first, then by framework, to
 
 ## Repository Structure
 
-This repository follows a language-first organization structure:
-
+<details>
+    <summary><b>This repository follows a language-first organization structure:</b></summary>
+    
 ```
 web-study/
 ├── java/                    # Java programming language
@@ -55,6 +56,7 @@ web-study/
 │   └── samples/            # Pure Swift examples
 └── src/                    # Legacy structure (cloud services, tools)
 ```
+</details>
 
 ## Programming Languages
 
