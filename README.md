@@ -25,6 +25,8 @@ web-study/
 ├── go/                     # Go programming language
 │   ├── echo/               # Echo framework examples
 │   └── samples/            # Pure Go examples
+├── C-Basic/                # C programming language
+│   └── samples/            # Embedded systems, robotics, aerospace examples
 ├── csharp/                 # C# programming language
 │   └── samples/            # Pure C# examples
 ├── ruby/                   # Ruby programming language
@@ -61,7 +63,9 @@ Enterprise-grade programming language with comprehensive framework support.
 - **Frameworks**: Spring (Spring Boot, Spark, Beam)
 - **Key Topics**: Enterprise applications, big data processing, microservices
 
-**Basic Syntax:**
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
 ```java
 // Hello World
 import java.util.Optional;
@@ -134,13 +138,16 @@ list.stream()
     .map(n -> n * 2)
     .forEach(System.out::println);
 ```
+</details>
 
 ### [Python](python/)
 High-level, interpreted language known for simplicity and extensive libraries.
 - **Frameworks**: Flask, Django
 - **Key Topics**: Web development, data science, automation, serverless
 
-**Basic Syntax:**
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
 ```python
 # Hello World
 print("Hello, World!")
@@ -203,13 +210,16 @@ evens = [x for x in range(10) if x % 2 == 0]
 # Lambda Functions
 doubled = list(map(lambda x: x * 2, [1, 2, 3, 4, 5]))
 ```
+</details>
 
 ### [JavaScript](javascript/)
 Core web technology for client and server-side development.
 - **Frameworks**: Node.js, React/React Native
 - **Key Topics**: Web applications, mobile apps, server-side development
 
-**Basic Syntax:**
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
 ```javascript
 // Hello World
 console.log("Hello, World!");
@@ -286,13 +296,16 @@ async function fetchData() {
     return await response.json();
 }
 ```
+</details>
 
 ### [Go](go/)
 Modern systems programming language with excellent concurrency support.
 - **Frameworks**: Echo
 - **Key Topics**: Web services, microservices, concurrent programming
 
-**Basic Syntax:**
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
 ```go
 // Hello World
 package main
@@ -375,12 +388,99 @@ value := <-ch
 // Defer
 defer fmt.Println("This runs at the end")
 ```
+</details>
+
+### [C](C-Basic/)
+Low-level, efficient programming language for systems programming and embedded systems.
+- **Key Topics**: Embedded systems, operating systems, hardware control, renewable energy systems, robotics, aerospace
+
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
+```c
+// Hello World
+#include <stdio.h>
+
+int main() {
+    printf("Hello, World!\n");
+    return 0;
+}
+
+// Variables and Constants
+#define CONSTANT 42  // Compile-time constant
+const int CONST_VAR = 100;  // Runtime constant
+int mutable = 200;  // Mutable variable
+
+// Functions
+int add(int a, int b) {
+    return a + b;
+}
+
+// Pointers
+int x = 10;
+int *ptr = &x;  // Pointer to x
+*ptr = 20;  // Dereference and modify
+
+// Error Handling
+int divide(int a, int b, int *result) {
+    if (b == 0) return -1;  // Error code
+    *result = a / b;
+    return 0;  // Success
+}
+
+// Structs
+struct Point {
+    float x;
+    float y;
+};
+
+struct Point p = {1.0, 2.0};
+struct Point *p_ptr = &p;
+p_ptr->x = 3.0;
+
+// Control Flow
+int num = 10;
+if (num > 0) {
+    // if block
+} else {
+    // else block
+}
+
+int numbers[] = {1, 2, 3, 4, 5};
+for (int i = 0; i < 5; i++) {
+    // loop body
+}
+
+int i = 0;
+while (i < 10) {
+    // loop body
+    i++;
+}
+
+// Memory Management
+int *arr = (int*)malloc(10 * sizeof(int));
+if (arr != NULL) {
+    // Use array
+    free(arr);
+}
+
+// File I/O
+FILE *file = fopen("data.txt", "r");
+if (file != NULL) {
+    char buffer[100];
+    fgets(buffer, 100, file);
+    fclose(file);
+}
+```
+</details>
 
 ### [C#](csharp/)
 Object-oriented programming language for the .NET platform.
 - **Key Topics**: Enterprise applications, financial systems, FIX protocol
 
-**Basic Syntax:**
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
 ```csharp
 // Hello World
 using System;
@@ -469,12 +569,15 @@ async Task<string> FetchDataAsync()
     return "Data";
 }
 ```
+</details>
 
 ### [Ruby](ruby/)
 Dynamic programming language focused on simplicity and productivity.
 - **Key Topics**: Web development, automation, authentication systems
 
-**Basic Syntax:**
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
 ```ruby
 # Hello World
 puts "Hello, World!"
@@ -548,12 +651,15 @@ sum = numbers.reduce(0) { |acc, n| acc + n }
 person = { name: "Alice", age: 30 }
 puts person[:name]
 ```
+</details>
 
 ### [Rust](rust/)
 Systems programming language focused on safety and performance.
 - **Key Topics**: Threading, async programming, webhooks, web servers, memory safety
 
-**Basic Syntax:**
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
 ```rust
 // Hello World
 fn main() {
@@ -641,12 +747,15 @@ match number {
 let doubled: Vec<i32> = numbers.iter().map(|x| x * 2).collect();
 let evens: Vec<&i32> = numbers.iter().filter(|x| *x % 2 == 0).collect();
 ```
+</details>
 
 ### [Scala](scala/)
 JVM language combining object-oriented and functional programming.
 - **Key Topics**: Big data processing, functional programming, JVM integration
 
-**Basic Syntax:**
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
 ```scala
 // Hello World
 import scala.util.{Try, Success, Failure}
@@ -731,12 +840,15 @@ val result = for {
   y <- List(10, 20)
 } yield x * y
 ```
+</details>
 
 ### [Groovy](groovy/)
 Dynamic language for the Java platform with enhanced productivity features.
 - **Key Topics**: Scripting, DSLs, Java integration
 
-**Basic Syntax:**
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
 ```groovy
 // Hello World
 println "Hello, World!"
@@ -824,12 +936,15 @@ println "Hello, ${name}!"
 def range = 1..10
 range.each { println it }
 ```
+</details>
 
 ### [Lisp](lisp/)
 Functional programming language known for symbolic computation.
 - **Key Topics**: Symbolic computation, AI, functional programming
 
-**Basic Syntax:**
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
 ```lisp
 ;; Hello World
 (print "Hello, World!")
@@ -904,12 +1019,15 @@ Functional programming language known for symbolic computation.
   `(when (> ,x 0)
      ,@body))
 ```
+</details>
 
 ### [TeaVM](teavm/)
 Java-to-JavaScript/WebAssembly transpiler.
 - **Key Topics**: Java in browsers, WebAssembly, cross-platform development
 
-**Basic Syntax:**
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
 ```java
 // TeaVM uses Java syntax but compiles to JavaScript/WebAssembly
 import org.teavm.jso.browser.Window;
@@ -974,12 +1092,15 @@ public class JSInterop {
     public static native long getCurrentTime();
 }
 ```
+</details>
 
 ### [Zig](zig/)
 Modern systems programming language focusing on performance, safety, and maintainability.
 - **Key Topics**: Systems programming, comptime, C interoperability, memory safety
 
-**Basic Syntax:**
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
 ```zig
 // Hello World
 const std = @import("std");
@@ -1042,12 +1163,15 @@ fn fibonacci(comptime n: u32) u32 {
     return fibonacci(n - 1) + fibonacci(n - 2);
 }
 ```
+</details>
 
 ### [Ballerina](ballerina/)
 Cloud-native programming language specialized for integration and networked services.
 - **Key Topics**: Web services, webhooks, concurrent workers, API integration, data transformation
 
-**Basic Syntax:**
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
 ```ballerina
 // Hello World
 import ballerina/io;
@@ -1150,12 +1274,15 @@ var adults = from var person in people
              where person.age >= 18
              select person.name;
 ```
+</details>
 
 ### [R](r/)
 Programming language and environment for statistical computing and data analysis.
 - **Key Topics**: Web applications with Shiny, parallel processing, webhooks with Plumber, data analysis pipelines
 
-**Basic Syntax:**
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
 ```r
 # Hello World
 library(dplyr) # Load dplyr for pipe operator examples
@@ -1257,12 +1384,15 @@ result <- df %>%
   filter(age >= 25) %>%
   select(name)
 ```
+</details>
 ### [Kotlin](kotlin/)
 Modern, statically typed programming language for JVM and Android development.
 - **Frameworks**: Android SDK, Jetpack Compose
 - **Key Topics**: Android mobile development, null safety, coroutines, functional programming, mobile apps
 
-**Basic Syntax:**
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
 ```kotlin
 // Hello World
 fun main() {
@@ -1377,13 +1507,16 @@ fun processValue(value: Any) {
     }
 }
 ```
+</details>
 
 ### [Swift](swift/)
 Powerful, intuitive programming language for iOS, macOS, and Apple ecosystem development.
 - **Frameworks**: SwiftUI, UIKit
 - **Key Topics**: iOS mobile development, memory safety, modern concurrency, protocol-oriented programming, mobile apps
 
-**Basic Syntax:**
+<details>
+<summary><b>Basic Syntax:</b></summary>
+
 ```swift
 // Hello World
 import Foundation
@@ -1583,6 +1716,7 @@ struct Rectangle {
     }
 }
 ```
+</details>
 
 ### DevOps and Cloud Management
 
