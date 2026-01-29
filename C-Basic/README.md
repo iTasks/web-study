@@ -211,7 +211,7 @@ Battery Monitor → ADC
 
 ```c
 // Initialize HAL for specific platform
-hal_init(PLATFORM_RASPBERRY_PI);
+hal_init(PLATFORM_RPI);
 
 // GPIO control
 hal_gpio_set_mode(pin, GPIO_MODE_OUTPUT);

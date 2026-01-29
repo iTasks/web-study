@@ -204,6 +204,8 @@ void wind_release_brake(void) {
 Auto-orient turbine into wind:
 
 ```c
+#include <math.h>
+
 void wind_yaw_control(float wind_direction, float current_yaw) {
     const float TOLERANCE = 15.0f;  // degrees
     
@@ -213,7 +215,7 @@ void wind_yaw_control(float wind_direction, float current_yaw) {
     while (error > 180.0f) error -= 360.0f;
     while (error < -180.0f) error += 360.0f;
     
-    if (fabs(error) > TOLERANCE) {
+    if (fabsf(error) > TOLERANCE) {
         int16_t speed = (int16_t)(error * 5.0f);  // Proportional control
         motor_set_speed(YAW_MOTOR_ID, speed);
     } else {

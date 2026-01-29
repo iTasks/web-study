@@ -183,6 +183,12 @@ servo_config_t servos[6] = {
 **Inverse Kinematics (Simple 2-DOF):**
 
 ```c
+#include <math.h>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 typedef struct {
     float x, y;  // Target position
 } point_t;
@@ -281,6 +287,12 @@ void obstacle_avoidance(void) {
 Basic dead reckoning:
 
 ```c
+#include <math.h>
+
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 typedef struct {
     float x, y;      // Position (meters)
     float theta;     // Heading (radians)

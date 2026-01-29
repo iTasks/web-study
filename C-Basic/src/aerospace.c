@@ -110,7 +110,10 @@ int telemetry_send(const telemetry_t* telem) {
 
 int telemetry_log(const telemetry_t* telem, const char* filename) {
     FILE* f = fopen(filename, "a");
-    if (!f) return -1;
+    if (!f) {
+        fprintf(stderr, "Failed to open log file: %s\n", filename);
+        return -1;
+    }
     
     fprintf(f, "%u,%.6f,%.6f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%.2f,%d,%d,%d,%d\n",
             telem->timestamp,

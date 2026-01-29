@@ -384,9 +384,9 @@ ls /dev/i2c* /dev/spi*
 ## Resources
 
 - [Main README](../README.md) - Complete feature list
-- [Hardware Guide](docs/HARDWARE_GUIDE.md) - Platform-specific details
-- [Deployment Guide](docs/DEPLOYMENT.md) - Production deployment
-- [Example Projects](examples/) - Working code examples
+- [Hardware Guide](HARDWARE_GUIDE.md) - Platform-specific details
+- [Deployment Guide](DEPLOYMENT.md) - Production deployment
+- [Example Projects](../examples/) - Working code examples
 
 ## Getting Help
 
