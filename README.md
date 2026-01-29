@@ -400,6 +400,7 @@ Low-level, efficient programming language for systems programming and embedded s
 ```c
 // Hello World
 #include <stdio.h>
+#include <stdlib.h>
 
 int main() {
     printf("Hello, World!\n");
@@ -1385,6 +1386,7 @@ result <- df %>%
   select(name)
 ```
 </details>
+
 ### [Kotlin](kotlin/)
 Modern, statically typed programming language for JVM and Android development.
 - **Frameworks**: Android SDK, Jetpack Compose
