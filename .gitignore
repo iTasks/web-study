@@ -52,3 +52,23 @@ obj/
 # OS files
 .DS_Store
 Thumbs.db
+
+# C/C++ compiled files
+*.o
+*.a
+*.so
+*.dylib
+*.out
+*.elf
+*.hex
+*.map
+
+# C-Basic specific
+C-Basic/build/
+C-Basic/bin/
+*.csv
+*_log.csv
+solar_data.csv
+flight_log.csv
+aircraft_log.csv
+
