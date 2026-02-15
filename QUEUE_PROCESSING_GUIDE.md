@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document provides a comprehensive guide to the queue processing samples added across multiple programming languages (Python, JavaScript/Node.js, and Go). These samples demonstrate efficient parallel queue processing with MongoDB and PostgreSQL bulk insert operations, designed for high-throughput scenarios such as Stock Exchange (SE) market order processing.
+This document provides a comprehensive guide to the queue processing samples added across multiple programming languages (Python, JavaScript/Node.js, Go, and C#). These samples demonstrate efficient parallel queue processing with MongoDB and PostgreSQL bulk insert operations, designed for high-throughput scenarios such as Stock Exchange (SE) market order processing.
 
 ## Features Across All Implementations
 
@@ -75,6 +75,26 @@ cd go/samples/queue_processing
 go mod download
 docker-compose up -d
 go run main.go
+```
+
+### C#
+**Path**: `/csharp/samples/`
+
+**Files**:
+- `MongoDBQueueProcessor.cs` - MongoDB bulk operations with InsertManyAsync
+- `PostgreSQLQueueProcessor.cs` - PostgreSQL batch operations with Npgsql
+- `MarketOrderProcessor.cs` - SE order processing with dual persistence
+- `CacheManager.cs` - MemoryCache-based LRU cache
+
+**Dependencies**: `MongoDB.Driver`, `Npgsql`, `Microsoft.Extensions.Caching.Memory`
+
+**Run Example**:
+```bash
+cd csharp/samples
+dotnet restore
+docker-compose up -d
+# Add samples to Program.cs and run:
+dotnet run
 ```
 
 ## Adaptive Batching Strategy
@@ -169,6 +189,7 @@ docker-compose up -d
 | Python | 50K | 8 | ~30K ops/sec | Threading limited by GIL |
 | Node.js | 50K | 8 | ~40K ops/sec | Event loop efficiency |
 | Go | 50K | 8 | ~80K ops/sec | Native concurrency |
+| C# | 50K | 8 | ~70K ops/sec | TPL async efficiency |
 
 ### Factors Affecting Performance
 1. **Database latency** - Network and disk I/O
@@ -208,6 +229,11 @@ docker-compose up -d
 ### Go
 - **GOGC**: Default 100, tune for performance
 - **Memory**: ~80-150MB for 10K queue + 10K cache
+
+### C#
+- **GC**: Generational garbage collection, tune with GCSettings
+- **Memory**: ~100-180MB for 10K queue + 10K cache
+- **MemoryCache**: Built-in LRU eviction with size limits
 
 ## Error Handling
 

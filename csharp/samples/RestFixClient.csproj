@@ -35,6 +35,11 @@
 	  
 	  <!-- Health Checks -->
 	  <PackageReference Include="Microsoft.Extensions.Diagnostics.HealthChecks" Version="6.0.0" />
+	  
+	  <!-- Queue Processing - MongoDB and PostgreSQL -->
+	  <PackageReference Include="MongoDB.Driver" Version="2.23.1" />
+	  <PackageReference Include="Npgsql" Version="8.0.1" />
+	  <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="8.0.0" />
 	</ItemGroup>
 
 </Project>
