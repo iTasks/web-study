@@ -67,7 +67,7 @@ namespace RestFixClient.Samples.QueueProcessing
         /// </summary>
         public void Clear()
         {
-            _cache.Dispose();
+            _cache.Clear();
             Interlocked.Exchange(ref _hits, 0);
             Interlocked.Exchange(ref _misses, 0);
         }

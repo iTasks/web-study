@@ -119,31 +119,41 @@ namespace RestFixClient.Samples.QueueProcessing
 
                 await using var transaction = await connection.BeginTransactionAsync();
 
-                var sql = $@"
+                // Use batch insert with value lists for better performance
+                var sqlBuilder = new System.Text.StringBuilder();
+                sqlBuilder.Append($@"
                     INSERT INTO {_tableName} 
                     (order_id, symbol, quantity, price, side, order_type, timestamp, trader_id, account_id, exchange, status)
-                    VALUES (@order_id, @symbol, @quantity, @price, @side, @order_type, @timestamp, @trader_id, @account_id, @exchange, @status)
-                    ON CONFLICT (order_id) DO NOTHING";
+                    VALUES ");
 
-                int inserted = 0;
-                foreach (var doc in documents)
+                var parameters = new List<NpgsqlParameter>();
+                for (int i = 0; i < documents.Count; i++)
                 {
-                    await using var cmd = new NpgsqlCommand(sql, connection, transaction);
-                    cmd.Parameters.AddWithValue("order_id", doc.OrderId);
-                    cmd.Parameters.AddWithValue("symbol", doc.Symbol);
-                    cmd.Parameters.AddWithValue("quantity", doc.Quantity);
-                    cmd.Parameters.AddWithValue("price", doc.Price);
-                    cmd.Parameters.AddWithValue("side", doc.Side);
-                    cmd.Parameters.AddWithValue("order_type", doc.OrderType);
-                    cmd.Parameters.AddWithValue("timestamp", doc.Timestamp);
-                    cmd.Parameters.AddWithValue("trader_id", doc.TraderId ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("account_id", doc.AccountId ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("exchange", doc.Exchange ?? (object)DBNull.Value);
-                    cmd.Parameters.AddWithValue("status", doc.Status ?? (object)DBNull.Value);
-
-                    inserted += await cmd.ExecuteNonQueryAsync();
+                    if (i > 0) sqlBuilder.Append(", ");
+                    
+                    var paramPrefix = $"p{i}_";
+                    sqlBuilder.Append($"(@{paramPrefix}order_id, @{paramPrefix}symbol, @{paramPrefix}quantity, @{paramPrefix}price, @{paramPrefix}side, @{paramPrefix}order_type, @{paramPrefix}timestamp, @{paramPrefix}trader_id, @{paramPrefix}account_id, @{paramPrefix}exchange, @{paramPrefix}status)");
+                    
+                    var doc = documents[i];
+                    parameters.Add(new NpgsqlParameter($"{paramPrefix}order_id", doc.OrderId));
+                    parameters.Add(new NpgsqlParameter($"{paramPrefix}symbol", doc.Symbol));
+                    parameters.Add(new NpgsqlParameter($"{paramPrefix}quantity", doc.Quantity));
+                    parameters.Add(new NpgsqlParameter($"{paramPrefix}price", doc.Price));
+                    parameters.Add(new NpgsqlParameter($"{paramPrefix}side", doc.Side));
+                    parameters.Add(new NpgsqlParameter($"{paramPrefix}order_type", doc.OrderType));
+                    parameters.Add(new NpgsqlParameter($"{paramPrefix}timestamp", doc.Timestamp));
+                    parameters.Add(new NpgsqlParameter($"{paramPrefix}trader_id", (object?)doc.TraderId ?? DBNull.Value));
+                    parameters.Add(new NpgsqlParameter($"{paramPrefix}account_id", (object?)doc.AccountId ?? DBNull.Value));
+                    parameters.Add(new NpgsqlParameter($"{paramPrefix}exchange", (object?)doc.Exchange ?? DBNull.Value));
+                    parameters.Add(new NpgsqlParameter($"{paramPrefix}status", (object?)doc.Status ?? DBNull.Value));
                 }
 
+                sqlBuilder.Append(" ON CONFLICT (order_id) DO NOTHING");
+
+                await using var cmd = new NpgsqlCommand(sqlBuilder.ToString(), connection, transaction);
+                cmd.Parameters.AddRange(parameters.ToArray());
+                
+                int inserted = await cmd.ExecuteNonQueryAsync();
                 await transaction.CommitAsync();
 
                 var elapsed = (DateTime.UtcNow - startTime).TotalSeconds;
