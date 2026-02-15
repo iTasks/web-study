@@ -129,7 +129,7 @@ func (p *MongoDBQueueProcessor) ProcessQueue(batchSize, workers int, adaptive bo
 							p.BulkInsert(batch)
 							batch = make([]MarketOrder, 0, currentBatchSize)
 						}
-						// Continue processing, don't return
+						// Timeout occurred, continue to next batch iteration
 					}
 				}
 

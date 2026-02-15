@@ -2,17 +2,10 @@ module github.com/iTasks/web-study/go/samples/queue_processing
 
 go 1.21
 
-require (
-	go.mongodb.org/mongo-driver v1.13.1
-	github.com/jackc/pgx/v5 v5.5.1
-	github.com/hashicorp/golang-lru/v2 v2.0.7
-)
+require go.mongodb.org/mongo-driver v1.13.1
 
 require (
 	github.com/golang/snappy v0.0.4 // indirect
-	github.com/jackc/pgpassfile v1.0.0 // indirect
-	github.com/jackc/pgservicefile v0.0.0-20231201235250-de7065d80cb4 // indirect
-	github.com/jackc/puddle/v2 v2.2.1 // indirect
 	github.com/klauspost/compress v1.17.4 // indirect
 	github.com/montanaflynn/stats v0.7.1 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
