@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hive Console - Reactive</title>
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <header>
+    <div class="title-row">
+      <div class="brand">
+        <div class="logo">&#x2B21;</div>
+        <div>
+          <h1>Hive Console</h1>
+          <p>Reactive with SSE feed &amp; R2DBC storage</p>
+        </div>
+      </div>
+      <div class="header-controls">
+        <div class="auto-refresh">
+          <div class="auto-refresh-toggle active" id="autoRefreshToggle" title="Toggle auto-refresh"></div>
+          <span class="auto-refresh-label">Auto</span>
+        </div>
+        <button class="toggle-btn" id="darkModeToggle" title="Toggle dark mode">&#x263D;</button>
+        <div class="pill">Reactive</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Control Deck -->
+    <section class="card" style="animation-delay: 0.05s;">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="card-icon">&#x2699;</div>
+          <h2>Control Deck</h2>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="sensorId">Sensor ID</label>
+        <input id="sensorId" value="t-1" placeholder="Enter sensor ID" />
+        <div class="sensor-chips">
+          <button class="sensor-chip active" data-sensor="t-1">T-1</button>
+          <button class="sensor-chip" data-sensor="t-2">T-2</button>
+          <button class="sensor-chip" data-sensor="t-3">T-3</button>
+          <button class="sensor-chip" data-sensor="t-4">T-4</button>
+          <button class="sensor-chip" data-sensor="t-5">T-5</button>
+          <button class="sensor-chip" data-sensor="t-6">T-6</button>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="temperature">Temperature (°C)</label>
+        <input id="temperature" type="number" step="0.1" value="22.5" placeholder="Enter temperature" />
+      </div>
+      <div class="row">
+        <button id="submitBtn"><span>Send Reading</span></button>
+        <button id="randomBtn" class="secondary">&#x2684; Random</button>
+        <button id="refreshBtn" class="secondary">&#x21BB; Refresh</button>
+      </div>
+    </section>
+
+    <!-- Live Metrics -->
+    <section class="card" style="animation-delay: 0.1s;">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="card-icon">&#x2315;</div>
+          <h2>Live Metrics</h2>
+        </div>
+        <span class="card-badge" id="readingCount">0 readings</span>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi">
+          <div class="kpi-label"><span class="kpi-icon">&#x1F321;</span> Latest Temp</div>
+          <div class="kpi-value" id="latestTemp">--<span class="kpi-unit">°C</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label"><span class="kpi-icon">&#x1F4E1;</span> Last Sensor</div>
+          <div class="kpi-value" id="latestSensor">--</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label"><span class="kpi-icon">&#x2744;</span> Min Temp</div>
+          <div class="kpi-value temp-cool" id="minTemp">--<span class="kpi-unit">°C</span></div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label"><span class="kpi-icon">&#x1F525;</span> Max Temp</div>
+          <div class="kpi-value temp-hot" id="maxTemp">--<span class="kpi-unit">°C</span></div>
+        </div>
+      </div>
+      <div class="thermo-container">
+        <div class="thermo">
+          <div id="thermoFill" class="thermo-fill"></div>
+        </div>
+        <div class="thermo-scale">
+          <div class="thermo-mark"><span>40°</span><div class="thermo-line"></div></div>
+          <div class="thermo-mark"><span>30°</span><div class="thermo-line"></div></div>
+          <div class="thermo-mark"><span>20°</span><div class="thermo-line"></div></div>
+          <div class="thermo-mark"><span>10°</span><div class="thermo-line"></div></div>
+        </div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-item">
+          <div class="stat-label">Average</div>
+          <div class="stat-value" id="avgTemp">--</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Range</div>
+          <div class="stat-value" id="tempRange">--</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Sensors</div>
+          <div class="stat-value" id="sensorCount">--</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trend -->
+    <section class="card" style="animation-delay: 0.15s;">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="card-icon">&#x1F4C8;</div>
+          <h2>Trend</h2>
+        </div>
+      </div>
+      <div class="sparkline-container">
+        <div class="sparkline-header">
+          <span class="sparkline-label">Last 24 readings</span>
+          <span class="sparkline-value" id="sparklineRange">--</span>
+        </div>
+        <div id="sparkline" class="sparkline">Waiting for data...</div>
+      </div>
+      <div class="row" style="margin-top: 12px;">
+        <button id="statusBtn" class="secondary">&#x2139; Get Status</button>
+      </div>
+      <div class="status-json" id="statusOutput">No status data available</div>
+    </section>
+
+    <!-- History -->
+    <section class="card" style="animation-delay: 0.2s;">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="card-icon">&#x1F4DC;</div>
+          <h2>History</h2>
+        </div>
+      </div>
+      <div class="history" id="historyOutput">
+        <table>
+          <thead>
+            <tr>
+              <th>Sensor</th>
+              <th>Temperature</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody id="historyBody">
+            <tr><td colspan="3" class="empty-state"><div class="empty-state-icon">&#x1F4ED;</div>No readings yet</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Alerts -->
+    <section class="card" style="animation-delay: 0.25s;">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="card-icon">&#x26A0;</div>
+          <h2>Alerts</h2>
+        </div>
+        <span class="card-badge" id="alertCount">0 alerts</span>
+      </div>
+      <div class="alert-list" id="alertList">
+        <div class="empty-state"><div class="empty-state-icon">&#x2713;</div>No active alerts</div>
+      </div>
+    </section>
+
+    <!-- Weather -->
+    <section class="card" style="animation-delay: 0.3s;">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="card-icon">&#x2600;</div>
+          <h2>Weather</h2>
+        </div>
+        <span id="weatherStatus" class="card-badge">--</span>
+      </div>
+      <div class="weather-comparison">
+        <div class="weather-item">
+          <div class="weather-label">Indoor</div>
+          <div class="weather-value" id="indoorTemp">--°C</div>
+        </div>
+        <div class="weather-delta" id="tempDelta">
+          <span class="delta-arrow">&#x2194;</span>
+          <span class="delta-value">--°C</span>
+        </div>
+        <div class="weather-item">
+          <div class="weather-label">Outdoor</div>
+          <div class="weather-value" id="outdoorTemp">--°C</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Live Feed -->
+    <section class="card" style="grid-column: span 2; animation-delay: 0.35s;">
+      <div class="card-header">
+        <div class="card-title">
+          <div class="card-icon">&#x26A1;</div>
+          <h2>Live Feed</h2>
+        </div>
+        <div class="stream-header">
+          <div class="status-indicator connecting" id="connectionStatus">
+            <span class="status-dot"></span>
+            <span id="streamStatus">Connecting...</span>
+          </div>
+          <button class="stream-clear" id="clearStreamBtn">Clear</button>
+        </div>
+      </div>
+      <div id="streamOutput" class="stream">Waiting for events...</div>
+    </section>
+  </main>
+
+  <footer>
+    Hive Console &middot; Built with Spring Boot &amp; WebFlux Reactive
+  </footer>
+
+  <div class="shortcuts-hint">
+    <span class="kbd">S</span> Send &nbsp;
+    <span class="kbd">R</span> Random &nbsp;
+    <span class="kbd">D</span> Dark mode
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
