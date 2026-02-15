@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: market_mongodb
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: market_data
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - queue_network
+
+  postgres:
+    image: postgres:latest
+    container_name: market_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: market_data
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - queue_network
+
+volumes:
+  mongodb_data:
+  postgres_data:
+
+networks:
+  queue_network:
+    driver: bridge
