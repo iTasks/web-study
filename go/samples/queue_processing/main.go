@@ -127,9 +127,9 @@ func (p *MongoDBQueueProcessor) ProcessQueue(batchSize, workers int, adaptive bo
 					case <-timeout:
 						if len(batch) > 0 {
 							p.BulkInsert(batch)
-							return
+							batch = make([]MarketOrder, 0, currentBatchSize)
 						}
-						return
+						// Continue processing, don't return
 					}
 				}
 

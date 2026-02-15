@@ -101,7 +101,7 @@ class ParallelQueueProcessor:
         try:
             self.queue.join()
             return True
-        except:
+        except Exception:
             return False
             
     def stop(self, wait: bool = True) -> None:

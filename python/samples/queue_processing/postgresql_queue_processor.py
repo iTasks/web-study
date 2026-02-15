@@ -301,7 +301,7 @@ class PostgreSQLQueueProcessor:
                         item = self.queue.get(timeout=1)
                         batch.append(item)
                         self.queue.task_done()
-                    except:
+                    except Exception:
                         break
                         
                 if not batch:
