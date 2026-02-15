@@ -102,8 +102,40 @@ namespace RestFixClient.Samples.QueueProcessing
 
         /// <summary>
         /// Batch insert using parameterized query
+        /// Note: PostgreSQL has a parameter limit of 32767. With 11 parameters per order,
+        /// this limits batches to ~2979 orders. For larger batches, consider chunking.
         /// </summary>
         public async Task<int> BatchInsertAsync(List<MarketOrder> documents)
+        {
+            if (documents == null || documents.Count == 0)
+                return 0;
+
+            await InitializeDatabaseAsync();
+
+            // PostgreSQL parameter limit safety check
+            const int MAX_PARAMS = 32767;
+            const int PARAMS_PER_ORDER = 11;
+            const int MAX_BATCH_SIZE = MAX_PARAMS / PARAMS_PER_ORDER; // ~2979
+
+            // Chunk large batches to respect parameter limit
+            if (documents.Count > MAX_BATCH_SIZE)
+            {
+                int totalInserted = 0;
+                for (int i = 0; i < documents.Count; i += MAX_BATCH_SIZE)
+                {
+                    var chunk = documents.Skip(i).Take(MAX_BATCH_SIZE).ToList();
+                    totalInserted += await BatchInsertInternalAsync(chunk);
+                }
+                return totalInserted;
+            }
+
+            return await BatchInsertInternalAsync(documents);
+        }
+
+        /// <summary>
+        /// Internal batch insert implementation
+        /// </summary>
+        private async Task<int> BatchInsertInternalAsync(List<MarketOrder> documents)
         {
             if (documents == null || documents.Count == 0)
                 return 0;
