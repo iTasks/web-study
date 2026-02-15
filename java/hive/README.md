@@ -122,9 +122,12 @@ Both implementations expose identical APIs:
 ## 6. Getting Started
 
 ### Prerequisites
-- Java 25
+- **Java 25** (required for Structured Concurrency preview features)
+  - Download from: https://jdk.java.net/25/
+  - Note: The virtual threads implementation uses JEP 480 (Structured Concurrency) which is a preview feature in Java 25
+  - For Java 21/22/23, you can use virtual threads without structured concurrency (see migration notes in ANALYSIS.md)
 - Docker (for PostgreSQL)
-- Maven
+- Maven 3.9+
 
 ### Start PostgreSQL
 
@@ -257,10 +260,29 @@ This project is for educational purposes, demonstrating modern Java concurrency 
 
 ---
 
-## 13. References
+## 13. Important Notes
+
+### Java Version Requirement
+This project demonstrates the latest Java concurrency features and requires **Java 25** with preview features enabled:
+- **Virtual Threads** (JEP 444) - Finalized in Java 21
+- **Structured Concurrency** (JEP 480) - Preview feature in Java 25
+
+If you only have Java 21-24, you can still use virtual threads but will need to modify the code to not use `StructuredTaskScope` (which is a preview API). See [ANALYSIS.md](ANALYSIS.md) for migration guidance.
+
+### Project Statistics
+- **Total Files**: 69+ (Java, XML, SQL, HTML, JS, CSS)
+- **Java Classes**: 56
+- **Lines of Code**: ~1,800 (both implementations combined)
+- **Database Tables**: 4 (readings, alerts, sensor_thresholds, hourly_stats)
+- **API Endpoints**: 11 endpoints across both implementations
+
+---
+
+## 14. References
 
 - [Project Loom - Virtual Threads](https://openjdk.org/jeps/444)
 - [Structured Concurrency (JEP 480)](https://openjdk.org/jeps/480)
 - [Spring WebFlux](https://docs.spring.io/spring-framework/reference/web/webflux.html)
 - [Project Reactor](https://projectreactor.io/)
 - [R2DBC](https://r2dbc.io/)
+- [Original HIVE Repository](https://github.com/rokon12/hive)
