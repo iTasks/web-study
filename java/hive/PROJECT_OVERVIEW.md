@@ -15,7 +15,8 @@ This directory contains a **complete replication** of the HIVE (Thermostat Monit
 
 ```
 java/hive/
-├── 📄 Documentation (4 files, 50KB+)
+├── 📄 Documentation (5 files, 65KB+)
+│   ├── OPTIMAL_SOLUTION.md - 🎯 START HERE! Decision guide (15KB)
 │   ├── README.md           - Setup guide, API docs, usage (8KB)
 │   ├── ANALYSIS.md         - Deep dive comparison (27KB)
 │   ├── SUMMARY.md          - Project statistics (12KB)
@@ -103,6 +104,15 @@ Both implementations provide:
 - **Decision framework**: When to use which?
 - **Migration guides**: Reactive→VT, Traditional→VT
 - Real-world recommendations
+
+### 🎯 OPTIMAL_SOLUTION.md (15KB) - **THE DECISION GUIDE!**
+- Quick decision tree for choosing approach
+- Use case recommendations (REST API, Kafka, CRUD, etc.)
+- ROI calculator and cost-benefit analysis
+- Step-by-step migration strategies
+- Performance matrix by scenario
+- Real-world examples with results
+- **Recommendation: Virtual Threads for 90% of projects!**
 
 ### SUMMARY.md (12KB)
 - Project statistics
@@ -298,12 +308,13 @@ See [SECURITY.md](SECURITY.md) for details.
 
 ## 📚 Next Steps
 
-1. **Read** [README.md](README.md) for setup instructions
-2. **Study** [ANALYSIS.md](ANALYSIS.md) for deep dive comparison
-3. **Run** both implementations side-by-side
-4. **Explore** the code to see patterns in action
-5. **Experiment** with modifications
-6. **Share** your learnings!
+1. **Read** [OPTIMAL_SOLUTION.md](OPTIMAL_SOLUTION.md) for quick decision guide 🎯
+2. **Read** [README.md](README.md) for setup instructions
+3. **Study** [ANALYSIS.md](ANALYSIS.md) for deep dive comparison
+4. **Run** both implementations side-by-side
+5. **Explore** the code to see patterns in action
+6. **Experiment** with modifications
+7. **Share** your learnings!
 
 ---
 

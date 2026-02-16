@@ -2,6 +2,8 @@
 
 **Reactive vs Virtual Threads Comparison**
 
+> 🎯 **Looking for recommendations?** Check [OPTIMAL_SOLUTION.md](OPTIMAL_SOLUTION.md) for a quick decision guide!
+
 This is a Java implementation demonstrating the comparison between two concurrent programming approaches:
 - **Reactive Stack:** Spring WebFlux with Project Reactor
 - **Virtual Threads Stack:** Spring Boot 3.5 with Java 25 Virtual Threads and Structured Concurrency
@@ -250,7 +252,10 @@ curl -N http://localhost:8081/api/stream
 
 ## 11. Performance Comparison
 
-See [ANALYSIS.md](ANALYSIS.md) for detailed performance metrics, complexity comparison, and recommendations on when to use each approach.
+See the following documents for detailed analysis:
+- **[OPTIMAL_SOLUTION.md](OPTIMAL_SOLUTION.md)** - 🎯 **START HERE!** Quick decision guide with optimal recommendations
+- **[ANALYSIS.md](ANALYSIS.md)** - Comprehensive performance metrics, complexity comparison, and detailed analysis
+- **[SUMMARY.md](SUMMARY.md)** - Project statistics and overview
 
 ---
 
