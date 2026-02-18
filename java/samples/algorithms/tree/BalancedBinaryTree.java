@@ -66,7 +66,7 @@ public class BalancedBinaryTree {
     }
 
     /**
-     * Get height of a tree (public version that doesn't check balance).
+     * Get height of a tree (helper method that doesn't check balance).
      * 
      * @param node current node
      * @return height of tree
