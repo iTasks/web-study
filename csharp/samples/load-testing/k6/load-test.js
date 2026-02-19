@@ -1,103 +1,137 @@
 /**
- * k6 Load Testing Script for C# Backend Applications
+ * k6 Load Testing Script for Stock Trading Platform (DSE/CSE)
  * 
- * This script demonstrates load testing for DSE-BD and CSE-BD systems with:
- * - Concurrent user simulation
- * - Performance metrics collection
- * - Bottleneck detection
- * - Custom thresholds for production readiness
+ * Based on real-world stock trading app features (Puji app):
+ * - Real-time market data streaming
+ * - Order management (place, cancel, edit orders)
+ * - Portfolio tracking and balance updates
+ * - Watchlist management
+ * - Market depth and historical data
+ * 
+ * This script simulates concurrent users performing typical stock trading operations
+ * with realistic workload patterns for DSE (Dhaka Stock Exchange) and CSE (Chittagong Stock Exchange).
  * 
  * Usage:
  *   k6 run load-test.js
- *   k6 run --vus 100 --duration 5m load-test.js
+ *   k6 run --vus 500 --duration 10m load-test.js  // Peak trading hours
+ *   k6 run --vus 1000 --duration 5m load-test.js  // Market opening surge
  */
 
 import http from 'k6/http';
 import { check, sleep, group } from 'k6';
 import { Rate, Trend, Counter, Gauge } from 'k6/metrics';
 
-// Custom metrics for bottleneck detection
+// Custom metrics for stock trading bottleneck detection
 const errorRate = new Rate('errors');
 const apiResponseTime = new Trend('api_response_time');
 const activeConnections = new Gauge('active_connections');
 const requestsPerSecond = new Counter('requests_per_second');
+const orderPlacementTime = new Trend('order_placement_time');
+const marketDataLatency = new Trend('market_data_latency');
+const portfolioUpdateTime = new Trend('portfolio_update_time');
 
-// Test configuration
+// Test configuration for stock trading platform
 export const options = {
-  // Concurrent users load testing scenarios
+  // Realistic concurrent users for stock trading platform
+  // Simulates market opening, regular trading hours, and closing
   stages: [
-    { duration: '1m', target: 50 },   // Ramp-up to 50 users
-    { duration: '3m', target: 100 },  // Ramp-up to 100 users
-    { duration: '5m', target: 100 },  // Stay at 100 users
-    { duration: '2m', target: 200 },  // Spike to 200 users
-    { duration: '2m', target: 200 },  // Stay at 200 users
-    { duration: '2m', target: 0 },    // Ramp-down to 0 users
+    { duration: '2m', target: 500 },    // Market opening surge (9:30 AM)
+    { duration: '5m', target: 1000 },   // Peak morning trading (9:30-10:00 AM)
+    { duration: '10m', target: 1000 },  // Sustained morning activity
+    { duration: '3m', target: 500 },    // Mid-day slowdown
+    { duration: '10m', target: 500 },   // Regular trading hours
+    { duration: '3m', target: 1500 },   // Pre-closing surge (2:30 PM)
+    { duration: '5m', target: 1500 },   // Closing time peak
+    { duration: '2m', target: 100 },    // After-hours
+    { duration: '2m', target: 0 },      // Ramp-down
   ],
   
-  // Production bottleneck checking thresholds
+  // Production bottleneck checking thresholds for trading platform
   thresholds: {
-    // 95% of requests must complete within 500ms
-    'http_req_duration': ['p(95)<500'],
+    // Real-time market data must be fast (< 200ms for 95%)
+    'http_req_duration{endpoint:market_data}': ['p(95)<200', 'p(99)<500'],
     
-    // 99% of requests must complete within 1s
-    'http_req_duration{staticAsset:yes}': ['p(99)<1000'],
+    // Order placement critical (< 300ms for 95%)
+    'http_req_duration{endpoint:order}': ['p(95)<300', 'p(99)<800'],
     
-    // Error rate must be less than 1%
-    'errors': ['rate<0.01'],
+    // Portfolio updates should be quick (< 400ms for 95%)
+    'http_req_duration{endpoint:portfolio}': ['p(95)<400', 'p(99)<1000'],
     
-    // API response time must be acceptable
-    'api_response_time': ['p(95)<300', 'p(99)<500'],
+    // Overall API performance
+    'http_req_duration': ['p(95)<500', 'p(99)<1500'],
     
-    // HTTP request failure rate must be less than 5%
-    'http_req_failed': ['rate<0.05'],
+    // Error rate must be extremely low for trading (< 0.1%)
+    'errors': ['rate<0.001'],
     
-    // Check success rate must be above 95%
-    'checks': ['rate>0.95'],
+    // Order placement specific metrics
+    'order_placement_time': ['p(95)<300', 'p(99)<800'],
+    
+    // Market data latency critical
+    'market_data_latency': ['p(95)<200', 'p(99)<500'],
+    
+    // HTTP request failure rate must be minimal
+    'http_req_failed': ['rate<0.01'],
+    
+    // Check success rate must be above 99% for trading
+    'checks': ['rate>0.99'],
   },
   
   // Additional configurations
   noConnectionReuse: false,
-  userAgent: 'k6-LoadTest/1.0',
+  userAgent: 'k6-StockTradingLoadTest/1.0',
   
   // Tags for metrics grouping
   tags: {
     environment: 'load-test',
-    service: 'backend-api',
+    service: 'stock-trading-api',
+    exchanges: 'DSE-CSE',
   },
 };
 
-// Base URL configuration - modify for your C# backend
+// Base URL configuration - modify for your stock trading backend
 const BASE_URL = __ENV.BASE_URL || 'http://localhost:5000';
 
-// Test data
+// Stock symbols for testing (DSE/CSE common stocks)
+const STOCK_SYMBOLS = ['GP', 'BRAC', 'ACI', 'SQURPHARMA', 'BATBC', 'BEXIMCO', 'OLYMPIC', 'RENATA'];
+
+// Test data for stock trading users
 const TEST_USER = {
-  username: `testuser_${__VU}_${Date.now()}`,
-  email: `test${__VU}@example.com`,
-  password: 'TestPassword123!',
+  username: `trader_${__VU}_${Date.now()}`,
+  email: `trader${__VU}@example.com`,
+  password: 'SecureTrading123!',
+  accountId: `ACC${__VU}${Date.now()}`,
 };
 
 /**
  * Setup function - runs once before all VUs
  */
 export function setup() {
-  console.log('Starting load test setup...');
+  console.log('='.repeat(80));
+  console.log('🚀 Starting Stock Trading Platform Load Test');
+  console.log('='.repeat(80));
   console.log(`Base URL: ${BASE_URL}`);
-  console.log('Test will simulate real user behavior with concurrent requests');
+  console.log(`Simulating trading on DSE (Dhaka Stock Exchange) and CSE (Chittagong Stock Exchange)`);
+  console.log(`Test will simulate realistic trader behavior with concurrent users`);
+  console.log(`Stock symbols: ${STOCK_SYMBOLS.join(', ')}`);
+  console.log('='.repeat(80));
   
   return {
     baseUrl: BASE_URL,
     testData: TEST_USER,
+    stocks: STOCK_SYMBOLS,
   };
 }
 
 /**
  * Main test function - runs for each VU iteration
+ * Simulates realistic stock trader behavior based on Puji app features
  */
 export default function (data) {
   const baseUrl = data.baseUrl;
+  const randomStock = data.stocks[Math.floor(Math.random() * data.stocks.length)];
   
-  // Group: Health Check & Readiness
-  group('Health Check', () => {
+  // Group: Health Check & Readiness (monitoring)
+  group('System Health', () => {
     const healthRes = http.get(`${baseUrl}/health`);
     
     check(healthRes, {
@@ -109,93 +143,149 @@ export default function (data) {
     apiResponseTime.add(healthRes.timings.duration);
   });
   
-  sleep(1);
+  sleep(0.5);
   
-  // Group: API Operations (simulating DSE-BD/CSE-BD operations)
-  group('API Operations', () => {
-    // Simulate GET request (Read operation)
-    const getRes = http.get(`${baseUrl}/api/data`, {
-      tags: { name: 'GetData' },
+  // Group: Real-time Market Data (highest frequency - 40% of requests)
+  group('Market Data Streaming', () => {
+    const startTime = Date.now();
+    
+    // Get real-time market data for specific stock
+    const marketDataRes = http.get(`${baseUrl}/api/market/data/${randomStock}`, {
+      tags: { name: 'MarketData', endpoint: 'market_data' },
     });
     
-    check(getRes, {
-      'GET status is 200': (r) => r.status === 200,
-      'GET response has data': (r) => r.body && r.body.length > 0,
-      'GET response time < 300ms': (r) => r.timings.duration < 300,
+    const responseTime = Date.now() - startTime;
+    
+    check(marketDataRes, {
+      'market data status is 200': (r) => r.status === 200,
+      'market data response time < 200ms': (r) => r.timings.duration < 200,
+      'market data has price': (r) => r.body && r.body.length > 0,
     });
     
-    errorRate.add(getRes.status !== 200);
-    apiResponseTime.add(getRes.timings.duration);
+    errorRate.add(marketDataRes.status !== 200);
+    marketDataLatency.add(responseTime);
     requestsPerSecond.add(1);
     
-    sleep(1);
+    // Bottleneck detection: slow market data
+    if (responseTime > 200) {
+      console.warn(`⚠️  Market data bottleneck: ${randomStock} took ${responseTime}ms`);
+    }
+  });
+  
+  sleep(1);
+  
+  // Group: Portfolio Management (30% of requests)
+  group('Portfolio Operations', () => {
+    const startTime = Date.now();
     
-    // Simulate POST request (Create operation)
-    const payload = JSON.stringify({
-      name: `Test_${__VU}_${__ITER}`,
-      value: Math.random() * 1000,
+    // Get portfolio with real-time balance
+    const portfolioRes = http.get(`${baseUrl}/api/portfolio`, {
+      tags: { name: 'Portfolio', endpoint: 'portfolio' },
+    });
+    
+    const responseTime = Date.now() - startTime;
+    
+    check(portfolioRes, {
+      'portfolio status is 200': (r) => r.status === 200,
+      'portfolio response time < 400ms': (r) => r.timings.duration < 400,
+      'portfolio has balance': (r) => r.body && r.body.length > 0,
+    });
+    
+    errorRate.add(portfolioRes.status !== 200);
+    portfolioUpdateTime.add(responseTime);
+    apiResponseTime.add(responseTime);
+    requestsPerSecond.add(1);
+    
+    // Bottleneck detection: slow portfolio updates
+    if (responseTime > 400) {
+      console.warn(`⚠️  Portfolio update bottleneck: took ${responseTime}ms`);
+    }
+  });
+  
+  sleep(2);
+  
+  // Group: Order Management (20% of requests - critical path)
+  group('Order Operations', () => {
+    const startTime = Date.now();
+    
+    // Place a buy order
+    const orderPayload = JSON.stringify({
+      symbol: randomStock,
+      type: 'BUY',
+      quantity: Math.floor(Math.random() * 100) + 1,
+      price: Math.random() * 1000 + 100,
+      accountId: TEST_USER.accountId,
       timestamp: new Date().toISOString(),
     });
     
-    const postRes = http.post(`${baseUrl}/api/data`, payload, {
+    const orderRes = http.post(`${baseUrl}/api/order`, orderPayload, {
       headers: { 'Content-Type': 'application/json' },
-      tags: { name: 'CreateData' },
+      tags: { name: 'PlaceOrder', endpoint: 'order' },
     });
     
-    check(postRes, {
-      'POST status is 201 or 200': (r) => r.status === 201 || r.status === 200,
-      'POST response time < 500ms': (r) => r.timings.duration < 500,
+    const responseTime = Date.now() - startTime;
+    
+    check(orderRes, {
+      'order placement status is 201 or 200': (r) => r.status === 201 || r.status === 200,
+      'order placement time < 300ms': (r) => r.timings.duration < 300,
+      'order has confirmation': (r) => r.body && r.body.length > 0,
     });
     
-    errorRate.add(!(postRes.status === 201 || postRes.status === 200));
-    apiResponseTime.add(postRes.timings.duration);
+    errorRate.add(!(orderRes.status === 201 || orderRes.status === 200));
+    orderPlacementTime.add(responseTime);
+    apiResponseTime.add(responseTime);
+    requestsPerSecond.add(1);
+    
+    // Bottleneck detection: slow order placement (critical!)
+    if (responseTime > 300) {
+      console.warn(`⚠️  CRITICAL: Order placement bottleneck for ${randomStock}: ${responseTime}ms`);
+    }
+  });
+  
+  sleep(1);
+  
+  // Group: Watchlist Management (5% of requests)
+  group('Watchlist Operations', () => {
+    // Get watchlist
+    const watchlistRes = http.get(`${baseUrl}/api/watchlist`, {
+      tags: { name: 'Watchlist' },
+    });
+    
+    check(watchlistRes, {
+      'watchlist status is 200': (r) => r.status === 200,
+      'watchlist response time < 300ms': (r) => r.timings.duration < 300,
+    });
+    
+    errorRate.add(watchlistRes.status !== 200);
+    apiResponseTime.add(watchlistRes.timings.duration);
     requestsPerSecond.add(1);
   });
   
   sleep(2);
   
-  // Group: Database Operations (bottleneck detection)
-  group('Database Operations', () => {
-    const dbRes = http.get(`${baseUrl}/api/database/query`, {
-      tags: { name: 'DatabaseQuery' },
+  // Group: Market Depth & Historical Data (5% of requests)
+  group('Market Analysis', () => {
+    // Get market depth (top 10 bid/ask)
+    const depthRes = http.get(`${baseUrl}/api/market/depth/${randomStock}`, {
+      tags: { name: 'MarketDepth' },
     });
     
-    check(dbRes, {
-      'Database query status is 200': (r) => r.status === 200,
-      'Database query time < 1s': (r) => r.timings.duration < 1000,
-      'No timeout errors': (r) => r.status !== 504,
+    check(depthRes, {
+      'market depth status is 200': (r) => r.status === 200,
+      'market depth time < 500ms': (r) => r.timings.duration < 500,
     });
     
-    // Bottleneck detection: slow database queries
-    if (dbRes.timings.duration > 1000) {
-      console.warn(`Bottleneck detected: Database query took ${dbRes.timings.duration}ms`);
+    // Bottleneck detection: slow market depth queries
+    if (depthRes.timings.duration > 500) {
+      console.warn(`⚠️  Market depth bottleneck: ${randomStock} took ${depthRes.timings.duration}ms`);
     }
     
-    errorRate.add(dbRes.status !== 200);
-    apiResponseTime.add(dbRes.timings.duration);
+    errorRate.add(depthRes.status !== 200);
+    apiResponseTime.add(depthRes.timings.duration);
+    requestsPerSecond.add(1);
   });
   
   sleep(1);
-  
-  // Group: Cache Operations
-  group('Cache Operations', () => {
-    const cacheRes = http.get(`${baseUrl}/api/cache/data`, {
-      tags: { name: 'CacheRead' },
-    });
-    
-    check(cacheRes, {
-      'Cache read status is 200': (r) => r.status === 200,
-      'Cache read time < 50ms': (r) => r.timings.duration < 50,
-    });
-    
-    // Bottleneck detection: cache misses or slow cache
-    if (cacheRes.timings.duration > 100) {
-      console.warn(`Bottleneck detected: Cache operation took ${cacheRes.timings.duration}ms`);
-    }
-    
-    errorRate.add(cacheRes.status !== 200);
-    apiResponseTime.add(cacheRes.timings.duration);
-  });
   
   // Update active connections gauge
   activeConnections.add(__VU);
@@ -207,35 +297,59 @@ export default function (data) {
  * Teardown function - runs once after all VUs complete
  */
 export function teardown(data) {
-  console.log('Load test completed!');
+  console.log('='.repeat(80));
+  console.log('✅ Stock Trading Platform Load Test Completed!');
+  console.log('='.repeat(80));
   console.log('Check the metrics summary for bottlenecks and performance issues.');
+  console.log('Critical metrics for trading platforms:');
+  console.log('  - Market data latency (should be < 200ms p95)');
+  console.log('  - Order placement time (should be < 300ms p95)');
+  console.log('  - Portfolio updates (should be < 400ms p95)');
+  console.log('  - Error rate (should be < 0.1% for trading)');
+  console.log('='.repeat(80));
 }
 
 /**
- * Custom summary for bottleneck analysis
+ * Custom summary for stock trading bottleneck analysis
  */
 export function handleSummary(data) {
   const bottlenecks = [];
   
-  // Analyze metrics for bottlenecks
+  // Analyze metrics for stock trading specific bottlenecks
+  if (data.metrics.market_data_latency && data.metrics.market_data_latency.values && data.metrics.market_data_latency.values['p(95)'] > 200) {
+    bottlenecks.push('⚠️  CRITICAL: Market data latency exceeds 200ms p95 - real-time data feed bottleneck');
+  }
+  
+  if (data.metrics.order_placement_time && data.metrics.order_placement_time.values && data.metrics.order_placement_time.values['p(95)'] > 300) {
+    bottlenecks.push('⚠️  CRITICAL: Order placement time exceeds 300ms p95 - trade execution bottleneck');
+  }
+  
+  if (data.metrics.portfolio_update_time && data.metrics.portfolio_update_time.values && data.metrics.portfolio_update_time.values['p(95)'] > 400) {
+    bottlenecks.push('⚠️  Portfolio update time exceeds 400ms p95 - balance calculation bottleneck');
+  }
+  
   if (data.metrics.http_req_duration && data.metrics.http_req_duration.values && data.metrics.http_req_duration.values['p(95)'] > 500) {
-    bottlenecks.push('⚠️  95th percentile response time exceeds 500ms - possible backend bottleneck');
+    bottlenecks.push('⚠️  Overall 95th percentile response time exceeds 500ms - backend performance issue');
   }
   
-  if (data.metrics.errors && data.metrics.errors.values && data.metrics.errors.values.rate > 0.01) {
-    bottlenecks.push('⚠️  Error rate exceeds 1% - investigate error causes');
+  if (data.metrics.errors && data.metrics.errors.values && data.metrics.errors.values.rate > 0.001) {
+    bottlenecks.push('⚠️  CRITICAL: Error rate exceeds 0.1% - trading errors can cause financial loss');
   }
   
-  if (data.metrics.http_req_failed && data.metrics.http_req_failed.values && data.metrics.http_req_failed.values.rate > 0.05) {
-    bottlenecks.push('⚠️  HTTP failure rate exceeds 5% - check network/server stability');
+  if (data.metrics.http_req_failed && data.metrics.http_req_failed.values && data.metrics.http_req_failed.values.rate > 0.01) {
+    bottlenecks.push('⚠️  HTTP failure rate exceeds 1% - network/server reliability issue');
   }
   
-  console.log('\n=== Bottleneck Analysis ===');
+  console.log('\n' + '='.repeat(80));
+  console.log('📊 STOCK TRADING PLATFORM - BOTTLENECK ANALYSIS');
+  console.log('='.repeat(80));
   if (bottlenecks.length === 0) {
-    console.log('✅ No significant bottlenecks detected');
+    console.log('✅ No significant bottlenecks detected - platform ready for trading');
   } else {
+    console.log('⚠️  BOTTLENECKS DETECTED:');
     bottlenecks.forEach(b => console.log(b));
   }
+  console.log('='.repeat(80));
   
   return {
     'stdout': JSON.stringify(data, null, 2),
@@ -245,31 +359,66 @@ export function handleSummary(data) {
 }
 
 /**
- * Generate HTML report
+ * Generate HTML report for stock trading platform
  */
 function htmlReport(data) {
+  const marketDataP95 = data.metrics.market_data_latency && data.metrics.market_data_latency.values ? 
+    data.metrics.market_data_latency.values['p(95)'].toFixed(2) : 'N/A';
+  const orderPlacementP95 = data.metrics.order_placement_time && data.metrics.order_placement_time.values ? 
+    data.metrics.order_placement_time.values['p(95)'].toFixed(2) : 'N/A';
+  const portfolioUpdateP95 = data.metrics.portfolio_update_time && data.metrics.portfolio_update_time.values ? 
+    data.metrics.portfolio_update_time.values['p(95)'].toFixed(2) : 'N/A';
+  
   return `
 <!DOCTYPE html>
 <html>
 <head>
-  <title>k6 Load Test Report</title>
+  <title>Stock Trading Platform - k6 Load Test Report</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
-    .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
-    h1 { color: #333; }
-    .metric { background: #f9f9f9; padding: 15px; margin: 10px 0; border-left: 4px solid #4CAF50; }
-    .warning { border-left-color: #ff9800; }
-    .error { border-left-color: #f44336; }
-    .metric-name { font-weight: bold; font-size: 18px; }
-    .metric-value { font-size: 24px; color: #666; margin: 10px 0; }
+    .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    h1 { color: #333; border-bottom: 3px solid #4CAF50; padding-bottom: 10px; }
+    h2 { color: #555; margin-top: 30px; }
+    .header { background: #4CAF50; color: white; padding: 15px; border-radius: 5px; margin-bottom: 20px; }
+    .metric { background: #f9f9f9; padding: 15px; margin: 10px 0; border-left: 4px solid #4CAF50; border-radius: 4px; }
+    .critical { border-left-color: #2196F3; background: #E3F2FD; }
+    .warning { border-left-color: #ff9800; background: #FFF3E0; }
+    .error { border-left-color: #f44336; background: #FFEBEE; }
+    .metric-name { font-weight: bold; font-size: 18px; color: #333; }
+    .metric-value { font-size: 28px; color: #666; margin: 10px 0; font-weight: bold; }
+    .metric-desc { font-size: 14px; color: #888; }
+    .footer { margin-top: 30px; padding-top: 20px; border-top: 1px solid #ddd; color: #888; }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>k6 Load Test Report</h1>
-    <p><strong>Test Date:</strong> ${new Date().toISOString()}</p>
+    <div class="header">
+      <h1>📈 Stock Trading Platform Load Test Report</h1>
+      <p>DSE (Dhaka Stock Exchange) / CSE (Chittagong Stock Exchange)</p>
+      <p><strong>Test Date:</strong> ${new Date().toISOString()}</p>
+    </div>
     
-    <h2>Summary Metrics</h2>
+    <h2>🎯 Critical Trading Metrics</h2>
+    
+    <div class="metric critical">
+      <div class="metric-name">Market Data Latency (p95)</div>
+      <div class="metric-value">${marketDataP95} ms</div>
+      <div class="metric-desc">Target: &lt; 200ms | Real-time data feed performance</div>
+    </div>
+    
+    <div class="metric critical">
+      <div class="metric-name">Order Placement Time (p95)</div>
+      <div class="metric-value">${orderPlacementP95} ms</div>
+      <div class="metric-desc">Target: &lt; 300ms | Trade execution speed</div>
+    </div>
+    
+    <div class="metric critical">
+      <div class="metric-name">Portfolio Update Time (p95)</div>
+      <div class="metric-value">${portfolioUpdateP95} ms</div>
+      <div class="metric-desc">Target: &lt; 400ms | Balance calculation performance</div>
+    </div>
+    
+    <h2>📊 Overall Performance Metrics</h2>
     <div class="metric">
       <div class="metric-name">Total Requests</div>
       <div class="metric-value">${data.metrics.http_reqs && data.metrics.http_reqs.values ? data.metrics.http_reqs.values.count : 0}</div>
@@ -278,16 +427,24 @@ function htmlReport(data) {
     <div class="metric">
       <div class="metric-name">Request Duration (95th percentile)</div>
       <div class="metric-value">${data.metrics.http_req_duration && data.metrics.http_req_duration.values ? data.metrics.http_req_duration.values['p(95)'].toFixed(2) : 0} ms</div>
+      <div class="metric-desc">Target: &lt; 500ms</div>
     </div>
     
-    <div class="metric ${data.metrics.errors && data.metrics.errors.values && data.metrics.errors.values.rate > 0.01 ? 'error' : ''}">
+    <div class="metric ${data.metrics.errors && data.metrics.errors.values && data.metrics.errors.values.rate > 0.001 ? 'error' : ''}">
       <div class="metric-name">Error Rate</div>
-      <div class="metric-value">${data.metrics.errors && data.metrics.errors.values ? (data.metrics.errors.values.rate * 100).toFixed(2) : 0}%</div>
+      <div class="metric-value">${data.metrics.errors && data.metrics.errors.values ? (data.metrics.errors.values.rate * 100).toFixed(3) : 0}%</div>
+      <div class="metric-desc">Target: &lt; 0.1% | Critical for trading platforms</div>
     </div>
     
     <div class="metric">
       <div class="metric-name">Requests per Second</div>
       <div class="metric-value">${data.metrics.http_reqs && data.metrics.http_reqs.values ? data.metrics.http_reqs.values.rate.toFixed(2) : 0}</div>
+    </div>
+    
+    <div class="footer">
+      <p><strong>Platform:</strong> DSE/CSE Stock Trading Backend</p>
+      <p><strong>Test Tool:</strong> k6 Load Testing Framework</p>
+      <p><strong>Report Generated:</strong> ${new Date().toLocaleString()}</p>
     </div>
   </div>
 </body>
