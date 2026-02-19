@@ -1,0 +1,11 @@
+# Build artifacts
+bin/
+obj/
+
+# Test results
+*.json
+*.html
+
+# IDE
+.vs/
+.vscode/
