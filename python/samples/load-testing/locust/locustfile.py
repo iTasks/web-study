@@ -201,12 +201,13 @@ class StockTraderUser(HttpUser):
         Get market depth data (weight=1)
         Simulates viewing top bid/ask levels (5% of requests)
         """
+        start_time = time.time()
         stock = random.choice(self.watchlist)
         
         with self.client.get(f"/api/market/depth/{stock}", 
                            catch_response=True, 
                            name="Market Depth") as response:
-            response_time = response.elapsed.total_seconds() * 1000
+            response_time = (time.time() - start_time) * 1000  # Convert to milliseconds
             
             if response.status_code == 200:
                 response.success()
@@ -251,7 +252,7 @@ def on_test_stop(environment, **kwargs):
         print("\nTop 5 Slowest Requests:")
         sorted_requests = sorted(slow_requests, key=lambda x: x["response_time"], reverse=True)[:5]
         for req in sorted_requests:
-            stock_info = f" [{req.get('stock', 'N/A')}]" if 'stock' in req else ""
+            stock_info = f" [{req['stock']}]" if 'stock' in req else ""
             print(f"  {req['method']} {req['endpoint']}{stock_info}: {req['response_time']:.2f}ms")
     else:
         print("\n✅ No significant bottlenecks detected")
@@ -261,8 +262,8 @@ def on_test_stop(environment, **kwargs):
     print(f"  Market Data Calls: {trading_metrics['market_data_calls']}")
     print(f"  Orders Placed: {trading_metrics['orders_placed']}")
     print(f"  Portfolio Updates: {trading_metrics['portfolio_updates']}")
-    print(f"  Slow Market Data: {trading_metrics['slow_market_data']} ({(trading_metrics['slow_market_data']/max(trading_metrics['market_data_calls'],1)*100):.1f}%)")
-    print(f"  Slow Orders: {trading_metrics['slow_orders']} ({(trading_metrics['slow_orders']/max(trading_metrics['orders_placed'],1)*100):.1f}%)")
+    print(f"  Slow Market Data: {trading_metrics['slow_market_data']} ({(trading_metrics['slow_market_data'] / max(trading_metrics['market_data_calls'], 1) * 100):.1f}%)")
+    print(f"  Slow Orders: {trading_metrics['slow_orders']} ({(trading_metrics['slow_orders'] / max(trading_metrics['orders_placed'], 1) * 100):.1f}%)")
     
     # Analyze errors
     print(f"\n📈 Error Summary:")

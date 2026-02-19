@@ -294,6 +294,26 @@ export default function (data) {
 }
 
 /**
+ * Helper function to safely get metric percentile value
+ */
+function getMetricPercentile(data, metricName, percentile, defaultValue = 0) {
+  if (data.metrics[metricName] && data.metrics[metricName].values && data.metrics[metricName].values[percentile]) {
+    return data.metrics[metricName].values[percentile];
+  }
+  return defaultValue;
+}
+
+/**
+ * Helper function to safely get metric rate value
+ */
+function getMetricRate(data, metricName, defaultValue = 0) {
+  if (data.metrics[metricName] && data.metrics[metricName].values && data.metrics[metricName].values.rate !== undefined) {
+    return data.metrics[metricName].values.rate;
+  }
+  return defaultValue;
+}
+
+/**
  * Teardown function - runs once after all VUs complete
  */
 export function teardown(data) {
@@ -315,28 +335,34 @@ export function teardown(data) {
 export function handleSummary(data) {
   const bottlenecks = [];
   
-  // Analyze metrics for stock trading specific bottlenecks
-  if (data.metrics.market_data_latency && data.metrics.market_data_latency.values && data.metrics.market_data_latency.values['p(95)'] > 200) {
+  // Analyze metrics for stock trading specific bottlenecks using helper functions
+  const marketDataP95 = getMetricPercentile(data, 'market_data_latency', 'p(95)');
+  if (marketDataP95 > 200) {
     bottlenecks.push('⚠️  CRITICAL: Market data latency exceeds 200ms p95 - real-time data feed bottleneck');
   }
   
-  if (data.metrics.order_placement_time && data.metrics.order_placement_time.values && data.metrics.order_placement_time.values['p(95)'] > 300) {
+  const orderPlacementP95 = getMetricPercentile(data, 'order_placement_time', 'p(95)');
+  if (orderPlacementP95 > 300) {
     bottlenecks.push('⚠️  CRITICAL: Order placement time exceeds 300ms p95 - trade execution bottleneck');
   }
   
-  if (data.metrics.portfolio_update_time && data.metrics.portfolio_update_time.values && data.metrics.portfolio_update_time.values['p(95)'] > 400) {
+  const portfolioUpdateP95 = getMetricPercentile(data, 'portfolio_update_time', 'p(95)');
+  if (portfolioUpdateP95 > 400) {
     bottlenecks.push('⚠️  Portfolio update time exceeds 400ms p95 - balance calculation bottleneck');
   }
   
-  if (data.metrics.http_req_duration && data.metrics.http_req_duration.values && data.metrics.http_req_duration.values['p(95)'] > 500) {
+  const httpDurationP95 = getMetricPercentile(data, 'http_req_duration', 'p(95)');
+  if (httpDurationP95 > 500) {
     bottlenecks.push('⚠️  Overall 95th percentile response time exceeds 500ms - backend performance issue');
   }
   
-  if (data.metrics.errors && data.metrics.errors.values && data.metrics.errors.values.rate > 0.001) {
+  const errorRate = getMetricRate(data, 'errors');
+  if (errorRate > 0.001) {
     bottlenecks.push('⚠️  CRITICAL: Error rate exceeds 0.1% - trading errors can cause financial loss');
   }
   
-  if (data.metrics.http_req_failed && data.metrics.http_req_failed.values && data.metrics.http_req_failed.values.rate > 0.01) {
+  const failureRate = getMetricRate(data, 'http_req_failed');
+  if (failureRate > 0.01) {
     bottlenecks.push('⚠️  HTTP failure rate exceeds 1% - network/server reliability issue');
   }
   
@@ -362,12 +388,12 @@ export function handleSummary(data) {
  * Generate HTML report for stock trading platform
  */
 function htmlReport(data) {
-  const marketDataP95 = data.metrics.market_data_latency && data.metrics.market_data_latency.values ? 
-    data.metrics.market_data_latency.values['p(95)'].toFixed(2) : 'N/A';
-  const orderPlacementP95 = data.metrics.order_placement_time && data.metrics.order_placement_time.values ? 
-    data.metrics.order_placement_time.values['p(95)'].toFixed(2) : 'N/A';
-  const portfolioUpdateP95 = data.metrics.portfolio_update_time && data.metrics.portfolio_update_time.values ? 
-    data.metrics.portfolio_update_time.values['p(95)'].toFixed(2) : 'N/A';
+  // Use helper functions for safe metric extraction
+  const marketDataP95 = getMetricPercentile(data, 'market_data_latency', 'p(95)', 'N/A');
+  const orderPlacementP95 = getMetricPercentile(data, 'order_placement_time', 'p(95)', 'N/A');
+  const portfolioUpdateP95 = getMetricPercentile(data, 'portfolio_update_time', 'p(95)', 'N/A');
+  
+  const formatValue = (val) => val === 'N/A' ? val : val.toFixed(2);
   
   return `
 <!DOCTYPE html>
@@ -402,19 +428,19 @@ function htmlReport(data) {
     
     <div class="metric critical">
       <div class="metric-name">Market Data Latency (p95)</div>
-      <div class="metric-value">${marketDataP95} ms</div>
+      <div class="metric-value">${formatValue(marketDataP95)} ms</div>
       <div class="metric-desc">Target: &lt; 200ms | Real-time data feed performance</div>
     </div>
     
     <div class="metric critical">
       <div class="metric-name">Order Placement Time (p95)</div>
-      <div class="metric-value">${orderPlacementP95} ms</div>
+      <div class="metric-value">${formatValue(orderPlacementP95)} ms</div>
       <div class="metric-desc">Target: &lt; 300ms | Trade execution speed</div>
     </div>
     
     <div class="metric critical">
       <div class="metric-name">Portfolio Update Time (p95)</div>
-      <div class="metric-value">${portfolioUpdateP95} ms</div>
+      <div class="metric-value">${formatValue(portfolioUpdateP95)} ms</div>
       <div class="metric-desc">Target: &lt; 400ms | Balance calculation performance</div>
     </div>
     
