@@ -17,6 +17,7 @@ This directory contains C# programming language study materials and sample appli
   - **Logging**: Structured logging with ILogger and Serilog
   - **Observability**: Metrics, distributed tracing, health checks
   - **Advanced Language Features**: Pattern matching, records, nullable reference types, Span<T>/Memory<T>
+  - **Load Testing**: [k6 load testing samples](samples/load-testing/k6/) for concurrent user testing
   - **FIX Protocol**: Financial trading applications (legacy implementation)
   - REST client implementations
   - Observer pattern implementations

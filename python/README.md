@@ -19,6 +19,7 @@ This directory contains Python programming language study materials, sample appl
   - Django web applications and models
   - Lambda function implementations
   - Server implementations
+  - **Load Testing**: [Locust load testing samples](samples/load-testing/locust/) for concurrent user testing
   - File I/O and data processing utilities
   - Web scraping and automation scripts
 
