@@ -40,6 +40,14 @@ This module focuses on the Java programming language and its related technologie
    - Build automation tool for Java projects.
    - [Gradle Documentation](https://docs.gradle.org/current/userguide/userguide.html)
 
+### Algorithms and Data Structures
+
+- **[Algorithms Package](algorithms/)**
+  - **Tree Algorithms**: Balanced Binary Trees, AVL Trees, tree balancing
+  - **Graph Algorithms**: BFS, DFS, shortest path, cycle detection
+  - **Network Algorithms**: Dijkstra's algorithm, Minimum Spanning Tree, Floyd-Warshall
+  - See [algorithms/README.md](algorithms/README.md) for detailed documentation
+
 ### Sample Applications
 
 - **Spring Boot Application**
@@ -135,6 +143,17 @@ src/java
 ├── Spliter.java
 ├── StringManipulations.java
 ├── WordCount.java
+├── algorithms                        # NEW: Advanced algorithms
+│   ├── README.md                    # Algorithms documentation
+│   ├── tree/                        # Tree algorithms
+│   │   ├── BALANCED_BINARY_TREE.md  # Comprehensive balanced tree guide
+│   │   ├── TreeNode.java            # Basic tree node structure
+│   │   ├── BalancedBinaryTree.java  # Check if tree is balanced
+│   │   └── AVLTree.java             # Self-balancing AVL tree
+│   ├── graph/                       # Graph algorithms
+│   │   └── GraphAlgorithms.java     # BFS, DFS, cycle detection
+│   └── network/                     # Network algorithms
+│       └── NetworkAlgorithms.java   # Dijkstra, MST, Floyd-Warshall
 ├── grid_check.java
 ├── pom.xml
 ├── simple_grid_sum.java
