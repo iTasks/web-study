@@ -112,6 +112,13 @@ namespace K6LoadTestSample
                     {
                         var payload = await JsonSerializer.DeserializeAsync<DataItem>(context.Request.Body);
                         
+                        if (payload == null)
+                        {
+                            context.Response.StatusCode = 400;
+                            await context.Response.WriteAsJsonAsync(new { error = "Invalid payload" });
+                            return;
+                        }
+                        
                         // Simulate some processing time
                         await Task.Delay(Random.Shared.Next(20, 100));
                         
@@ -182,7 +189,7 @@ namespace K6LoadTestSample
     public class DataItem
     {
         public Guid Id { get; set; } = Guid.NewGuid();
-        public string Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         public double Value { get; set; }
         public DateTime Timestamp { get; set; } = DateTime.UtcNow;
     }

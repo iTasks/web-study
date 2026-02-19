@@ -58,6 +58,27 @@ web-study/
 ```
 </details>
 
+## 🚀 Load Testing & Performance
+
+**[📊 Load Testing Guide](LOAD_TESTING_GUIDE.md)** - Comprehensive comparison of load testing tools
+
+### Quick Links
+- **[k6 (C# Backend)](csharp/samples/load-testing/k6/)** - JavaScript-based load testing for .NET backends
+  - Concurrent user simulation
+  - Performance metrics & thresholds
+  - Bottleneck detection
+  - CI/CD ready
+  
+- **[Locust (Python Backend)](python/samples/load-testing/locust/)** - Python-based load testing with web UI
+  - Realistic user behavior simulation
+  - Real-time monitoring dashboard
+  - Distributed testing support
+  - Custom metrics & reporting
+
+**Perfect for**: DSE-BD and CSE-BD load testing scenarios with production bottleneck checking
+
+---
+
 ## Programming Languages
 
 ### [Java](java/)

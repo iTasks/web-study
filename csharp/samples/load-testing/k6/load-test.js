@@ -120,7 +120,7 @@ export default function (data) {
     
     check(getRes, {
       'GET status is 200': (r) => r.status === 200,
-      'GET response has data': (r) => r.body.length > 0,
+      'GET response has data': (r) => r.body && r.body.length > 0,
       'GET response time < 300ms': (r) => r.timings.duration < 300,
     });
     
@@ -218,15 +218,15 @@ export function handleSummary(data) {
   const bottlenecks = [];
   
   // Analyze metrics for bottlenecks
-  if (data.metrics.http_req_duration?.values?.['p(95)'] > 500) {
+  if (data.metrics.http_req_duration && data.metrics.http_req_duration.values && data.metrics.http_req_duration.values['p(95)'] > 500) {
     bottlenecks.push('⚠️  95th percentile response time exceeds 500ms - possible backend bottleneck');
   }
   
-  if (data.metrics.errors?.values?.rate > 0.01) {
+  if (data.metrics.errors && data.metrics.errors.values && data.metrics.errors.values.rate > 0.01) {
     bottlenecks.push('⚠️  Error rate exceeds 1% - investigate error causes');
   }
   
-  if (data.metrics.http_req_failed?.values?.rate > 0.05) {
+  if (data.metrics.http_req_failed && data.metrics.http_req_failed.values && data.metrics.http_req_failed.values.rate > 0.05) {
     bottlenecks.push('⚠️  HTTP failure rate exceeds 5% - check network/server stability');
   }
   
@@ -272,22 +272,22 @@ function htmlReport(data) {
     <h2>Summary Metrics</h2>
     <div class="metric">
       <div class="metric-name">Total Requests</div>
-      <div class="metric-value">${data.metrics.http_reqs?.values?.count || 0}</div>
+      <div class="metric-value">${data.metrics.http_reqs && data.metrics.http_reqs.values ? data.metrics.http_reqs.values.count : 0}</div>
     </div>
     
     <div class="metric">
       <div class="metric-name">Request Duration (95th percentile)</div>
-      <div class="metric-value">${(data.metrics.http_req_duration?.values?.['p(95)'] || 0).toFixed(2)} ms</div>
+      <div class="metric-value">${data.metrics.http_req_duration && data.metrics.http_req_duration.values ? data.metrics.http_req_duration.values['p(95)'].toFixed(2) : 0} ms</div>
     </div>
     
-    <div class="metric ${data.metrics.errors?.values?.rate > 0.01 ? 'error' : ''}">
+    <div class="metric ${data.metrics.errors && data.metrics.errors.values && data.metrics.errors.values.rate > 0.01 ? 'error' : ''}">
       <div class="metric-name">Error Rate</div>
-      <div class="metric-value">${((data.metrics.errors?.values?.rate || 0) * 100).toFixed(2)}%</div>
+      <div class="metric-value">${data.metrics.errors && data.metrics.errors.values ? (data.metrics.errors.values.rate * 100).toFixed(2) : 0}%</div>
     </div>
     
     <div class="metric">
       <div class="metric-name">Requests per Second</div>
-      <div class="metric-value">${(data.metrics.http_reqs?.values?.rate || 0).toFixed(2)}</div>
+      <div class="metric-value">${data.metrics.http_reqs && data.metrics.http_reqs.values ? data.metrics.http_reqs.values.rate.toFixed(2) : 0}</div>
     </div>
   </div>
 </body>
