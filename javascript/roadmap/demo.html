@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full-Stack JS Roadmap – Interactive Course Demo</title>
+  <meta name="description" content="Animated presentation of the full-stack JavaScript/TypeScript learning roadmap for senior engineers." />
+
+  <!-- ── Fonts (CDN) ─────────────────────────────────────────────────────── -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & tokens ─────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0f0f1a;
+      --surface:  #1a1a2e;
+      --card:     #16213e;
+      --border:   #2a2a4a;
+      --accent:   #7c3aed;
+      --accent2:  #06b6d4;
+      --accent3:  #10b981;
+      --warn:     #f59e0b;
+      --danger:   #ef4444;
+      --text:     #e2e8f0;
+      --muted:    #94a3b8;
+      --code-bg:  #0d1117;
+      --radius:   14px;
+      --shadow:   0 8px 32px rgba(0,0,0,.5);
+      --trans:    cubic-bezier(.4,0,.2,1);
+    }
+
+    html { font-size: 16px; scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      user-select: none;
+    }
+
+    /* ── Progress bar ───────────────────────────────────────────────────── */
+    #progress-bar {
+      position: fixed;
+      top: 0; left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width .4s var(--trans);
+      z-index: 100;
+      border-radius: 0 2px 2px 0;
+    }
+
+    /* ── Slide counter ──────────────────────────────────────────────────── */
+    #counter {
+      position: fixed;
+      top: 14px; right: 20px;
+      font-size: .75rem;
+      color: var(--muted);
+      z-index: 100;
+      letter-spacing: .05em;
+    }
+
+    /* ── Navigation ─────────────────────────────────────────────────────── */
+    .nav-btn {
+      position: fixed;
+      top: 50%; transform: translateY(-50%);
+      z-index: 100;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--border);
+      color: var(--text);
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      transition: background .2s, transform .2s;
+      backdrop-filter: blur(8px);
+    }
+    .nav-btn:hover { background: rgba(124,58,237,.35); transform: translateY(-50%) scale(1.1); }
+    #btn-prev { left: 16px; }
+    #btn-next { right: 16px; }
+
+    /* ── Dot navigation ─────────────────────────────────────────────────── */
+    #dots {
+      position: fixed;
+      bottom: 22px; left: 50%;
+      transform: translateX(-50%);
+      display: flex; gap: 8px;
+      z-index: 100;
+    }
+    .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: background .3s, transform .3s;
+    }
+    .dot.active {
+      background: var(--accent);
+      transform: scale(1.4);
+    }
+
+    /* ── Slide container ────────────────────────────────────────────────── */
+    #deck {
+      position: relative;
+      width: 100vw; height: 100vh;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 80px 80px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .5s var(--trans), transform .5s var(--trans);
+      transform: translateX(60px);
+    }
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(0);
+    }
+    .slide.exit-left {
+      opacity: 0;
+      transform: translateX(-60px);
+    }
+
+    /* ── Slide inner layouts ────────────────────────────────────────────── */
+    .slide-inner {
+      max-width: 960px;
+      width: 100%;
+      animation: fadeUp .6s var(--trans) both;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Typography ─────────────────────────────────────────────────────── */
+    .eyebrow {
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 12px;
+      animation: fadeUp .5s .1s var(--trans) both;
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #e2e8f0 30%, var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+      animation: fadeUp .5s .15s var(--trans) both;
+    }
+
+    h2 {
+      font-size: clamp(1.4rem, 3vw, 2.2rem);
+      font-weight: 600;
+      margin-bottom: 16px;
+      animation: fadeUp .5s .1s var(--trans) both;
+    }
+
+    .subtitle {
+      font-size: clamp(.95rem, 1.8vw, 1.15rem);
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 640px;
+      animation: fadeUp .5s .2s var(--trans) both;
+    }
+
+    /* ── Phase badge ────────────────────────────────────────────────────── */
+    .phase-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 14px;
+      border-radius: 100px;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      margin-bottom: 16px;
+      animation: fadeUp .5s .05s var(--trans) both;
+    }
+
+    /* ── Card grid ──────────────────────────────────────────────────────── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+      margin-top: 28px;
+      animation: fadeUp .5s .3s var(--trans) both;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
+    }
+    .card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(124,58,237,.2);
+    }
+
+    .card-icon { font-size: 1.6rem; margin-bottom: 10px; }
+    .card-title { font-size: .9rem; font-weight: 600; margin-bottom: 4px; }
+    .card-desc { font-size: .78rem; color: var(--muted); line-height: 1.5; }
+
+    /* ── Timeline ───────────────────────────────────────────────────────── */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 24px;
+      animation: fadeUp .5s .25s var(--trans) both;
+    }
+
+    .timeline-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      transition: border-color .2s, transform .2s;
+    }
+    .timeline-row:hover { border-color: var(--accent2); transform: translateX(6px); }
+
+    .tl-num {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; font-weight: 700;
+      flex-shrink: 0;
+    }
+    .tl-label { font-size: .9rem; font-weight: 500; flex: 1; }
+    .tl-dur {
+      font-size: .75rem;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+      white-space: nowrap;
+    }
+
+    /* ── Code block ─────────────────────────────────────────────────────── */
+    .code-wrap {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin-top: 20px;
+      overflow-x: auto;
+      animation: fadeUp .5s .3s var(--trans) both;
+    }
+    pre, code {
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      font-size: .82rem;
+      line-height: 1.7;
+      color: #a5d6ff;
+    }
+    .kw  { color: #ff7b72; }
+    .fn  { color: #d2a8ff; }
+    .str { color: #a5d6ff; }
+    .cm  { color: #8b949e; font-style: italic; }
+    .ty  { color: #79c0ff; }
+    .num { color: #f2cc60; }
+
+    /* ── Two-column layout ──────────────────────────────────────────────── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 24px;
+      animation: fadeUp .5s .25s var(--trans) both;
+    }
+    @media (max-width: 700px) { .two-col { grid-template-columns: 1fr; } }
+
+    /* ── Comparison table ───────────────────────────────────────────────── */
+    .cmp-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .82rem;
+      margin-top: 20px;
+      animation: fadeUp .5s .3s var(--trans) both;
+    }
+    .cmp-table th {
+      text-align: left;
+      padding: 8px 12px;
+      background: var(--card);
+      color: var(--muted);
+      font-weight: 600;
+      letter-spacing: .04em;
+      font-size: .72rem;
+      text-transform: uppercase;
+    }
+    .cmp-table td {
+      padding: 8px 12px;
+      border-top: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    .cmp-table tr:hover td { background: rgba(255,255,255,.03); }
+    .tick { color: var(--accent3); }
+    .cross { color: var(--danger); }
+    .warn-ico { color: var(--warn); }
+
+    /* ── Feature list ────────────────────────────────────────────────────── */
+    .feat-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+      animation: fadeUp .5s .25s var(--trans) both;
+    }
+    .feat-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: .9rem;
+      line-height: 1.5;
+    }
+    .feat-list li::before {
+      content: '▸';
+      color: var(--accent2);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── Hero decorations ───────────────────────────────────────────────── */
+    .hero-orbs {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: .18;
+      animation: drift 12s ease-in-out infinite alternate;
+    }
+    .orb1 { width: 500px; height: 500px; background: var(--accent);  top: -120px; left: -100px; animation-delay: 0s; }
+    .orb2 { width: 400px; height: 400px; background: var(--accent2); bottom: -80px; right: -60px; animation-delay: -4s; }
+    .orb3 { width: 300px; height: 300px; background: var(--accent3); top: 40%; left: 40%; animation-delay: -8s; }
+
+    @keyframes drift {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(30px, 20px) scale(1.08); }
+    }
+
+    /* ── Pill tags ──────────────────────────────────────────────────────── */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 18px;
+      animation: fadeUp .5s .3s var(--trans) both;
+    }
+    .tag {
+      padding: 4px 12px;
+      border-radius: 100px;
+      font-size: .72rem;
+      font-weight: 600;
+      border: 1px solid;
+    }
+    .tag-purple  { color: #c4b5fd; border-color: #5b21b6; background: rgba(91,33,182,.15); }
+    .tag-cyan    { color: #67e8f9; border-color: #0e7490; background: rgba(14,116,144,.15); }
+    .tag-green   { color: #6ee7b7; border-color: #065f46; background: rgba(6,95,70,.15); }
+    .tag-amber   { color: #fcd34d; border-color: #92400e; background: rgba(146,64,14,.15); }
+    .tag-red     { color: #fca5a5; border-color: #991b1b; background: rgba(153,27,27,.15); }
+
+    /* ── Keyboard hint ──────────────────────────────────────────────────── */
+    #kbd-hint {
+      position: fixed;
+      bottom: 54px; right: 20px;
+      font-size: .65rem;
+      color: var(--muted);
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+    .kbd {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .7rem;
+    }
+
+    /* ── Arch diagram ───────────────────────────────────────────────────── */
+    .arch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      margin-top: 20px;
+      animation: fadeUp .5s .3s var(--trans) both;
+    }
+    .arch-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .arch-box {
+      padding: 8px 18px;
+      border-radius: 8px;
+      font-size: .78rem;
+      font-weight: 600;
+      text-align: center;
+      border: 1px solid;
+    }
+    .arch-arrow {
+      width: 2px;
+      height: 20px;
+      background: var(--border);
+      margin: 0 auto;
+    }
+    .arch-arrow-h {
+      display: flex;
+      align-items: center;
+      color: var(--border);
+      font-size: .7rem;
+    }
+
+    /* ── Pulse animation on the live dot ───────────────────────────────── */
+    .pulse {
+      display: inline-block;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--accent3);
+      margin-right: 6px;
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,.6); }
+      50%       { box-shadow: 0 0 0 6px rgba(16,185,129,0); }
+    }
+
+    /* ── Slide-specific backgrounds ─────────────────────────────────────── */
+    .bg-hero    { background: radial-gradient(ellipse at 20% 50%, rgba(124,58,237,.12) 0%, transparent 60%), var(--bg); }
+    .bg-phase0  { background: radial-gradient(ellipse at 80% 20%, rgba(6,182,212,.1) 0%, transparent 55%), var(--bg); }
+    .bg-phase1  { background: radial-gradient(ellipse at 10% 80%, rgba(124,58,237,.1) 0%, transparent 55%), var(--bg); }
+    .bg-phase2  { background: radial-gradient(ellipse at 90% 60%, rgba(16,185,129,.08) 0%, transparent 50%), var(--bg); }
+    .bg-phase3  { background: radial-gradient(ellipse at 30% 30%, rgba(245,158,11,.08) 0%, transparent 50%), var(--bg); }
+    .bg-phase4  { background: radial-gradient(ellipse at 70% 80%, rgba(6,182,212,.09) 0%, transparent 55%), var(--bg); }
+    .bg-phase5  { background: radial-gradient(ellipse at 20% 40%, rgba(239,68,68,.08) 0%, transparent 50%), var(--bg); }
+    .bg-phase6  { background: radial-gradient(ellipse at 80% 30%, rgba(16,185,129,.1) 0%, transparent 50%), var(--bg); }
+    .bg-scripts { background: radial-gradient(ellipse at 50% 70%, rgba(245,158,11,.09) 0%, transparent 50%), var(--bg); }
+    .bg-port    { background: radial-gradient(ellipse at 20% 60%, rgba(124,58,237,.12) 0%, transparent 55%), var(--bg); }
+    .bg-final   { background: radial-gradient(ellipse at 50% 50%, rgba(124,58,237,.15) 0%, transparent 60%), var(--bg); }
+
+    /* ── Topic brief grid ───────────────────────────────────────────────── */
+    .brief-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 12px;
+      margin-top: 20px;
+      animation: fadeUp .5s .25s var(--trans) both;
+    }
+    .brief-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+    .brief-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+
+    .brief-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent2);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: border-color .2s, transform .2s, box-shadow .2s;
+    }
+    .brief-card:hover {
+      border-left-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(124,58,237,.18);
+    }
+    .brief-card .bc-title {
+      font-size: .82rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .brief-card .bc-brief {
+      font-size: .74rem;
+      color: var(--muted);
+      line-height: 1.55;
+    }
+    .brief-card .bc-points {
+      list-style: none;
+      margin-top: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .brief-card .bc-points li {
+      font-size: .71rem;
+      color: #7dd3fc;
+      display: flex;
+      gap: 5px;
+      line-height: 1.4;
+    }
+    .brief-card .bc-points li::before { content: '›'; color: var(--accent2); flex-shrink: 0; }
+
+    /* colour variants for left border accent */
+    .brief-card.green  { border-left-color: var(--accent3); }
+    .brief-card.amber  { border-left-color: var(--warn); }
+    .brief-card.red    { border-left-color: var(--danger); }
+    .brief-card.purple { border-left-color: var(--accent); }
+
+    /* scrollable slide-inner for dense topic slides */
+    .slide-inner.scrollable {
+      overflow-y: auto;
+      max-height: calc(100vh - 100px);
+      padding-right: 4px;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── Progress bar ──────────────────────────────────────────────────────── -->
+<div id="progress-bar"></div>
+<div id="counter"></div>
+
+<!-- ── Navigation ───────────────────────────────────────────────────────── -->
+<button class="nav-btn" id="btn-prev" aria-label="Previous slide">&#8592;</button>
+<button class="nav-btn" id="btn-next" aria-label="Next slide">&#8594;</button>
+<div id="dots"></div>
+<div id="kbd-hint">
+  <span class="kbd">←</span><span class="kbd">→</span>
+  <span style="margin-left:2px">or</span>
+  <span class="kbd">Space</span>
+  to navigate
+</div>
+
+<!-- ════════════════════════════════════════════════════════════════════════
+     SLIDES
+     ════════════════════════════════════════════════════════════════════════ -->
+<div id="deck">
+
+  <!-- ── 0: Hero ─────────────────────────────────────────────────────────── -->
+  <section class="slide bg-hero" data-index="0">
+    <div class="hero-orbs">
+      <div class="orb orb1"></div>
+      <div class="orb orb2"></div>
+      <div class="orb orb3"></div>
+    </div>
+    <div class="slide-inner" style="text-align:center; position:relative; z-index:1;">
+      <div class="eyebrow">Full-Stack Learning Roadmap</div>
+      <h1>From Backend Engineer<br>to Full-Stack Developer</h1>
+      <p class="subtitle" style="margin:0 auto 32px;">
+        A production-grade, six-month curriculum for Senior .NET / Python engineers
+        moving confidently into React, React Native, and full-stack architecture.
+      </p>
+      <div class="tags" style="justify-content:center;">
+        <span class="tag tag-purple">React</span>
+        <span class="tag tag-cyan">React Native</span>
+        <span class="tag tag-green">FastAPI · Django</span>
+        <span class="tag tag-amber">TypeScript</span>
+        <span class="tag tag-red">CI/CD · Docker</span>
+      </div>
+      <p style="margin-top:40px; font-size:.75rem; color:var(--muted);">
+        <span class="pulse"></span>Interactive — use arrow keys or click the buttons to navigate
+      </p>
+    </div>
+  </section>
+
+  <!-- ── 1: Overview / Timeline ──────────────────────────────────────────── -->
+  <section class="slide bg-phase0" data-index="1">
+    <div class="slide-inner">
+      <div class="eyebrow">Course Overview</div>
+      <h2>~6 Months to Strong Full-Stack Level</h2>
+      <p class="subtitle">8 phases, studied 2–3 hrs/day. Each phase builds on the last.</p>
+      <div class="timeline">
+        <div class="timeline-row">
+          <div class="tl-num" style="background:rgba(6,182,212,.2);color:#67e8f9;">0</div>
+          <span class="tl-label">Modern JavaScript (ES6+) &amp; TypeScript</span>
+          <span class="tl-dur">3 weeks</span>
+        </div>
+        <div class="timeline-row">
+          <div class="tl-num" style="background:rgba(124,58,237,.2);color:#c4b5fd;">1</div>
+          <span class="tl-label">React Core — Components, Hooks, Routing, Forms, API</span>
+          <span class="tl-dur">5 weeks</span>
+        </div>
+        <div class="timeline-row">
+          <div class="tl-num" style="background:rgba(124,58,237,.2);color:#c4b5fd;">2</div>
+          <span class="tl-label">Advanced React — State, Performance, Testing, Build</span>
+          <span class="tl-dur">5 weeks</span>
+        </div>
+        <div class="timeline-row">
+          <div class="tl-num" style="background:rgba(245,158,11,.2);color:#fcd34d;">3</div>
+          <span class="tl-label">React Native — Mobile, Navigation, Native APIs</span>
+          <span class="tl-dur">5 weeks</span>
+        </div>
+        <div class="timeline-row">
+          <div class="tl-num" style="background:rgba(6,182,212,.2);color:#67e8f9;">4</div>
+          <span class="tl-label">Python Backend — FastAPI &amp; Django + DRF</span>
+          <span class="tl-dur">4 weeks</span>
+        </div>
+        <div class="timeline-row">
+          <div class="tl-num" style="background:rgba(239,68,68,.2);color:#fca5a5;">5</div>
+          <span class="tl-label">Full-Stack Architecture — Auth, Docker, CI/CD</span>
+          <span class="tl-dur">4 weeks</span>
+        </div>
+        <div class="timeline-row">
+          <div class="tl-num" style="background:rgba(16,185,129,.2);color:#6ee7b7;">6</div>
+          <span class="tl-label">Advanced — Next.js SSR, Mobile Advanced, Scaling</span>
+          <span class="tl-dur">ongoing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 2: Phase 0 ──────────────────────────────────────────────────────── -->
+  <section class="slide bg-phase0" data-index="2">
+    <div class="slide-inner">
+      <div class="phase-badge" style="background:rgba(6,182,212,.15);color:#67e8f9;border:1px solid #0e7490;">
+        ⚡ Phase 0 · 3 weeks
+      </div>
+      <h2>Modern JavaScript (ES6+) &amp; TypeScript</h2>
+      <p class="subtitle">You don't need beginner JS. Focus on the idioms React relies on.</p>
+      <div class="two-col">
+        <div>
+          <div class="card" style="height:100%">
+            <div class="card-icon">🟨</div>
+            <div class="card-title">ES6+ Essentials</div>
+            <ul class="feat-list" style="margin-top:10px;">
+              <li>let / const · arrow functions</li>
+              <li>Destructuring + spread/rest</li>
+              <li>Modules (import / export)</li>
+              <li>async/await · Promises</li>
+              <li>Closures · Array methods</li>
+              <li>Optional chaining ??</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="card" style="height:100%">
+            <div class="card-icon">🔷</div>
+            <div class="card-title">TypeScript — Mandatory</div>
+            <ul class="feat-list" style="margin-top:10px;">
+              <li>Interfaces &amp; type aliases</li>
+              <li>Generics &lt;T&gt;</li>
+              <li>Union &amp; discriminated unions</li>
+              <li>Utility types: Partial, Pick, Omit</li>
+              <li>Type guards &amp; narrowing</li>
+              <li>strict mode — always on</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 3: Phase 1 ──────────────────────────────────────────────────────── -->
+  <section class="slide bg-phase1" data-index="3">
+    <div class="slide-inner">
+      <div class="phase-badge" style="background:rgba(124,58,237,.15);color:#c4b5fd;border:1px solid #5b21b6;">
+        ⚛️ Phase 1 · 5 weeks
+      </div>
+      <h2>React Core (Web)</h2>
+      <p class="subtitle">Component-based UI. Declarative. State-driven rendering.</p>
+      <div class="card-grid">
+        <div class="card">
+          <div class="card-icon">🪝</div>
+          <div class="card-title">Hooks</div>
+          <div class="card-desc">useState · useEffect · useMemo · useCallback · useRef</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🧩</div>
+          <div class="card-title">Component Architecture</div>
+          <div class="card-desc">Smart vs dumb · Lifting state · Composition patterns</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🗺️</div>
+          <div class="card-title">React Router v6</div>
+          <div class="card-desc">Nested routes · Auth guards · Lazy loading · URL params</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">📋</div>
+          <div class="card-title">Forms</div>
+          <div class="card-desc">React Hook Form · Zod validation · Controlled inputs</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔗</div>
+          <div class="card-title">API Integration</div>
+          <div class="card-desc">Axios · TanStack Query · JWT auth · FastAPI CORS</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 4: Phase 2 ──────────────────────────────────────────────────────── -->
+  <section class="slide bg-phase2" data-index="4">
+    <div class="slide-inner">
+      <div class="phase-badge" style="background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid #065f46;">
+        🧠 Phase 2 · 5 weeks
+      </div>
+      <h2>Advanced React — Production Level</h2>
+      <div class="two-col">
+        <div>
+          <h3 style="font-size:.85rem;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.08em;">State Management</h3>
+          <table class="cmp-table">
+            <thead><tr><th>Use Case</th><th>Tool</th></tr></thead>
+            <tbody>
+              <tr><td>Small app / UI state</td><td style="color:#67e8f9;">useState + Context</td></tr>
+              <tr><td>Medium app, async</td><td style="color:#6ee7b7;">Zustand</td></tr>
+              <tr><td>Large scalable app</td><td style="color:#c4b5fd;">Redux Toolkit</td></tr>
+              <tr><td>Server state / cache</td><td style="color:#fcd34d;">TanStack Query</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3 style="font-size:.85rem;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.08em;">Key Topics</h3>
+          <ul class="feat-list">
+            <li>React.memo · useMemo · useCallback</li>
+            <li>Code splitting · lazy() · Suspense</li>
+            <li>Custom hooks (service patterns)</li>
+            <li>Compound components · HOC · Error boundaries</li>
+            <li>Vitest + React Testing Library + MSW</li>
+            <li>Vite CDN builds (content-hash assets)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 5: Phase 2 Code sample ──────────────────────────────────────────── -->
+  <section class="slide bg-phase2" data-index="5">
+    <div class="slide-inner">
+      <div class="phase-badge" style="background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid #065f46;">
+        🧠 Phase 2 · Code Sample
+      </div>
+      <h2>Zustand Store in 15 Lines</h2>
+      <p class="subtitle">Global state with zero boilerplate — no Provider needed.</p>
+      <div class="code-wrap">
+<pre><code><span class="kw">import</span> { create } <span class="kw">from</span> <span class="str">'zustand'</span>;
+
+<span class="kw">interface</span> <span class="ty">CartStore</span> {
+  items: <span class="ty">CartItem</span>[];
+  addItem: (item: <span class="ty">CartItem</span>) =&gt; <span class="ty">void</span>;
+  total:   () =&gt; <span class="ty">number</span>;
+}
+
+<span class="kw">export const</span> <span class="fn">useCartStore</span> = <span class="fn">create</span>&lt;<span class="ty">CartStore</span>&gt;()((set, get) =&gt; ({
+  items:   [],
+  addItem: (item) =&gt; set((s) =&gt; ({ items: [...s.items, item] })),
+  total:   () =&gt; get().items.<span class="fn">reduce</span>((sum, i) =&gt; sum + i.price, <span class="num">0</span>),
+}));
+
+<span class="cm">// Usage — no Provider, works in any component</span>
+<span class="kw">const</span> { items, addItem } = <span class="fn">useCartStore</span>();</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 6: Phase 3 ──────────────────────────────────────────────────────── -->
+  <section class="slide bg-phase3" data-index="6">
+    <div class="slide-inner">
+      <div class="phase-badge" style="background:rgba(245,158,11,.15);color:#fcd34d;border:1px solid #92400e;">
+        📱 Phase 3 · 5 weeks
+      </div>
+      <h2>React Native — Mobile</h2>
+      <p class="subtitle">One codebase → iOS + Android. Same React patterns, native rendering.</p>
+      <div class="two-col">
+        <div>
+          <h3 style="font-size:.85rem;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.08em;">Web → Native Mapping</h3>
+          <table class="cmp-table">
+            <thead><tr><th>React (Web)</th><th>React Native</th></tr></thead>
+            <tbody>
+              <tr><td>&lt;div&gt;</td><td style="color:#fcd34d;">&lt;View&gt;</td></tr>
+              <tr><td>&lt;p&gt; / &lt;span&gt;</td><td style="color:#fcd34d;">&lt;Text&gt;</td></tr>
+              <tr><td>&lt;img&gt;</td><td style="color:#fcd34d;">&lt;Image&gt;</td></tr>
+              <tr><td>&lt;input&gt;</td><td style="color:#fcd34d;">&lt;TextInput&gt;</td></tr>
+              <tr><td>onClick</td><td style="color:#fcd34d;">onPress</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <h3 style="font-size:.85rem;color:var(--muted);margin-bottom:10px;text-transform:uppercase;letter-spacing:.08em;">Expo vs Bare</h3>
+          <table class="cmp-table">
+            <thead><tr><th>Feature</th><th>Expo</th><th>Bare</th></tr></thead>
+            <tbody>
+              <tr><td>Setup time</td><td class="tick">✔ Minutes</td><td class="warn-ico">⚠ Hours</td></tr>
+              <tr><td>OTA updates</td><td class="tick">✔</td><td class="cross">✖</td></tr>
+              <tr><td>Custom native</td><td class="cross">✖</td><td class="tick">✔</td></tr>
+              <tr><td>Good for MVP</td><td class="tick">✔</td><td class="warn-ico">⚠</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 7: Phase 4 ──────────────────────────────────────────────────────── -->
+  <section class="slide bg-phase4" data-index="7">
+    <div class="slide-inner">
+      <div class="phase-badge" style="background:rgba(6,182,212,.15);color:#67e8f9;border:1px solid #0e7490;">
+        🐍 Phase 4 · 4 weeks
+      </div>
+      <h2>Python Backend — Production Grade</h2>
+      <p class="subtitle">You already know backend. Focus on <em>frontend integration quality</em>.</p>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <div class="card-title">Option 1 — FastAPI</div>
+          <ul class="feat-list" style="margin-top:10px;">
+            <li>Pydantic v2 validation (DTOs)</li>
+            <li>Dependency injection</li>
+            <li>OAuth2 + JWT + refresh tokens</li>
+            <li>Async endpoints</li>
+            <li>WebSockets (real-time)</li>
+            <li>Auto OpenAPI / Swagger</li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-icon">🎸</div>
+          <div class="card-title">Option 2 — Django + DRF</div>
+          <ul class="feat-list" style="margin-top:10px;">
+            <li>ViewSets + Serializers</li>
+            <li>Token / Session auth</li>
+            <li>Permissions + RBAC</li>
+            <li>ORM — select_related, annotate</li>
+            <li>Admin panel out-of-the-box</li>
+            <li>drf-spectacular (OpenAPI)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 8: Phase 5 Architecture ─────────────────────────────────────────── -->
+  <section class="slide bg-phase5" data-index="8">
+    <div class="slide-inner">
+      <div class="phase-badge" style="background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid #991b1b;">
+        🔐 Phase 5 · 4 weeks
+      </div>
+      <h2>Full-Stack Production Architecture</h2>
+      <p class="subtitle">Docker Compose stack ready to run on any VPS or cloud provider.</p>
+      <div class="arch">
+        <div class="arch-row">
+          <div class="arch-box" style="background:rgba(124,58,237,.15);border-color:#5b21b6;color:#c4b5fd;">React Web (Vite / CDN)</div>
+          <div class="arch-arrow-h">&nbsp;·&nbsp;</div>
+          <div class="arch-box" style="background:rgba(245,158,11,.15);border-color:#92400e;color:#fcd34d;">React Native (Expo)</div>
+        </div>
+        <div class="arch-arrow"></div>
+        <div class="arch-row">
+          <div class="arch-box" style="background:rgba(6,182,212,.15);border-color:#0e7490;color:#67e8f9;min-width:300px;text-align:center;">Nginx · SSL termination · Rate limiting</div>
+        </div>
+        <div class="arch-arrow"></div>
+        <div class="arch-row">
+          <div class="arch-box" style="background:rgba(16,185,129,.15);border-color:#065f46;color:#6ee7b7;">FastAPI / Django</div>
+        </div>
+        <div class="arch-arrow"></div>
+        <div class="arch-row" style="gap:24px;">
+          <div class="arch-box" style="background:rgba(6,182,212,.12);border-color:#0e7490;color:#67e8f9;">PostgreSQL</div>
+          <div class="arch-box" style="background:rgba(239,68,68,.12);border-color:#991b1b;color:#fca5a5;">Redis</div>
+          <div class="arch-box" style="background:rgba(245,158,11,.12);border-color:#92400e;color:#fcd34d;">S3 / CDN</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 9: Phase 5 CI/CD ────────────────────────────────────────────────── -->
+  <section class="slide bg-phase5" data-index="9">
+    <div class="slide-inner">
+      <div class="phase-badge" style="background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid #991b1b;">
+        🚀 Phase 5 · CI/CD
+      </div>
+      <h2>GitHub Actions Pipeline</h2>
+      <p class="subtitle">Automated test → build → push → deploy on every push to main.</p>
+      <div class="code-wrap">
+<pre><code><span class="cm"># .github/workflows/ci.yml</span>
+<span class="kw">jobs</span>:
+  <span class="fn">test-frontend</span>:
+    steps:
+      - run: npm ci
+      - run: npm run type-check &amp;&amp; npm run lint
+      - run: npm run test -- --run --coverage
+      - run: npm run build
+
+  <span class="fn">test-backend</span>:
+    services:
+      postgres: { image: postgres:16 }
+    steps:
+      - run: pip install -r requirements.txt
+      - run: ruff check . &amp;&amp; mypy .
+      - run: pytest --cov=app
+
+  <span class="fn">deploy</span>:
+    needs: [test-frontend, test-backend]
+    steps:
+      - uses: <span class="str">docker/build-push-action@v5</span>
+      - run: docker compose up -d --build</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 10: Phase 6 ─────────────────────────────────────────────────────── -->
+  <section class="slide bg-phase6" data-index="10">
+    <div class="slide-inner">
+      <div class="phase-badge" style="background:rgba(16,185,129,.15);color:#6ee7b7;border:1px solid #065f46;">
+        📊 Phase 6 · Expert
+      </div>
+      <h2>Advanced / Expert Level</h2>
+      <div class="card-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="card">
+          <div class="card-icon">▲</div>
+          <div class="card-title">Next.js (SSR)</div>
+          <div class="card-desc">App Router · Server components · SEO optimization · ISR</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">📱</div>
+          <div class="card-title">Mobile Advanced</div>
+          <div class="card-desc">Hermes profiling · Native modules · Offline-first · Background sync</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚖️</div>
+          <div class="card-title">Scaling</div>
+          <div class="card-desc">CDN strategy · Load balancing · Rate limiting · DB connection pools</div>
+        </div>
+      </div>
+      <div style="margin-top:24px;padding:16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);animation:fadeUp .5s .4s var(--trans) both;">
+        <p style="font-size:.82rem;color:var(--muted);line-height:1.6;">
+          <strong style="color:var(--text);">Horizontal scaling checklist:</strong>
+          Stateless backends · Redis sessions · Shared S3 storage · PgBouncer pooling · 
+          Graceful shutdown · Health endpoints · 12-Factor App
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 11: Management Scripts ──────────────────────────────────────────── -->
+  <section class="slide bg-scripts" data-index="11">
+    <div class="slide-inner">
+      <div class="phase-badge" style="background:rgba(245,158,11,.15);color:#fcd34d;border:1px solid #92400e;">
+        🛠️ Management Scripts
+      </div>
+      <h2>Run · Build · Deploy — Any Platform</h2>
+      <p class="subtitle">Four equivalent scripts, one command surface, zero lock-in.</p>
+      <table class="cmp-table" style="margin-top:20px;">
+        <thead>
+          <tr><th>Script</th><th>Platform</th><th>Features</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code style="color:#a5d6ff;">manage.py</code></td>
+            <td>Any (Python 3.8+)</td>
+            <td><span class="tick">✔</span> CLI + <strong>GUI</strong> (tkinter)</td>
+          </tr>
+          <tr>
+            <td><code style="color:#a5d6ff;">manage.sh</code></td>
+            <td>Linux / macOS / WSL</td>
+            <td><span class="tick">✔</span> Colour output, parallel servers</td>
+          </tr>
+          <tr>
+            <td><code style="color:#a5d6ff;">manage.bat</code></td>
+            <td>Windows cmd.exe</td>
+            <td><span class="tick">✔</span> Separate console windows</td>
+          </tr>
+          <tr>
+            <td><code style="color:#a5d6ff;">manage.ps1</code></td>
+            <td>PowerShell 5.1+</td>
+            <td><span class="tick">✔</span> Typed params, port detection</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="code-wrap" style="margin-top:16px;">
+<pre><code><span class="cm"># Linux / macOS</span>
+./scripts/manage.sh dev
+
+<span class="cm"># Windows PowerShell</span>
+.\scripts\manage.ps1 deploy production
+
+<span class="cm"># GUI (Python + tkinter — any OS)</span>
+python scripts/manage.py gui</code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 12: Portfolio Projects ──────────────────────────────────────────── -->
+  <section class="slide bg-port" data-index="12">
+    <div class="slide-inner">
+      <div class="phase-badge" style="background:rgba(124,58,237,.15);color:#c4b5fd;border:1px solid #5b21b6;">
+        🧪 Portfolio Projects
+      </div>
+      <h2>Build These in Parallel with Studying</h2>
+      <div class="card-grid" style="grid-template-columns:repeat(3,1fr);margin-top:24px;">
+        <div class="card">
+          <div class="card-icon">📈</div>
+          <div class="card-title">Trading Dashboard</div>
+          <div class="card-desc">React + WebSocket · Python price simulation engine · Real-time candlestick charts · Redis Pub/Sub</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🛒</div>
+          <div class="card-title">Service Marketplace</div>
+          <div class="card-desc">React Native + Expo · FastAPI backend · Stripe payments · Geolocation filtering</div>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏢</div>
+          <div class="card-title">SaaS Admin Panel</div>
+          <div class="card-desc">Next.js App Router · Django + DRF · Multi-tenant RBAC · Dashboard analytics</div>
+        </div>
+      </div>
+      <p style="margin-top:24px;font-size:.8rem;color:var(--muted);animation:fadeUp .5s .5s var(--trans) both;">
+        Each project grows phase-by-phase: mock data → state management → real backend → Docker → deployed.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── 13: Final / CTA ─────────────────────────────────────────────────── -->
+  <section class="slide bg-final" data-index="13">
+    <div class="hero-orbs">
+      <div class="orb orb1" style="opacity:.12;"></div>
+      <div class="orb orb2" style="opacity:.12;"></div>
+    </div>
+    <div class="slide-inner" style="text-align:center;position:relative;z-index:1;">
+      <div class="eyebrow">You're Ready</div>
+      <h1>Start Building 🚀</h1>
+      <p class="subtitle" style="margin:0 auto 32px;">
+        Your distributed-systems experience, backend strength, and EPAM background
+        give you a massive head-start. The remaining gap is UI architecture mindset
+        and frontend state management patterns — and now you have the roadmap.
+      </p>
+      <div class="tags" style="justify-content:center;margin-bottom:32px;">
+        <span class="tag tag-purple">Clean component boundaries</span>
+        <span class="tag tag-cyan">Predictable state</span>
+        <span class="tag tag-green">UX thinking</span>
+        <span class="tag tag-amber">API contract discipline</span>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:fadeUp .5s .35s var(--trans) both;">
+        <a href="README.md" style="padding:10px 22px;background:var(--accent);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:.88rem;transition:opacity .2s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+          📋 Open Roadmap README
+        </a>
+        <a href="../scripts/README.md" style="padding:10px 22px;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:8px;text-decoration:none;font-weight:600;font-size:.88rem;transition:background .2s;" onmouseover="this.style.background='#2a2a4a'" onmouseout="this.style.background='var(--card)'">
+          🛠️ Scripts Guide
+        </a>
+      </div>
+      <p style="margin-top:40px;font-size:.72rem;color:var(--muted);">
+        Slide 14 of 14 · Press ← to go back
+      </p>
+    </div>
+  </section>
+
+</div><!-- /#deck -->
+
+
+<script>
+  /* ── State ────────────────────────────────────────────────────────────── */
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total  = slides.length;
+  let   current = 0;
+  let   animating = false;
+
+  /* ── DOM refs ─────────────────────────────────────────────────────────── */
+  const bar     = document.getElementById('progress-bar');
+  const counter = document.getElementById('counter');
+  const dotsEl  = document.getElementById('dots');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+
+  /* ── Build dots ───────────────────────────────────────────────────────── */
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
+  });
+
+  /* ── Render ───────────────────────────────────────────────────────────── */
+  function render(idx, dir) {
+    slides.forEach((s, i) => {
+      s.classList.remove('active', 'exit-left');
+      if (i === idx) {
+        s.classList.add('active');
+        /* re-trigger entry animation on child */
+        s.querySelectorAll('.slide-inner').forEach(el => {
+          el.style.animation = 'none';
+          el.offsetHeight; /* reflow */
+          el.style.animation = '';
+        });
+      } else if (dir === 'forward' && i === idx - 1) {
+        s.classList.add('exit-left');
+      }
+    });
+
+    /* progress */
+    bar.style.width = ((idx / (total - 1)) * 100) + '%';
+
+    /* counter */
+    counter.textContent = (idx + 1) + ' / ' + total;
+
+    /* dots */
+    dotsEl.querySelectorAll('.dot').forEach((d, i) => {
+      d.classList.toggle('active', i === idx);
+    });
+
+    /* nav btn visibility */
+    btnPrev.style.opacity = idx === 0           ? '0.3' : '1';
+    btnNext.style.opacity = idx === total - 1   ? '0.3' : '1';
+  }
+
+  function goTo(idx) {
+    if (animating || idx === current || idx < 0 || idx >= total) return;
+    animating = true;
+    const dir = idx > current ? 'forward' : 'backward';
+    current = idx;
+    render(current, dir);
+    setTimeout(() => { animating = false; }, 520);
+  }
+
+  function next() { goTo(current + 1); }
+  function prev() { goTo(current - 1); }
+
+  /* ── Controls ─────────────────────────────────────────────────────────── */
+  btnNext.addEventListener('click', next);
+  btnPrev.addEventListener('click', prev);
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') {
+      e.preventDefault(); next();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault(); prev();
+    } else if (e.key === 'Home') {
+      goTo(0);
+    } else if (e.key === 'End') {
+      goTo(total - 1);
+    }
+  });
+
+  /* Touch/swipe support */
+  let touchX = null;
+  document.addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+  document.addEventListener('touchend', e => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 40) { dx < 0 ? next() : prev(); }
+    touchX = null;
+  }, { passive: true });
+
+  /* ── Init ─────────────────────────────────────────────────────────────── */
+  render(0, 'forward');
+</script>
+</body>
+</html>
