@@ -1,3 +1,7 @@
+# NodeJS Guide (Legacy)
+
+[← Back to src](../readme.md) | [Main README](../../README.md)
+
 ## NodeJS Guide:
 
 This guide provides instructions on how to set up and use the Node.js components of this project.
