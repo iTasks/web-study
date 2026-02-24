@@ -1,5 +1,7 @@
 # Ticker Function
 
+[← Back to GCF Functions](../README.md) | [GCF](../../README.md) | [Main README](../../../../README.md)
+
 This directory contains the `ticker` function for the web-study project. The `ticker` function is designed to handle and process real-time ticker data.
 
 ## Overview
