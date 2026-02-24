@@ -1,5 +1,7 @@
 # GCF Functions
 
+[← Back to GCF](../README.md) | [Main README](../../../README.md)
+
 This directory contains various Google Cloud Functions (GCF) for the web-study project. Each function is designed to handle specific tasks and is implemented in different programming languages.
 
 ## Overview

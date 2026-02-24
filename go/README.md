@@ -18,6 +18,10 @@ This directory contains Go programming language study materials, sample applicat
   - Wallet applications and blockchain-related code
   - Concurrent programming examples
   - Network programming utilities
+  - **[Queue Processing](samples/queue_processing/)**: Parallel queue processing with MongoDB and PostgreSQL
+
+### AI Assistant Examples
+- **[Yelp AI Assistant](yelp-ai-assistant/)**: Yelp-style AI assistant implementation in Go
 
 ## Setup Instructions
 

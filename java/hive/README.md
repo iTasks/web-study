@@ -1,5 +1,7 @@
 # HIVE - Thermostat Monitoring Demo
 
+[← Back to Java](../README.md) | [Main README](../../README.md)
+
 **Reactive vs Virtual Threads Comparison**
 
 > 🎯 **Looking for recommendations?** Check [OPTIMAL_SOLUTION.md](OPTIMAL_SOLUTION.md) for a quick decision guide!

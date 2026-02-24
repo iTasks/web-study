@@ -1,5 +1,7 @@
 # Yelp-Style AI Assistant (Rust)
 
+[← Back to Rust](../README.md) | [Main README](../../README.md)
+
 A Rust implementation of a Yelp-style AI assistant that classifies query intent, routes to search services, orchestrates results, and generates mock LLM answers.
 
 ## Architecture

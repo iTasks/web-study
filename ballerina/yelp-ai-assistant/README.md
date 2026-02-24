@@ -1,5 +1,7 @@
 # Yelp-Style AI Assistant — Ballerina
 
+[← Back to Ballerina](../README.md) | [Main README](../../README.md)
+
 A Ballerina replica of the [Python yelp-ai-assistant](https://github.com/smaruf/python-ai-course/tree/main/yelp-ai-assistant).
 
 ## Quick Start

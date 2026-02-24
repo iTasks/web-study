@@ -1,5 +1,7 @@
 # Wind Turbine Configuration
 
+[← Back to C-Basic](../../README.md) | [Main README](../../../README.md)
+
 Example configurations for wind turbine monitoring and control systems.
 
 ## Small Vertical Axis Turbine (12V, 400W)

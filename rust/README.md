@@ -16,6 +16,9 @@ This directory contains Rust programming language study materials and sample app
   - **Async/Coroutines**: Advanced async programming with tokio, custom futures, and concurrent execution
   - **System Programming**: Low-level system interactions and performance optimization
 
+### AI Assistant Examples
+- **[Yelp AI Assistant](yelp-ai-assistant/)**: Yelp-style AI assistant implementation in Rust
+
 ## Setup Instructions
 
 ### Prerequisites

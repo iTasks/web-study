@@ -1,5 +1,7 @@
 # C-Basic: Production-Ready Embedded Systems Framework
 
+[← Back to Main](../README.md) | [Web Study Repository](https://github.com/iTasks/web-study)
+
 A comprehensive C framework for production-ready embedded systems projects targeting:
 - **Operating Systems & Hardware**: Raspberry Pi, Arduino, generic Linux, microcontrollers
 - **Renewable Energy**: Solar panels, wind turbines, thermal generators with MPPT and battery management
@@ -32,6 +34,17 @@ A comprehensive C framework for production-ready embedded systems projects targe
 - **Safety Features**: Geofencing, battery monitoring, altitude limits
 - **Auto-pilot**: Target altitude/position control, autonomous navigation
 - **Sensor Fusion**: GPS, barometer, magnetometer, IMU integration
+
+## Contents
+
+- **[Hardware Platforms](hardware/)**: Platform-specific implementations
+  - **[Arduino](hardware/arduino/)**: Arduino-specific code and examples
+  - **[Raspberry Pi](hardware/rpi/)**: Raspberry Pi-specific implementations
+- **[Energy Systems](energy/)**: Renewable energy system configurations
+  - **[Solar](energy/solar/)**: Solar power monitoring and control
+  - **[Wind](energy/wind/)**: Wind turbine monitoring and control
+- **[Robotics](robotics/)**: Robotics configuration examples
+- **[Aerospace](aerospace/)**: Aerospace configuration examples
 
 ## Directory Structure
 

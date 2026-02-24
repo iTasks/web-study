@@ -1,5 +1,7 @@
 # Yelp-Style AI Assistant — C# (ASP.NET Core 8)
 
+[← Back to C#](../README.md) | [Main README](../../README.md)
+
 A minimal-API ASP.NET Core 8 replica of the [Python yelp-ai-assistant](https://github.com/smaruf/python-ai-course/tree/main/yelp-ai-assistant).
 
 Uses **zero external NuGet packages** — only built-in ASP.NET Core.

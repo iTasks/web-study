@@ -24,6 +24,9 @@ This directory contains Groovy programming language study materials and sample a
   - RESTful endpoints with CRUD operations
   - JSON request/response handling
 
+### AI Assistant Examples
+- **[Yelp AI Assistant](yelp-ai-assistant/)**: Yelp-style AI assistant implementation in Groovy (Ratpack)
+
 ## Setup Instructions
 
 ### Prerequisites

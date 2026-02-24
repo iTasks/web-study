@@ -1,5 +1,7 @@
 # Yelp-Style AI Assistant — Go
 
+[← Back to Go](../README.md) | [Main README](../../README.md)
+
 A Go replica of the [Python yelp-ai-assistant](https://github.com/smaruf/python-ai-course/tree/main/yelp-ai-assistant).
 
 Uses only the Go standard library (`net/http`, `sync`, `regexp`, `crypto/sha256`).

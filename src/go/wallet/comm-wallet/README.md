@@ -1,8 +1,9 @@
+# Communication Wallet Service (Legacy)
+
+[← Back to Main](../../../../README.md)
 
 
 ### Dependencies:
- 1. Golang: https://golang.org/
- 2. Echo: https://echo.labstack.com/guide/installation/
  3. Gorm: https://gorm.io/docs/models.html
  4. Twilio: https://github.com/twilio/twilio-go
  5. Kafka: https://github.com/lovoo/goka + https://github.com/Shopify/sarama 

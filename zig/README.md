@@ -33,6 +33,9 @@ This directory contains Zig programming language study materials and sample appl
   - Hardware abstraction layers (GPIO, PWM, I2C)
   - Safety-critical embedded systems
 
+### AI Assistant Examples
+- **[Yelp AI Assistant](yelp-ai-assistant/)**: Yelp-style AI assistant implementation in Zig
+
 ## Setup Instructions
 
 ### Prerequisites

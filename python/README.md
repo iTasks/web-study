@@ -20,6 +20,7 @@ This directory contains Python programming language study materials, sample appl
   - Lambda function implementations
   - Server implementations
   - **Load Testing**: [Locust load testing samples](samples/load-testing/locust/) for concurrent user testing
+  - **Queue Processing**: [Queue processing samples](samples/queue_processing/) with MongoDB and PostgreSQL
   - File I/O and data processing utilities
   - Web scraping and automation scripts
 
