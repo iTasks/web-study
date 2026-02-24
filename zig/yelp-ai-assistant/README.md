@@ -1,5 +1,7 @@
 # Yelp-Style AI Assistant — Zig
 
+[← Back to Zig](../README.md) | [Main README](../../README.md)
+
 A single-file Zig implementation of a Yelp-style AI assistant HTTP server. It classifies natural-language queries about a business (intent detection), routes them to in-memory search services, and returns a mock-RAG style answer.
 
 ## Features

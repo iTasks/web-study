@@ -11,6 +11,7 @@ This directory contains Node.js framework examples and implementations. Node.js 
 - `lambda/`: AWS Lambda function implementations
 - `ng/`: Node.js applications and utilities
 - Various server-side JavaScript examples
+- **[Queue Processing](queue_processing/)**: Parallel queue processing with MongoDB and PostgreSQL
 
 ## Setup Instructions
 

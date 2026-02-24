@@ -1,5 +1,7 @@
 # Yelp-Style AI Assistant — Java (Spring Boot)
 
+[← Back to Java](../README.md) | [Main README](../../README.md)
+
 A Spring Boot 3.x replica of the [Python yelp-ai-assistant](https://github.com/smaruf/python-ai-course/tree/main/yelp-ai-assistant).
 
 ## Quick Start

@@ -1,5 +1,7 @@
 # Solar Power System Configuration
 
+[← Back to C-Basic](../../README.md) | [Main README](../../../README.md)
+
 Example configurations for solar power monitoring and control systems.
 
 ## Small Scale Solar (12V, 100W)

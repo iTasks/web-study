@@ -21,6 +21,12 @@ This directory contains Java programming language study materials, sample applic
   - REST client implementations
   - Game implementations (PingPong, RubiksCube)
 
+### Reactive vs Virtual Threads
+- **[HIVE](hive/)**: Thermostat monitoring demo comparing Reactive Stack vs Virtual Threads
+
+### AI Assistant Examples
+- **[Yelp AI Assistant](yelp-ai-assistant/)**: Yelp-style AI assistant implementation in Java (Spring Boot)
+
 ## Setup Instructions
 
 ### Prerequisites

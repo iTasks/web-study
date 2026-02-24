@@ -24,6 +24,9 @@ This directory contains C# programming language study materials and sample appli
   - Stock market simulation applications
   - Rate limiting and configuration examples
 
+### AI Assistant Examples
+- **[Yelp AI Assistant](yelp-ai-assistant/)**: Yelp-style AI assistant implementation in C# (ASP.NET Core 8)
+
 ## Setup Instructions
 
 ### Prerequisites

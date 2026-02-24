@@ -16,6 +16,9 @@ This directory contains Ballerina programming language study materials and sampl
   - API integration utilities
   - Data processing and transformation
 
+### AI Assistant Examples
+- **[Yelp AI Assistant](yelp-ai-assistant/)**: Yelp-style AI assistant implementation in Ballerina
+
 ## Setup Instructions
 
 ### Prerequisites

@@ -1,5 +1,7 @@
 # Yelp-Style AI Assistant — Groovy (Ratpack)
 
+[← Back to Groovy](../README.md) | [Main README](../../README.md)
+
 A Ratpack-powered Groovy replica of the [Python yelp-ai-assistant](https://github.com/smaruf/python-ai-course/tree/main/yelp-ai-assistant).
 
 Single-file script using `@Grab` — no build step needed.
