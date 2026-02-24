@@ -1,0 +1,12 @@
+.{
+    .name = .yelp_ai_assistant,
+    .version = "0.1.0",
+    .fingerprint = 0xb84a6be42132dfdd,
+    .minimum_zig_version = "0.15.0",
+    .dependencies = .{},
+    .paths = .{
+        "build.zig",
+        "build.zig.zon",
+        "src",
+    },
+}
