@@ -1,0 +1,20 @@
+[package]
+name = "yelp-ai-assistant"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "yelp-ai-assistant"
+path = "src/main.rs"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+hyper = { version = "1.0", features = ["full"] }
+hyper-util = { version = "0.1", features = ["tokio"] }
+http-body-util = "0.1"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+bytes = "1"
+futures = "0.3"
+regex = "1"
+sha2 = "0.10"
