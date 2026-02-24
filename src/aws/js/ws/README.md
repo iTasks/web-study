@@ -2,6 +2,7 @@
 
 [← Back to AWS](../../README.md) | [Main README](../../../../README.md)
 
-### Reference to ws lib
- * Goal: using web-socket for developing web application
- * Link: https://github.com/iTasks/ws
+## Overview
+
+- **Goal**: Using WebSocket for developing web applications
+- **Repository**: [iTasks/ws](https://github.com/iTasks/ws)
