@@ -6,6 +6,46 @@
 
 This directory contains JavaScript/TypeScript programming language study materials, sample applications, and framework implementations. JavaScript is a high-level, interpreted programming language that is one of the core technologies of the World Wide Web, alongside HTML and CSS.
 
+## 🗺️ Full-Stack Roadmap
+
+**[📋 Full-Stack JavaScript Roadmap](roadmap/README.md)** — Structured learning path for Senior Engineers moving into full-stack JS development.
+
+Covers React (Web) · React Native (Mobile) · Python backend (FastAPI/Django) · Production architecture · CI/CD · Scaling
+
+| Phase | Topic | Duration |
+|-------|-------|----------|
+| [Phase 0](roadmap/phase-0-foundations/README.md) | Modern JS (ES6+) & TypeScript | 3 weeks |
+| [Phase 1](roadmap/phase-1-react-core/README.md) | React Core | 5 weeks |
+| [Phase 2](roadmap/phase-2-advanced-react/README.md) | Advanced React | 5 weeks |
+| [Phase 3](roadmap/phase-3-react-native/README.md) | React Native | 5 weeks |
+| [Phase 4](roadmap/phase-4-python-backend/README.md) | Python Backend | 4 weeks |
+| [Phase 5](roadmap/phase-5-fullstack-architecture/README.md) | Full-Stack Architecture | 4 weeks |
+| [Phase 6](roadmap/phase-6-advanced/README.md) | Advanced / Expert | ongoing |
+| [Portfolio](roadmap/portfolio-projects/README.md) | Portfolio Projects | parallel |
+
+## 🛠️ Project Management Scripts
+
+**[📜 Management Scripts](scripts/README.md)** — CLI and GUI tools to run, build, test, and deploy the project.
+
+| Script | Platform | Features |
+|--------|----------|----------|
+| [`scripts/manage.py`](scripts/manage.py) | Any (Python 3.8+) | CLI + GUI (tkinter) |
+| [`scripts/manage.sh`](scripts/manage.sh) | Linux / macOS / WSL | CLI |
+| [`scripts/manage.bat`](scripts/manage.bat) | Windows cmd.exe | CLI |
+| [`scripts/manage.ps1`](scripts/manage.ps1) | PowerShell (all OS) | CLI |
+
+Quick start:
+```bash
+# Linux / macOS
+./scripts/manage.sh setup && ./scripts/manage.sh dev
+
+# Windows (PowerShell)
+.\scripts\manage.ps1 setup; .\scripts\manage.ps1 dev
+
+# GUI (any OS with Python + tkinter)
+python scripts/manage.py gui
+```
+
 ## Contents
 
 ### Frameworks
@@ -122,6 +162,22 @@ npm run test:pact
 ```
 javascript/
 ├── README.md                    # This file
+├── roadmap/                     # Full-stack learning roadmap
+│   ├── README.md                # Main roadmap with phase index and timeline
+│   ├── phase-0-foundations/     # ES6+ JS and TypeScript
+│   ├── phase-1-react-core/      # React core concepts, routing, forms, API
+│   ├── phase-2-advanced-react/  # State, performance, patterns, testing, build tools
+│   ├── phase-3-react-native/    # Mobile development with React Native
+│   ├── phase-4-python-backend/  # FastAPI and Django+DRF
+│   ├── phase-5-fullstack-architecture/  # Auth, Docker, CI/CD, Nginx
+│   ├── phase-6-advanced/        # Next.js SSR, mobile advanced, scaling
+│   └── portfolio-projects/      # 3 production-grade portfolio project guides
+├── scripts/                     # Project management tools
+│   ├── README.md                # Scripts usage guide
+│   ├── manage.py                # Python CLI + GUI (tkinter)
+│   ├── manage.sh                # Bash CLI (Linux/macOS/WSL)
+│   ├── manage.bat               # Windows Batch CLI
+│   └── manage.ps1               # PowerShell CLI (cross-platform)
 ├── nodejs/                      # Node.js framework examples
 │   ├── lambda/                  # AWS Lambda functions
 │   ├── ng/                      # Node.js applications
