@@ -44,7 +44,7 @@ This directory contains Java programming language study materials, sample applic
 
 ### Software Quality and Testing Docs
 - **[Apache JMeter with AI CLI](sqa/apache_jmeter_with_ai_cli.md)**: Performance testing workflows using JMeter CLI and AI-assisted plan generation
-- **[Cucumber + Selenium + JMeter for .NET](sqa/cucumber_selenium_jmeter_for_donet.md)**: Cross-tool testing architecture and responsibilities
+- **[Cucumber + Selenium + JMeter for .NET](sqa/cucumber_selenium_jmeter_for_dotnet.md)**: Cross-tool testing architecture and responsibilities
 - **[Cucumber + Selenium + JS + PyScript](sqa/cucumber_selenium_js_pyscript.md)**: Hybrid UI automation and scripting test strategy
 
 ## Setup Instructions
@@ -132,7 +132,7 @@ java/
 │   └── iac_for_project_with_mobile_integration.md
 ├── sqa/                      # Software quality and test strategy docs
 │   ├── apache_jmeter_with_ai_cli.md
-│   ├── cucumber_selenium_jmeter_for_donet.md
+│   ├── cucumber_selenium_jmeter_for_dotnet.md
 │   └── cucumber_selenium_js_pyscript.md
 ├── samples/                  # Pure Java language examples
 │   ├── Application.java      # Main application example
