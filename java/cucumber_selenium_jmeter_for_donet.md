@@ -365,7 +365,7 @@ This is how many enterprise QA/performance teams operate.
 
 # Useful Extensions
 
-You can also integrate:
+One can also integrate:
 
 * k6
 * Gatling
