@@ -4,6 +4,8 @@ In a modern enterprise architecture, Open Banking and VISA represent alternative
 
 Here is how the expanded **6-Week Technical Learning Roadmap** looks, incorporating **Visa Direct** endpoints and pan-European **Berlin Group NextGenPSD2 / Open Banking** standards.
 
+- [Payment GW and Exchange](Payment_and_Exchange.md)
+
 ---
 
 ## 📅 The Expanded 6-Week Technical Roadmap
