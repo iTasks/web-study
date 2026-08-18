@@ -1,52 +1,87 @@
-[Nasdaq Calypso](https://www.nasdaq.com/solutions/fintech/nasdaq-calypso?utm_source=chatgpt.com) is an **enterprise financial-market platform** used mainly by banks, investment firms, central banks, and other financial institutions to manage the **entire lifecycle of financial trades**. ([Nasdaq][1])
+# Calypso (Java Capital Markets Platform)
 
-### In simple terms
+[← Back to Java](../README.md) | [Main README](../../README.md)
 
-Think of Calypso as a large **banking/trading back-office + risk-management system**:
+## Purpose
 
-**Trade → valuation → risk → confirmation → settlement → accounting/reporting**
+This directory provides a practical learning path for Nasdaq Calypso and starter tooling for automation and load testing workflows.
 
-It covers:
+## Learning Plan
 
-* **Front Office** — trading, pricing, hedging, portfolio/trade management
-* **Middle Office** — risk, P&L, limits, compliance
-* **Back Office** — confirmations, settlement, accounting, post-trade processing
-* **Treasury & Liquidity** — funding, cash, FX and interest-rate risk
-* **Collateral & Margin** — collateral management, clearing and margin
-* **Market/Risk Analytics** — market, credit, liquidity and other risk calculations
-* **Regulatory reporting** and compliance
-* Supports **exchange-traded and OTC products** across multiple asset classes. ([Nasdaq][2])
+### Phase 1: Foundations
+- Understand capital markets basics: products, counterparties, lifecycle, settlement
+- Learn Calypso platform concepts: front/middle/back office responsibilities
+- Review core Java and Spring Boot concepts used in Calypso integrations
 
-### Technology perspective
+### Phase 2: Core Calypso Concepts
+- Trade lifecycle modeling (capture → validation → booking → settlement)
+- Static data setup (books, counterparties, calendars, currencies)
+- Workflows, status transitions, and exception handling
+- Scheduling and batch processing concepts
 
-This is particularly relevant to your Java/Spring background: **Calypso is a multi-tier application built primarily with Java technologies**, uses industry-standard databases, and its newer architecture uses **Spring Boot**. It also has an event-driven architecture and integrates with external/third-party systems. ([Calypso Learning Services][3])
+### Phase 3: Integration and Automation
+- Inbound/outbound interfaces (file, API, message-driven patterns)
+- Reconciliation and reporting automation patterns
+- Operational runbooks for health checks and daily controls
+- Test data generation for repeatable QA/UAT flows
 
-So a Calypso developer may work with concepts such as:
+### Phase 4: Performance and Reliability
+- Define baseline SLAs for booking, pricing, and batch windows
+- Create repeatable load profiles and stress scenarios
+- Analyze latency bottlenecks and throughput limits
+- Add regression checks to prevent performance degradation
 
-**Java + Spring Boot + distributed/event-driven architecture + databases + financial products + trade lifecycle + risk**
+### Phase 5: Production Readiness
+- Monitoring strategy (service health, queue depth, failures)
+- Release checklist and rollback approach
+- Incident response playbooks and post-incident review process
+- Compliance and auditability checks for operational controls
 
-rather than developing a conventional CRUD business application.
+## Automation & Load-Testing Tools
 
-### Why it matters for a developer
+### Kotlin
+- **[`tools/kotlin/trade_workload_generator.main.kts`](tools/kotlin/trade_workload_generator.main.kts)**
+  - Generates synthetic trade workload JSON files for testing and replay.
 
-Calypso is a **specialized capital-markets platform**, so the learning curve has two sides:
+### Groovy
+- **[`tools/groovy/batch_health_check.groovy`](tools/groovy/batch_health_check.groovy)**
+  - Parses batch execution CSV logs and flags SLA breaches.
 
-| Area                                | Importance |
-| ----------------------------------- | ---------- |
-| Java                                | ⭐⭐⭐⭐⭐      |
-| Spring / Spring Boot                | ⭐⭐⭐⭐       |
-| Distributed systems                 | ⭐⭐⭐⭐       |
-| SQL / databases                     | ⭐⭐⭐⭐       |
-| APIs/integration                    | ⭐⭐⭐⭐       |
-| Financial markets                   | ⭐⭐⭐⭐⭐      |
-| Trading & derivatives               | ⭐⭐⭐⭐       |
-| Risk management                     | ⭐⭐⭐⭐       |
-| Calypso-specific APIs/configuration | ⭐⭐⭐⭐⭐      |
+### Python
+- **[`tools/python/reconciliation_summary.py`](tools/python/reconciliation_summary.py)**
+  - Builds reconciliation summaries from transaction CSV files.
+- **[`load-testing/python-locust/locustfile.py`](load-testing/python-locust/locustfile.py)**
+  - Locust-based load profile for trade capture and pricing APIs.
 
-Nasdaq currently describes Calypso as serving **3,500+ financial institutions across 50+ countries**, so it is a significant enterprise platform rather than a niche internal application. ([Nasdaq][2])
+## Quick Start
 
-**For your profile specifically:** if you're looking at a **Senior Java/Calypso position**, your existing Java + Spring Boot + microservices/distributed-systems experience should transfer quite well. The biggest gap would likely be **capital-markets domain knowledge and Calypso-specific architecture/API knowledge**, not core programming.
+```bash
+# Kotlin workload generator
+kotlin java/calypso/tools/kotlin/trade_workload_generator.main.kts --count 200 --out /tmp/trades.json
 
-[1]: https://www.nasdaq.com/solutions/fintech/nasdaq-calypso?trk=article-ssr-frontend-pulse_little-text-block&utm_source=chatgpt.com "Nasdaq Calypso Solutions | Nasdaq"
-[2]: https://www.nasdaq.com/solutions/fintech/nasdaq-calypso?utm_source=chatgpt.com "Nasdaq Calypso Solutions | Nasdaq"
-[3]: https://calypsoeducation.nasdaq.com/courses/102-calypso-core-architecture-1?utm_source=chatgpt.com "102 - Calypso Core Architecture"
+# Groovy batch SLA check
+groovy java/calypso/tools/groovy/batch_health_check.groovy --input /tmp/batch-runs.csv --sla-ms 800
+
+# Python reconciliation summary
+python3 java/calypso/tools/python/reconciliation_summary.py --input /tmp/transactions.csv --out /tmp/recon-summary.json
+
+# Python Locust load test
+locust -f java/calypso/load-testing/python-locust/locustfile.py --host=http://localhost:8080 --headless -u 50 -r 5 --run-time 2m
+```
+
+## Project Structure
+
+```
+java/calypso/
+├── README.md
+├── tools/
+│   ├── kotlin/
+│   │   └── trade_workload_generator.main.kts
+│   ├── groovy/
+│   │   └── batch_health_check.groovy
+│   └── python/
+│       └── reconciliation_summary.py
+└── load-testing/
+    └── python-locust/
+        └── locustfile.py
+```
