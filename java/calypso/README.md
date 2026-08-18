@@ -5,6 +5,7 @@
 ## Purpose
 
 This directory provides a practical learning path for Nasdaq Calypso and starter tooling for automation and load testing workflows.
+The included Spring starter uses **Java 21+** and **Spring Boot 3.5.x**.
 
 ## Learning Plan
 
@@ -39,6 +40,10 @@ This directory provides a practical learning path for Nasdaq Calypso and starter
 
 ## Automation & Load-Testing Tools
 
+### Java + Spring Boot (Java 21+)
+- **[`spring-java21/`](spring-java21/)**
+  - Starter Java 21 + Spring Boot project structure for Calypso-oriented APIs and services.
+
 ### Kotlin
 - **[`tools/kotlin/trade_workload_generator.main.kts`](tools/kotlin/trade_workload_generator.main.kts)**
   - Generates synthetic trade workload JSON files for testing and replay.
@@ -56,6 +61,10 @@ This directory provides a practical learning path for Nasdaq Calypso and starter
 ## Quick Start
 
 ```bash
+# Java 21 + Spring Boot starter project
+cd java/calypso/spring-java21
+mvn spring-boot:run
+
 # Kotlin workload generator
 kotlin java/calypso/tools/kotlin/trade_workload_generator.main.kts --count 200 --out /tmp/trades.json
 
@@ -74,6 +83,16 @@ locust -f java/calypso/load-testing/python-locust/locustfile.py --host=http://lo
 ```
 java/calypso/
 ├── README.md
+├── spring-java21/
+│   ├── pom.xml
+│   └── src/
+│       ├── main/
+│       │   ├── java/com/itasks/calypso/
+│       │   │   ├── CalypsoApplication.java
+│       │   │   └── HealthController.java
+│       │   └── resources/application.yml
+│       └── test/java/com/itasks/calypso/
+│           └── CalypsoApplicationTests.java
 ├── tools/
 │   ├── kotlin/
 │   │   └── trade_workload_generator.main.kts

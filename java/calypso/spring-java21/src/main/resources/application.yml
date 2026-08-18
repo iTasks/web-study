@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: calypso-spring-java21
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
